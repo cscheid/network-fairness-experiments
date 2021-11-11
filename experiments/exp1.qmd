@@ -63,28 +63,3 @@ plot_community_dists(list(v ** 2 for v in ic_result), params)
 plt.show()
 ```
 
-# Collateral dmg
-
-Average of neighbors:
-
-```{python}
-#| echo: false
-import numpy
-
-def collect_neighbor_data(result, params):
-	graph = read_graph(params["graph"])
-	seeds = params["seeds"]
-	return list(list(result[i] for i in out_nodes if i not in seeds) for out_nodes in graph)
-
-ic_neighbor_result = collect_neighbor_data(ic_result, params)
-plot_community_dists(list((numpy.mean(lst) if len(lst) > 0 else None) for lst in ic_neighbor_result), params)
-```
-
-Min of neighbors:
-
-```{python}
-#| echo: false
-import numpy
-plot_community_dists(list((numpy.min(lst) if len(lst) > 0 else None) for lst in ic_neighbor_result), params)
-```
-

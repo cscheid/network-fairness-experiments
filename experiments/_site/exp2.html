@@ -162,7 +162,6 @@
 </div>
 </div>
 <p>Or the min:</p>
-<p>But now we collect our neighbor’s information first, and then compute the mean over that:</p>
 <div class="cell" data-execution_count="4">
 <p></p><details>
 <summary>Code</summary><p></p>
@@ -238,15 +237,13 @@
 <span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a>Or the min:</span>
 <span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a>But now we collect our neighbor's information first, and then compute the mean over that:</span>
-<span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-69"><a href="#cb5-69" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb5-70"><a href="#cb5-70" aria-hidden="true" tabindex="-1"></a>ic_neighbor_result <span class="op">=</span> collect_neighbor_data(ic_result, params)</span>
-<span id="cb5-71"><a href="#cb5-71" aria-hidden="true" tabindex="-1"></a>ic_neighbor_result <span class="op">=</span> <span class="bu">list</span>(numpy.<span class="bu">min</span>(lst) <span class="cf">for</span> lst <span class="kw">in</span> ic_neighbor_result)</span>
-<span id="cb5-72"><a href="#cb5-72" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
-<span id="cb5-73"><a href="#cb5-73" aria-hidden="true" tabindex="-1"></a>plot_community_dists(ic_neighbor_result, params)</span>
-<span id="cb5-74"><a href="#cb5-74" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
-<span id="cb5-75"><a href="#cb5-75" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb5-68"><a href="#cb5-68" aria-hidden="true" tabindex="-1"></a>ic_neighbor_result <span class="op">=</span> collect_neighbor_data(ic_result, params)</span>
+<span id="cb5-69"><a href="#cb5-69" aria-hidden="true" tabindex="-1"></a>ic_neighbor_result <span class="op">=</span> <span class="bu">list</span>(numpy.<span class="bu">min</span>(lst) <span class="cf">for</span> lst <span class="kw">in</span> ic_neighbor_result)</span>
+<span id="cb5-70"><a href="#cb5-70" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
+<span id="cb5-71"><a href="#cb5-71" aria-hidden="true" tabindex="-1"></a>plot_community_dists(ic_neighbor_result, params)</span>
+<span id="cb5-72"><a href="#cb5-72" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb5-73"><a href="#cb5-73" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 <script type="application/javascript">

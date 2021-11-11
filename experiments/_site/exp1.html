@@ -143,7 +143,7 @@
 <div class="sourceCode" id="cb2"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>params[<span class="st">"graph"</span>] <span class="op">=</span> graph</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>params[<span class="st">"seeds"</span>] <span class="op">=</span> seeds</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>ic_result <span class="op">=</span>run_experiment(params)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>ic_result <span class="op">=</span> run_experiment(params)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <section id="basic" class="level1">
 <h1>Basic</h1>
@@ -160,25 +160,10 @@
 <p><img src="exp1_files/figure-html/cell-5-output-1.png" width="558" height="404"></p>
 </div>
 </div>
-</section>
-<section id="collateral-dmg" class="level1">
-<h1>Collateral dmg</h1>
-<p>Average of neighbors:</p>
-<div class="cell" data-execution_count="5">
-<div class="cell-output-display">
-<p><img src="exp1_files/figure-html/cell-6-output-1.png" width="566" height="404"></p>
-</div>
-</div>
-<p>Min of neighbors:</p>
-<div class="cell" data-execution_count="6">
-<div class="cell-output-display">
-<p><img src="exp1_files/figure-html/cell-7-output-1.png" width="558" height="404"></p>
-</div>
-</div>
 
 
 <!-- -->
-<div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title anchored" id="quarto-embedded-source-code-modal-label" data-anchor-id="collateral-dmg">Source Code</h5><button class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div><div class="modal-body"><div class="">
+<div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title anchored" id="quarto-embedded-source-code-modal-label" data-anchor-id="basic">Source Code</h5><button class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div><div class="modal-body"><div class="">
 <div class="sourceCode" id="cb3" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Experiment 1"</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> </span></span>
@@ -220,7 +205,7 @@
 <span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>params[<span class="st">"graph"</span>] <span class="op">=</span> graph</span>
 <span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>params[<span class="st">"seeds"</span>] <span class="op">=</span> seeds</span>
 <span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>ic_result <span class="op">=</span>run_experiment(params)</span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>ic_result <span class="op">=</span> run_experiment(params)</span>
 <span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a></span>
@@ -243,31 +228,6 @@
 <span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a>plot_community_dists(<span class="bu">list</span>(v <span class="op">**</span> <span class="dv">2</span> <span class="cf">for</span> v <span class="kw">in</span> ic_result), params)</span>
 <span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
 <span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb3-73"><a href="#cb3-73" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a><span class="fu"># Collateral dmg</span></span>
-<span id="cb3-75"><a href="#cb3-75" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-76"><a href="#cb3-76" aria-hidden="true" tabindex="-1"></a>Average of neighbors:</span>
-<span id="cb3-77"><a href="#cb3-77" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-80"><a href="#cb3-80" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb3-81"><a href="#cb3-81" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb3-82"><a href="#cb3-82" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy</span>
-<span id="cb3-83"><a href="#cb3-83" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-84"><a href="#cb3-84" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> collect_neighbor_data(result, params):</span>
-<span id="cb3-85"><a href="#cb3-85" aria-hidden="true" tabindex="-1"></a>    graph <span class="op">=</span> read_graph(params[<span class="st">"graph"</span>])</span>
-<span id="cb3-86"><a href="#cb3-86" aria-hidden="true" tabindex="-1"></a>    seeds <span class="op">=</span> params[<span class="st">"seeds"</span>]</span>
-<span id="cb3-87"><a href="#cb3-87" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">list</span>(<span class="bu">list</span>(result[i] <span class="cf">for</span> i <span class="kw">in</span> out_nodes <span class="cf">if</span> i <span class="kw">not</span> <span class="kw">in</span> seeds) <span class="cf">for</span> out_nodes <span class="kw">in</span> graph)</span>
-<span id="cb3-88"><a href="#cb3-88" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-89"><a href="#cb3-89" aria-hidden="true" tabindex="-1"></a>ic_neighbor_result <span class="op">=</span> collect_neighbor_data(ic_result, params)</span>
-<span id="cb3-90"><a href="#cb3-90" aria-hidden="true" tabindex="-1"></a>plot_community_dists(<span class="bu">list</span>((numpy.mean(lst) <span class="cf">if</span> <span class="bu">len</span>(lst) <span class="op">&gt;</span> <span class="dv">0</span> <span class="cf">else</span> <span class="va">None</span>) <span class="cf">for</span> lst <span class="kw">in</span> ic_neighbor_result), params)</span>
-<span id="cb3-91"><a href="#cb3-91" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb3-92"><a href="#cb3-92" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-93"><a href="#cb3-93" aria-hidden="true" tabindex="-1"></a>Min of neighbors:</span>
-<span id="cb3-94"><a href="#cb3-94" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-97"><a href="#cb3-97" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb3-98"><a href="#cb3-98" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb3-99"><a href="#cb3-99" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy</span>
-<span id="cb3-100"><a href="#cb3-100" aria-hidden="true" tabindex="-1"></a>plot_community_dists(<span class="bu">list</span>((numpy.<span class="bu">min</span>(lst) <span class="cf">if</span> <span class="bu">len</span>(lst) <span class="op">&gt;</span> <span class="dv">0</span> <span class="cf">else</span> <span class="va">None</span>) <span class="cf">for</span> lst <span class="kw">in</span> ic_neighbor_result), params)</span>
-<span id="cb3-101"><a href="#cb3-101" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </section>

@@ -5,9 +5,10 @@ format: html
 
 Reports:
 
-* [Experiment 1](exp1.qmd)
-* [Experiment 2](exp2.qmd)
-* [Experiment 3](exp3.qmd)
+* [Experiment 1](exp1.qmd): some overseeding, collateral dmg as "square"
+* [Experiment 2](exp2.qmd): some overseeding, collateral dmg as average or min over neighbors
+* [Experiment 3](exp3.qmd): (5.2) vary overseeding, look also at collateral dmg
+* [Experiment 4](exp4.qmd): (5.3) vary node removal, look also at collateral dmg
 
 Supporting files:
 
