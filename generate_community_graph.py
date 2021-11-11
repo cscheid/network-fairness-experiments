@@ -28,7 +28,7 @@ def range_over_communities(sizes):
             index += 1
 
 print(n) # n edges
-print(1) # yes, directed
+print(0) # no, undirected
 
 # print edges    
 for i, c1 in range_over_communities(sizes):

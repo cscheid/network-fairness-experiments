@@ -35,8 +35,6 @@ int main(int argc, char **argv)
   float alpha = stof(argv[3]);
   int nreps = atoi(argv[4]);
 
-  // cerr << "reps: " << nreps << "\nalpha: " << alpha << endl;
-
   vector<float> result = run_ic(seeds, alpha, nreps, g);
   for (auto &v: result) {
     cout << v << " ";

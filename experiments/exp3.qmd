@@ -1,0 +1,93 @@
+---
+title: "Experiment 3"
+format: 
+  html:
+    code-tools: true
+    code-fold: true
+---
+
+Two Erdos-Renyi graphs $n=1000, p=0.01$ connected to one another with random edges, $p=0.0001$.
+Same as before, but now we look at the overall probability conditioned on the community, and
+vary the overseeding.
+
+```{python}
+from exps import *
+import numpy
+import matplotlib.pyplot as plt
+
+def make_params(overseeding_factor):
+    return dict(
+        # graph params
+        n = 1000,
+        p1 = 0.01 / 2,
+        p2 = 0.01 / 2,
+        p_inter = 0.0001 / 2,
+        # seeding params
+        seed1 = overseeding_factor * 0.1,
+        seed2 = 0.1,
+        # IC params
+        alpha = 0.1,
+        reprs = 100)
+
+def run_experiment_range(factors, f):
+    c1s = []
+    c2s = []
+    for factor in factors:
+        params = make_params(factor)
+        graph = two_communities(params)
+        seeds = set_seeds(params)
+        params["graph"] = graph
+        params["seeds"] = seeds
+        ic_result = run_experiment(params)
+        ic_result = f(ic_result, params)
+        c1, c2 = split_result_by_communities(ic_result, params)
+        c1s.append(numpy.mean(c1))
+        c2s.append(numpy.mean(c2))
+    return c1s, c2s
+
+def id(r, params):
+    return r
+def square(r, params):
+    return numpy.array(r) ** 2
+def mean(r, params):
+    r = collect_neighbor_data(r, params)
+    return list(numpy.mean(v) for v in r if len(v))
+def min(r, params):
+    r = collect_neighbor_data(r, params)
+    return list(numpy.min(v) for v in r if len(v))
+
+factors = [1,2,3,4,5,6,7,8,9]
+
+def plot_curve(f, label):
+    c1s, c2s = run_experiment_range(factors, f)
+    plt.figure()
+    plt.plot(factors, c1s)
+    plt.plot(factors, c2s)
+    plt.xlabel("Overseeding factor")
+    plt.ylabel(label)
+    plt.show()
+```
+
+No transformation:
+
+```{python}
+plot_curve(id, "prob")
+```
+
+Square:
+
+```{python}
+plot_curve(square, "squared prob")
+```
+
+Mean of neighbors:
+
+```{python}
+plot_curve(mean, "mean of neighbors' prob")
+```
+
+Min of neighbors:
+
+```{python}
+plot_curve(min, "min of neighbors' prob")
+```

@@ -1,0 +1,90 @@
+---
+title: "Experiment 1"
+format: 
+  html:
+    code-tools: true
+    code-fold: true
+---
+
+Two Erdos-Renyi graphs $n=1000, p=0.01$ connected to one another with random edges, $p=0.0001$.
+We overseed one community and look at the access probabilities:
+
+```{python}
+#| code-fold: show
+from exps import *
+
+overseeding_factor = 4
+
+params = dict(
+    # graph params
+    n = 1000,
+    p1 = 0.01 / 2,
+    p2 = 0.01 / 2,
+    p_inter = 0.0001 / 2,
+    # seeding params
+    seed1 = overseeding_factor * 0.1,
+    seed2 = 0.1,
+    # IC params
+    alpha = 0.1,
+    reprs = 10000)
+
+graph = two_communities(params)
+seeds = set_seeds(params)
+```
+
+We generate a community graph, seeds, run the IC computation, and plot the distribution of access probabilities across
+the two communities:
+
+```{python}
+params["graph"] = graph
+params["seeds"] = seeds
+
+ic_result = run_experiment(params)
+
+```
+
+# Basic
+
+Access probs:
+```{python}
+#| echo: false
+plt.figure()
+plot_community_dists(ic_result, params)
+plt.show()
+```
+
+$x^2$ access probs:
+
+Access probs:
+```{python}
+#| echo: false
+plt.figure()
+plot_community_dists(list(v ** 2 for v in ic_result), params)
+plt.show()
+```
+
+# Collateral dmg
+
+Average of neighbors:
+
+```{python}
+#| echo: false
+import numpy
+
+def collect_neighbor_data(result, params):
+	graph = read_graph(params["graph"])
+	seeds = params["seeds"]
+	return list(list(result[i] for i in out_nodes if i not in seeds) for out_nodes in graph)
+
+ic_neighbor_result = collect_neighbor_data(ic_result, params)
+plot_community_dists(list((numpy.mean(lst) if len(lst) > 0 else None) for lst in ic_neighbor_result), params)
+```
+
+Min of neighbors:
+
+```{python}
+#| echo: false
+import numpy
+plot_community_dists(list((numpy.min(lst) if len(lst) > 0 else None) for lst in ic_neighbor_result), params)
+```
+

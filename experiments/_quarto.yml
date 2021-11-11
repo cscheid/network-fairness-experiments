@@ -1,0 +1,7 @@
+project:
+  type: site
+  output-dir: _site
+format:
+  html:
+    code-tools: true
+    code-fold: true

@@ -1,5 +1,5 @@
 #include "independent_cascade.h"
-
+#include <iostream>
 #include <cstdlib>
 #include <queue>
 

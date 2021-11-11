@@ -1,0 +1,15 @@
+---
+title: "Network fairness experiments"
+format: html
+---
+
+Reports:
+
+* [Experiment 1](exp1.qmd)
+* [Experiment 2](exp2.qmd)
+* [Experiment 3](exp3.qmd)
+
+Supporting files:
+
+* [utils.py](utils.py)
+* [exps.py](exps.py)
