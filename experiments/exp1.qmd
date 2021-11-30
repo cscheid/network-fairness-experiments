@@ -7,7 +7,12 @@ format:
 ---
 
 Two Erdos-Renyi graphs $n=1000, p=0.01$ connected to one another with random edges, $p=0.0001$.
-We overseed one community and look at the access probabilities:
+We overseed one community and look at the access probabilities.
+
+(I'm dividing the probability by 2 there so that my results match
+those of the students. I'm pretty sure this is harmless and coming
+from different convention on how to interpret the values in symmetric
+graphs when generating them, etc.)
 
 ```{python}
 #| code-fold: show
