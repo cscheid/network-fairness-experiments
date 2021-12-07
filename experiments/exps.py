@@ -39,8 +39,13 @@ def array_into_file(vec):
             f.write(" ")
     return n
 
+# def community_graph(*args):
+#     return run_cmd(["../generate_community_graph.py"] + list(str(i) for i in args))
+
+##
 def community_graph(*args):
-    return run_cmd(["../generate_community_graph.py"] + list(str(i) for i in args))
+    return run_cmd(["../retrieve_community_graph.py"] + list(str(i) for i in args))
+##
 
 def ic(graph_file_name, seeds, alpha, reps):
     return run_cmd(["../ic/ic", graph_file_name, seeds, str(alpha), str(reps)])
@@ -68,10 +73,12 @@ def run_experiment(params):
     graph, seeds, alpha, reprs = itemgetter('graph', 'seeds', 'alpha', 'reprs')(params)
     return read_array(ic(graph, array_into_file(seeds), alpha, reprs))
 
+##
 def two_communities(params):
     n1 = params.get('n1', params["n"])
     n2 = params.get('n2', params["n"])
-    return community_graph(params["p_inter"], n1, params["p1"], n2, params["p2"])
+    return community_graph(params["p_inter"], n1, params["p1"], n2, params["p2"], params["network"])
+##
 
 def read_graph(name):
     g = []
