@@ -16,7 +16,7 @@ import matplotlib.pyplot as plt
 def make_params(shrink_factor):
     return dict(
         ##
-        network = "../data/reference_communities/Isolated_communities/SBM/Run_1",
+        network = "../data/reference_communities/Isolated_communities/SBM/Run_1/twocommunities_edgelist.txt",
         ##
         # graph params
         n = 1000,

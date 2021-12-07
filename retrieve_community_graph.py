@@ -30,7 +30,7 @@ n = sum(sizes)
 print(n) # n edges
 print(0) # no, undirected
 
-with open(network + "/twocommunities_edgelist.txt") as edgelist:
+with open(network) as edgelist:
     next(edgelist)
     for line in edgelist:
         if line[-1] == "\n":
