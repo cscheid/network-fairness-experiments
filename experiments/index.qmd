@@ -3,14 +3,58 @@ title: "Network fairness experiments"
 format: html
 ---
 
-Reports:
+# Reports
 
-* [Experiment 1](exp1.qmd): some overseeding, collateral dmg as "square"
-* [Experiment 2](exp2.qmd): some overseeding, collateral dmg as average or min over neighbors
-* [Experiment 3](exp3.qmd): (5.2) vary overseeding, look also at collateral dmg
-* [Experiment 4](exp4.qmd): (5.3) vary node removal, look also at collateral dmg
+* [Experiment 1 (1)](exp1.qmd): some overseeding, collateral dmg as "square"
+* [Experiment 2 (1)](exp2.qmd): some overseeding, collateral dmg as average or min over neighbors
+* [Experiment 3 (1)](exp3.qmd): (5.2) vary overseeding, look also at collateral dmg
+* [Experiment 4 (2)](exp4.qmd): (5.3) vary node removal, look also at collateral dmg
 
-Supporting files:
+## TODO
+
+* Collateral consequences: run `ic` with `n=1` instead of `n=10000`,
+  and change `min` and `mean` to run `ic` inside of them instead of
+  taking a result
+  
+  * in addition to the "default" aggregation, also allow each node to
+    get a random univariate [0,1] that scales the value before the
+    aggregation
+  
+* Make fairness graphs for each experiment
+
+* Experiment 1+2: 
+  * remove nodes based on mean of IC calculations (experiment 1)
+  * then seed equally across communities
+  * measure disparity/access
+  * plot degree distribution
+
+* Experiment "3": equitable vaccine distribution
+  * specific graph: 12 communities, 1 is essential worker community; SBM described on the paper
+  * fairness calculation is essential workers over non-essential workers
+  * equal vaccination rate, look at resulting distributions
+    * measure direct harm
+    * measure collateral consequences
+  * vaccinate proportionally to degree distribution <- this is a proxy for direct harm
+    * measure direct harm
+    * measure collateral consequences
+  * vaccinate proportionally to "purely network-centric collateral consequences" <- what is the proxy for collateral consequence?
+    * measure direct harm
+    * measure collateral consequences
+
+* Graphs (each repeated n times):
+
+  1. SBM
+  2. LFR
+  3. SBM "more connected"
+  4. LFR "more connected"
+  5. Essential worker community
+  
+* Carlos works with Jade and Nasanbayar to make sure everyone can run things everywhere.
+  * Get graph files in the repo.
+  * Get Nasanbayar and Jade up and running with quarto.
+  
+
+# Supporting files
 
 * [utils.py](utils.py)
 * [exps.py](exps.py)

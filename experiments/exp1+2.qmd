@@ -12,17 +12,46 @@ format:
 from exps import *
 import numpy
 import matplotlib.pyplot as plt
+import networkx as nx
+import random
 
+def graph_to_edge_list(network):
+    result = []
+    for (node_id, neighbors) in enumerate(network):
+        for neighbor in neighbors:
+            result.append([node_id, neighbor])
+    return result
+    
+def write_output(G, filename):
+    with open(filename, 'w') as txt_file:
+        num_of_nodes = len(G.nodes)
+        directed = 0
+        txt_file.write("{}\t{}\n".format(num_of_nodes, directed))
+        for edge in G.edges:
+            txt_file.write("{}\t{}\n".format(edge[0], edge[1]))
+    
+def delete_nodes_from_network(network):
+    network = read_graph(network)
+    edge_list = graph_to_edge_list(network)
+    nodes_to_delete = set() # solve_this_later()
+    #for i in range(1000):
+    #    r = random.random()
+    #    if r < 0.1:
+    #        nodes_to_delete.add(i)
+    #for i in range(1000, 2000):
+    #    r = random.random()
+    #    if r < 0.3:
+    #        nodes_to_delete.add(i)
+    edge_list = list(
+        edge for edge in edge_list
+        if (edge[0] not in nodes_to_delete and
+            edge[1] not in nodes_to_delete))
+    g = nx.Graph(edge_list)
+    write_output(g, "output.txt")
+    return "output.txt"
+    
 def make_params(shrink_factor):
     return dict(
-        ##
-        network = "../data/reference_communities/Isolated_communities/SBM/Run_1/twocommunities_edgelist.txt",
-        ##
-        # graph params
-        n = 1000,
-        p1 = 0.01 / 2,
-        p2 = 0.01 / 2,
-        p_inter = 0.0001 / 2,
         # seeding params
         seed1 = 0.3,
         seed2 = 0.3,
@@ -30,22 +59,20 @@ def make_params(shrink_factor):
         alpha = 0.1,
         reprs = 100)
 
-def run_experiment_range(factors, f):
+def run_experiment_range(network, communities, factors, f):
     c1s = []
     c2s = []
     for factor in factors:
         params = make_params(factor)
-        n1 = int(params["n"] * (1 - factor))
-        n2 = int(params["n"] * (1 - 0.1))
-        params["n1"] = n1
-        params["n2"] = n2
-        graph = two_communities(params)
+        params["n"] = 1000
+        params["n1"] = 1000
+        params["n2"] = 1000
+        params["graph"] = delete_nodes_from_network(network)
         seeds = set_seeds(params)
-        params["graph"] = graph
         params["seeds"] = seeds
         ic_result = run_experiment(params)
         ic_result = f(ic_result, params)
-        c1, c2 = split_result_by_communities(ic_result, params)
+        c1, c2 = split_result_by_communities(ic_result, seeds, communities)
         c1s.append(numpy.mean(c1))
         c2s.append(numpy.mean(c2))
     return c1s, c2s
@@ -61,8 +88,8 @@ def min(r, params):
     r = collect_neighbor_data(r, params)
     return list(numpy.min(v) for v in r if len(v))
 factors = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]
-def plot_curve(f, label):
-    c1s, c2s = run_experiment_range(factors, f)
+def plot_curve(network, community, f, label):
+    c1s, c2s = run_experiment_range(network, community, factors, f)
     plt.figure()
     plt.plot(factors, c1s)
     plt.plot(factors, c2s)
@@ -75,23 +102,37 @@ def plot_curve(f, label):
 No transformation:
 
 ```{python}
-plot_curve(id, "prob")
+communities = [list(range(1000)), list(i + 1000 for i in range(1000))]
+network = "../data/reference_communities/Isolated_communities/SBM/Run_1/twocommunities_edgelist.txt"
+plot_curve(
+    network,
+    communities,
+    id, "prob")
 ```
 
 Square:
 
 ```{python}
-plot_curve(square, "squared prob")
+plot_curve(
+    network,
+    communities,
+    square, "squared prob")
 ```
 
 Mean of neighbors:
 
 ```{python}
-plot_curve(mean, "mean of neighbors' prob")
+plot_curve(
+    network,
+    communities,
+    mean, "mean of neighbors' prob")
 ```
 
 Min of neighbors:
 
 ```{python}
-plot_curve(min, "min of neighbors' prob")
+plot_curve(
+    network,
+    communities,
+    min, "min of neighbors' prob")
 ```
