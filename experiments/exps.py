@@ -33,10 +33,10 @@ def split_result_by_communities(experiment_result, seeds, communities):
     
 def plot_community_dists(result, params, communities):
     for result in split_result_by_communities(result, params, communities):
-        hist(result)
+        hist([i for i in result if i < 1.0])
     # hist(c1)
     # hist(c2)
-    
+
 def array_into_file(vec):
     n = temp_name()
     with open(n, "w") as f:
