@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 # generate simple community graphs, erdos-renyi within with some per-community p, erdos-renyi without with some overall p
 #
