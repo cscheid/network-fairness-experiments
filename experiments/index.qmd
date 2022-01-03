@@ -1,6 +1,5 @@
 ---
 title: "Network fairness experiments"
-format: html
 ---
 
 # Reports
@@ -10,7 +9,15 @@ format: html
 * [Experiment 3 (1)](exp3.qmd): (5.2) vary overseeding, look also at collateral dmg
 * [Experiment 4 (2)](exp4.qmd): (5.3) vary node removal, look also at collateral dmg
 
-## TODO
+## Files with figures
+
+* [fig 2](fig-2.qmd)
+
+## Collateral Consequences
+
+* [collateral consequences experiments](collateral.qmd).
+
+# TODO
 
 * Collateral consequences: run `ic` with `n=1` instead of `n=10000`,
   and change `min` and `mean` to run `ic` inside of them instead of
