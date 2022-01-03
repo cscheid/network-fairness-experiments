@@ -16,9 +16,10 @@ def hist(v, **kwargs):
         alpha = 0.3,
         bins = 20, 
         range = (0, 1), 
-        density=True)
-    for (k, v) in kwargs.items():
-        defaults[k] = v
+        density = True
+    )
+    for (k, value) in kwargs.items():
+        defaults[k] = value
     
     plt.hist(v, **defaults)
 

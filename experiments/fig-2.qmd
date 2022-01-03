@@ -22,8 +22,11 @@ for m in model:
             n = read_graph(f)
             degs = degrees(n)
             l.extend(degs)
+        print(l)
         plt.figure()
         hist(l, range=dr[m])
         plt.title(f'{m}, {c}')
+        plt.xlabel("Node degree")
+        plt.ylabel("Frequency")
         plt.show()
 ```
