@@ -10,7 +10,7 @@ format:
 
 (This is Section 5.3)
 
-Same as [experiment 3](experiment3.qmd), but we range the community shrinkage from 0.1 to 0.9.
+Same as [experiment 3](exp3.qmd), but we range the community shrinkage from 0.1 to 0.9.
 
 ```{python}
 from exps import *
@@ -40,10 +40,9 @@ def run_experiment_range(factors, f):
         n2 = int(params["n"] * (1 - 0.1))
         params["n1"] = n1
         params["n2"] = n2
-        graph = two_communities(params)
-        seeds = set_seeds(params)
-        params["graph"] = graph
-        params["seeds"] = seeds
+        params["communities"] = [list(range(0, n1)), list(range(n1, n1 + n2))]
+        params["graph"] = two_communities(params)
+        params["seeds"] = set_seeds(params)
         ic_result = run_experiment(params)
         ic_result = f(ic_result, params)
         c1, c2 = split_result_by_communities(ic_result, params)
@@ -57,10 +56,19 @@ def square(r, params):
     return numpy.array(r) ** 2
 def mean(r, params):
     r = collect_neighbor_data(r, params)
-    return list(numpy.mean(v) for v in r if len(v))
+    def mean_or_none(v):
+        if len(v) == 0:
+            return None
+        return numpy.mean(v)
+    return list(mean_or_none(v) for v in r)
 def min(r, params):
     r = collect_neighbor_data(r, params)
-    return list(numpy.min(v) for v in r if len(v))
+    def min_or_none(v):
+        if len(v) == 0:
+            return None
+        return numpy.min(v)
+    return list(min_or_none(v) for v in r)
+
 factors = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]
 def plot_curve(f, label):
     c1s, c2s = run_experiment_range(factors, f)
