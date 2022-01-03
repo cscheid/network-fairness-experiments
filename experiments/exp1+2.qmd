@@ -79,25 +79,6 @@ def run_experiment_range(network, communities, factors, f):
         c2s.append(numpy.mean(c2))
     return c1s, c2s
 
-def id(r, params):
-    return r
-def square(r, params):
-    return numpy.array(r) ** 2
-def mean(r, params):
-    r = collect_neighbor_data(r, params)
-    def mean_or_none(v):
-        if len(v) == 0:
-            return None
-        return numpy.mean(v)
-    return list(mean_or_none(v) for v in r)
-def min(r, params):
-    r = collect_neighbor_data(r, params)
-    def min_or_none(v):
-        if len(v) == 0:
-            return None
-        return numpy.min(v)
-    return list(min_or_none(v) for v in r)
-
 factors = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]
 def plot_curve(network, community, f, label):
     c1s, c2s = run_experiment_range(network, community, factors, f)
@@ -110,11 +91,15 @@ def plot_curve(network, community, f, label):
 
 ```
 
+## Collateral consequences functions
+
+Note, we'll have to fix the community calculate to create the right
+communities when using the different graphs. Right now we're using
+a specific network for which we know the community configuration.
+
 No transformation:
 
 ```{python}
-# Note, we'll have to fix the community calculate to create the right communities when
-# using the different graphs
 communities = [list(range(1000)), list(range(1000, 2000))]
 network = "../data/reference_communities/Isolated_communities/SBM/Run_1/twocommunities_edgelist.txt"
 plot_curve(

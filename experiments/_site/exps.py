@@ -10,14 +10,17 @@ def collect_neighbor_data(result, params):
     graph = read_graph(params["graph"])
     return list(list(result[i] for i in out_nodes) for out_nodes in graph)
 
-def hist(v):
-    kwargs = dict(
+def hist(v, **kwargs):
+    defaults = dict(
         histtype = "stepfilled", 
         alpha = 0.3,
         bins = 20, 
         range = (0, 1), 
         density=True)
-    plt.hist(v, **kwargs)
+    for (k, v) in kwargs.items():
+        defaults[k] = v
+    
+    plt.hist(v, **defaults)
 
 def split_result_by_communities(experiment_result, params):
     seeds = params["seeds"]
