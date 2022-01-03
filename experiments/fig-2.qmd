@@ -1,0 +1,29 @@
+---
+title: "Getting Figure 2 from the paper"
+---
+
+```{python}
+import glob
+from exps import *
+import matplotlib.pyplot as plt
+
+model = ["SBM", "LFR"]
+dr = { "SBM": (0, 40), "LFR": (0, 60) }
+communities = ["Isolated_communities", "More_connected_communities"]
+
+def degrees(network):
+    return list(len(l) for l in network)
+
+for m in model:
+    for c in communities:
+        files = glob.glob(f'../data/reference_communities/{c}/{m}/Run_*/twocommunities_edgelist.txt')
+        l = []
+        for f in files:
+            n = read_graph(f)
+            degs = degrees(n)
+            l.extend(degs)
+        plt.figure()
+        hist(l, range=dr[m])
+        plt.title(f'{m}, {c}')
+        plt.show()
+```

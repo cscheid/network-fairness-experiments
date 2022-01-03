@@ -1,4 +1,5 @@
 from utils import *
+import numpy
 
 import random
 from operator import itemgetter
@@ -30,6 +31,9 @@ def split_result_by_communities(experiment_result, params):
             v = experiment_result[node]
             if v == None:
                 continue
+            if v == -1:
+                # this comes from the c++ computation
+                continue
             community_result.append(v)
         result_list.append(community_result)
     return result_list
@@ -51,6 +55,9 @@ def community_graph(*args):
 
 def ic(graph_file_name, seeds, alpha, reps):
     return run_cmd(["../ic/ic", graph_file_name, seeds, str(alpha), str(reps)])
+
+def ic_fun(graph_file_name, seeds, alpha, reps, fun):
+    return run_cmd(["../ic/ic_fun", graph_file_name, seeds, str(alpha), str(reps), fun])
 
 def read_array(filename):
     with open(filename) as f:
@@ -76,12 +83,10 @@ def run_experiment(params):
     graph, seeds, alpha, reprs = itemgetter('graph', 'seeds', 'alpha', 'reprs')(params)
     return read_array(ic(graph, array_into_file(seeds), alpha, reprs))
 
-##
 def two_communities(params):
     n1 = params.get('n1', params["n"])
     n2 = params.get('n2', params["n"])
     return community_graph(params["p_inter"], n1, params["p1"], n2, params["p2"])
-##
 
 def read_graph(name):
     g = []
@@ -103,3 +108,25 @@ def read_graph(name):
                 g[t].append(f)
     return g
                 
+
+##############################################################################
+# collateral consquence functions
+
+def id(r, params):
+    return r
+def square(r, params):
+    return numpy.array(r) ** 2
+def mean(r, params):
+    r = collect_neighbor_data(r, params)
+    def mean_or_none(v):
+        if len(v) == 0:
+            return None
+        return numpy.mean(v)
+    return list(mean_or_none(v) for v in r)
+def min(r, params):
+    r = collect_neighbor_data(r, params)
+    def min_or_none(v):
+        if len(v) == 0:
+            return None
+        return numpy.min(v)
+    return list(min_or_none(v) for v in r)
