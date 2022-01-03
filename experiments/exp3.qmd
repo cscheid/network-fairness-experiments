@@ -46,25 +46,6 @@ def run_experiment_range(factors, f):
         c2s.append(numpy.mean(c2))
     return c1s, c2s
 
-def id(r, params):
-    return r
-def square(r, params):
-    return numpy.array(r) ** 2
-def mean(r, params):
-    r = collect_neighbor_data(r, params)
-    def mean_or_none(v):
-        if len(v) == 0:
-            return None
-        return numpy.mean(v)
-    return list(mean_or_none(v) for v in r)
-def min(r, params):
-    r = collect_neighbor_data(r, params)
-    def min_or_none(v):
-        if len(v) == 0:
-            return None
-        return numpy.min(v)
-    return list(min_or_none(v) for v in r)
-
 factors = [1,2,3,4,5,6,7,8,9]
 
 def plot_curve(f, label):
@@ -92,11 +73,11 @@ plot_curve(square, "squared prob")
 Mean of neighbors:
 
 ```{python}
-plot_curve(mean, "mean of neighbors' prob")
+plot_curve(f_mean, "mean of neighbors' prob")
 ```
 
 Min of neighbors:
 
 ```{python}
-plot_curve(min, "min of neighbors' prob")
+plot_curve(f_min, "min of neighbors' prob")
 ```

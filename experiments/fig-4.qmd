@@ -1,0 +1,106 @@
+---
+title: "Figure 4, etc"
+---
+
+Each result "row" is based off:
+
+1. A set of graphs (realizations of a particular graph model)
+2. A one-parameter family of experiments
+
+```{python}
+from exps import *
+import copy
+
+n_reps = 100 # set this to 10000 when generating final results!
+```
+
+
+# Experiment 1: Overseeding
+ 
+```{python}
+def configure_experiment_1(factors, graphs):
+    result = {}
+    params = dict(
+        n1 = 1000,
+        n2 = 1000)
+    for f in factors:
+        for g in graphs:
+            # n = read_graph(g)
+            params["seed1"] = f * 0.1
+            params["seed2"] = 0.1 
+            params["graph"] = g
+            params["seeds"] = set_seeds(params)
+            params["factor"] = f
+            params["graph_name"] = g
+            params["alpha"] = 0.1
+            params["reprs"] = n_reps
+            params["communities"] = [list(range(0, 1000)), list(range(1000, 2000))]
+            result[(f, g)] = copy.copy(params)
+    return result
+
+def run_experiment_batch(conf):
+    result = {}
+    for (k, params) in conf.items():
+        params = copy.copy(params)
+        params["ic_result"] = run_experiment(params)
+        result[k] = params
+    return result
+
+def figure_1(params):
+    c1, c2 = split_result_by_communities(params["ic_result"], params)
+    plt.figure()
+    hist(c1)
+    hist(c2)
+    plt.xlabel("Access probability")
+    plt.ylabel("Frequency")
+    plt.show()
+    
+def figure_2(conf):
+    x_values_1 = []
+    x_values_2 = []
+    y_values_1 = []
+    y_values_2 = []
+    for (k, v) in conf.items():
+        c1, c2 = split_result_by_communities(v["ic_result"], v)
+        c1 = numpy.mean(c1)
+        c2 = numpy.mean(c2)
+        x_values_1.append(v["factor"])
+        x_values_2.append(v["factor"])
+        y_values_1.append(c1)
+        y_values_2.append(c2)
+    plt.figure()
+    sns.lineplot(x = x_values_1, y = y_values_1, estimator = numpy.mean, ci = 95)
+    sns.lineplot(x = x_values_2, y = y_values_2, estimator = numpy.mean, ci = 95)
+    sns.scatterplot(x = x_values_1, y = y_values_1)
+    sns.scatterplot(x = x_values_2, y = y_values_2)
+    plt.xlabel("Factor")
+    plt.ylabel("Access")
+    plt.show()
+
+def figure_3(conf):
+    x_values = []
+    y_values = []
+    for (k, v) in conf.items():
+        c1, c2 = split_result_by_communities(v["ic_result"], v)
+        c1 = numpy.mean(c1)
+        c2 = numpy.mean(c2)
+        f = min(c1, c2) / max(c1, c2)
+        x_values.append(v["factor"])
+        y_values.append(f)
+    plt.figure()
+    sns.lineplot(x = x_values, y = y_values, estimator = numpy.mean, ci = 95)
+    sns.scatterplot(x = x_values, y = y_values)
+    plt.xlabel("Factor")
+    plt.ylabel("Fairness")
+    plt.show()
+
+full_params = configure_experiment_1(
+    list(range(1,10)),
+    graphs[0]["files"])
+
+k = (5, graphs[0]["files"][0])
+full_result = run_experiment_batch(full_params)
+figure_1(full_result[k])
+figure_2(full_result)
+figure_3(full_result)
+```

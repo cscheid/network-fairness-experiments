@@ -1,10 +1,12 @@
 from utils import *
 import numpy
+import glob
 
 import random
 from operator import itemgetter
 
 import matplotlib.pyplot as plt
+import seaborn as sns
 
 def collect_neighbor_data(result, params):
     graph = read_graph(params["graph"])
@@ -70,8 +72,8 @@ def read_array(filename):
 def set_seeds(params):
     seed1 = params["seed1"]
     seed2 = params["seed2"]
-    n1 = params.get('n1', params["n"])
-    n2 = params.get('n2', params["n"])
+    n1 = params.get('n1', params.get("n", 0))
+    n2 = params.get('n2', params.get("n", 0))
     seeds = []
     for i in range(n1):
         # seed community1 with probability seed1
@@ -88,8 +90,8 @@ def run_experiment(params):
     return read_array(ic(graph, array_into_file(seeds), alpha, reprs))
 
 def two_communities(params):
-    n1 = params.get('n1', params["n"])
-    n2 = params.get('n2', params["n"])
+    n1 = params.get('n1', params.get("n", 0))
+    n2 = params.get('n2', params.get("n", 0))
     return community_graph(params["p_inter"], n1, params["p1"], n2, params["p2"])
 
 def read_graph(name):
@@ -120,17 +122,33 @@ def id(r, params):
     return r
 def square(r, params):
     return numpy.array(r) ** 2
-def mean(r, params):
+def f_mean(r, params):
     r = collect_neighbor_data(r, params)
     def mean_or_none(v):
         if len(v) == 0:
             return None
         return numpy.mean(v)
     return list(mean_or_none(v) for v in r)
-def min(r, params):
+def f_min(r, params):
     r = collect_neighbor_data(r, params)
     def min_or_none(v):
         if len(v) == 0:
             return None
         return numpy.min(v)
     return list(min_or_none(v) for v in r)
+
+##############################################################################
+# Data access
+
+graphs = []
+model = ["SBM", "LFR"]
+communities = ["Isolated_communities", "More_connected_communities"]
+
+for m in model:
+    for c in communities:
+        files = glob.glob(f'../data/reference_communities/{c}/{m}/Run_*/twocommunities_edgelist.txt')
+        l = []
+        graphs.append(
+            dict(model=m,
+                 community_type=c,
+                 files=files))

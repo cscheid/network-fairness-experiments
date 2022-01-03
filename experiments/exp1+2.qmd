@@ -123,7 +123,7 @@ Mean of neighbors:
 plot_curve(
     network,
     communities,
-    mean, "mean of neighbors' prob")
+    f_mean, "mean of neighbors' prob")
 ```
 
 Min of neighbors:
@@ -132,5 +132,5 @@ Min of neighbors:
 plot_curve(
     network,
     communities,
-    min, "min of neighbors' prob")
+    f_min, "min of neighbors' prob")
 ```
