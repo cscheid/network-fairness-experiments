@@ -27,17 +27,16 @@ params = dict(
     seed2 = 0.1,
     # IC params
     alpha = 0.1,
-    reprs = 10000)
-communities = [list(range(0, 1000)), list(range(1000, 2000))]
-graph = two_communities(params)
-seeds = set_seeds(params)
+    reprs = 10000,
+    communities = [list(range(0, 1000)), list(range(1000, 2000))])
+
+params["graph"] = two_communities(params)
+params["seeds"] = set_seeds(params)
 ```
 
 We generate a community graph, seeds, run the IC computation as before.
 
 ```{python}
-params["graph"] = graph
-params["seeds"] = seeds
 
 ic_result = run_experiment(params)
 ```
@@ -50,7 +49,7 @@ import matplotlib.pyplot as plt
 ic_neighbor_result = collect_neighbor_data(ic_result, params)
 ic_neighbor_result = list(numpy.mean(lst) for lst in ic_neighbor_result)
 plt.figure()
-plot_community_dists(ic_neighbor_result, params, communities)
+plot_community_dists(ic_neighbor_result, params)
 plt.show()
 ```
 
@@ -60,6 +59,6 @@ Or the min:
 ic_neighbor_result = collect_neighbor_data(ic_result, params)
 ic_neighbor_result = list(numpy.min(lst) for lst in ic_neighbor_result)
 plt.figure()
-plot_community_dists(ic_neighbor_result, params, communities)
+plot_community_dists(ic_neighbor_result, params)
 plt.show()
 ```

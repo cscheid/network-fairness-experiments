@@ -7,7 +7,6 @@ import matplotlib.pyplot as plt
 
 def collect_neighbor_data(result, params):
     graph = read_graph(params["graph"])
-    seeds = set
     return list(list(result[i] for i in out_nodes) for out_nodes in graph)
 
 def hist(v):
@@ -19,23 +18,25 @@ def hist(v):
         density=True)
     plt.hist(v, **kwargs)
 
-def split_result_by_communities(experiment_result, seeds, communities):
+def split_result_by_communities(experiment_result, params):
+    seeds = params["seeds"]
+    communities = params["communities"]
     result_list = []
     for community in communities:
         community_result = []
-        print(len(experiment_result))
         for node in community:
             if node in seeds:
                 continue
-            community_result.append(experiment_result[node])
+            v = experiment_result[node]
+            if v == None:
+                continue
+            community_result.append(v)
         result_list.append(community_result)
     return result_list
     
-def plot_community_dists(result, params, communities):
-    for result in split_result_by_communities(result, params, communities):
-        hist([i for i in result if i < 1.0])
-    # hist(c1)
-    # hist(c2)
+def plot_community_dists(result, params):
+    for result in split_result_by_communities(result, params):
+        hist(result)
 
 def array_into_file(vec):
     n = temp_name()
@@ -56,7 +57,8 @@ def read_array(filename):
         return list(float(v) for v in f.readline().split())
         
 def set_seeds(params):
-    seed1, seed2 = itemgetter('seed1', 'seed2')(params)
+    seed1 = params["seed1"]
+    seed2 = params["seed2"]
     n1 = params.get('n1', params["n"])
     n2 = params.get('n2', params["n"])
     seeds = []

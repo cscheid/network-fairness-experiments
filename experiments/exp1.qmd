@@ -31,24 +31,27 @@ params = dict(
     seed2 = 0.1,
     # IC params
     alpha = 0.1,
-    reprs = 10000)
+    reprs = 10000,
+    communities = [list(range(0, 1000)), list(range(1000, 2000))]
+    )
     
-communities = [list(range(0, 1000)), list(range(1000, 2000))]
-
-graph = two_communities(params)
-seeds = set_seeds(params)
 ```
 
-We generate a community graph, seeds, run the IC computation, and plot the distribution of access probabilities across
-the two communities:
+We generate a community graph and seeds:
 
 ```{python}
-params["graph"] = graph
-params["seeds"] = seeds
-
-ic_result = run_experiment(params)
-
+params["graph"] = two_communities(params)
+params["seeds"] = set_seeds(params)
 ```
+
+Then, we run the IC computation:
+
+```{python}
+ic_result = run_experiment(params)
+```
+
+Finally, we plot the distribution of access probabilities across the
+communities:
 
 # Basic
 
@@ -56,7 +59,7 @@ Access probs:
 ```{python}
 #| echo: false
 plt.figure()
-plot_community_dists(ic_result, params, communities)
+plot_community_dists(ic_result, params)
 plt.show()
 ```
 
@@ -66,7 +69,7 @@ Access probs:
 ```{python}
 #| echo: false
 plt.figure()
-plot_community_dists(list(v ** 2 for v in ic_result), params, communities)
+plot_community_dists(list(v ** 2 for v in ic_result), params)
 plt.show()
 ```
 
