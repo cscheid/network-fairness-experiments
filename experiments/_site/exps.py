@@ -19,17 +19,23 @@ def hist(v):
         density=True)
     plt.hist(v, **kwargs)
 
-def split_result_by_communities(result, params):
-    seeds = set(params["seeds"])
-    n = params.get("n1", params.get("n", None))
-    c1 = list(x for (i, x) in enumerate(result[:n]) if i not in seeds and x is not None)
-    c2 = list(x for (i, x) in enumerate(result[n:]) if (n + i) not in seeds and x is not None)
-    return c1, c2
+def split_result_by_communities(experiment_result, seeds, communities):
+    result_list = []
+    for community in communities:
+        community_result = []
+        print(len(experiment_result))
+        for node in community:
+            if node in seeds:
+                continue
+            community_result.append(experiment_result[node])
+        result_list.append(community_result)
+    return result_list
     
-def plot_community_dists(result, params):
-    c1, c2 = split_result_by_communities(result, params)
-    hist(c1)
-    hist(c2)
+def plot_community_dists(result, params, communities):
+    for result in split_result_by_communities(result, params, communities):
+        hist(result)
+    # hist(c1)
+    # hist(c2)
     
 def array_into_file(vec):
     n = temp_name()
@@ -68,16 +74,24 @@ def run_experiment(params):
     graph, seeds, alpha, reprs = itemgetter('graph', 'seeds', 'alpha', 'reprs')(params)
     return read_array(ic(graph, array_into_file(seeds), alpha, reprs))
 
+##
 def two_communities(params):
     n1 = params.get('n1', params["n"])
     n2 = params.get('n2', params["n"])
     return community_graph(params["p_inter"], n1, params["p1"], n2, params["p2"])
+##
 
 def read_graph(name):
     g = []
     with open(name, "r") as f:
-        n = int(f.readline())
-        d = int(f.readline())
+        l = f.readline()
+        if '\t' in l:
+            l = l.split('\t')
+            n = int(l[0])
+            d = int(l[1])
+        else:
+            n = int(l)
+            d = int(f.readline())
         for i in range(n):
             g.append([])
         for l in f:

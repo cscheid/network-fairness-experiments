@@ -100,27 +100,92 @@
     "collapse-after": 2,
     "panel-placement": "start",
     "type": "textbox",
-    "limit": 20
+    "limit": 20,
+    "language": {
+      "search-no-results-text": "No results",
+      "search-matching-documents-text": "matching documents",
+      "search-copy-link-title": "Copy link to search",
+      "search-hide-matches-text": "Hide additional matches",
+      "search-more-match-text": "more match in this document",
+      "search-more-matches-text": "more matches in this document",
+      "search-clear-button-title": "Clear",
+      "search-detached-cancel-button-title": "Cancel",
+      "search-submit-button-title": "Submit"
+    }
   }</script>
 </head>
-<body>
+<body class="fullcontent">
 <div id="quarto-search-results"></div>
- <!-- /navbar/sidebar -->
-<div class="container-fluid quarto-container d-flex flex-column page-layout-article" id="quarto-content">
-<div class="row flex-fill">
-  <div class="col mx-auto col-sm-12 col-md-11 col-lg-9 px-lg-4">
-<main>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+<!-- main -->
+<main class="content">
 <header id="title-block-header">
 <div class="quarto-title-block"><div><h1 class="title">Network fairness experiments</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </header>
-<p>Reports:</p>
+<section id="reports" class="level1">
+<h1>Reports</h1>
 <ul>
-<li><a href="./exp1.html">Experiment 1</a>: some overseeding, collateral dmg as “square”</li>
-<li><a href="./exp2.html">Experiment 2</a>: some overseeding, collateral dmg as average or min over neighbors</li>
-<li><a href="./exp3.html">Experiment 3</a>: (5.2) vary overseeding, look also at collateral dmg</li>
-<li><a href="./exp4.html">Experiment 4</a>: (5.3) vary node removal, look also at collateral dmg</li>
+<li><a href="./exp1.html">Experiment 1 (1)</a>: some overseeding, collateral dmg as “square”</li>
+<li><a href="./exp2.html">Experiment 2 (1)</a>: some overseeding, collateral dmg as average or min over neighbors</li>
+<li><a href="./exp3.html">Experiment 3 (1)</a>: (5.2) vary overseeding, look also at collateral dmg</li>
+<li><a href="./exp4.html">Experiment 4 (2)</a>: (5.3) vary node removal, look also at collateral dmg</li>
 </ul>
-<p>Supporting files:</p>
+<section id="todo" class="level2">
+<h2 class="anchored" data-anchor-id="todo">TODO</h2>
+<ul>
+<li><p>Collateral consequences: run <code>ic</code> with <code>n=1</code> instead of <code>n=10000</code>, and change <code>min</code> and <code>mean</code> to run <code>ic</code> inside of them instead of taking a result</p>
+<ul>
+<li>in addition to the “default” aggregation, also allow each node to get a random univariate [0,1] that scales the value before the aggregation</li>
+</ul></li>
+<li><p>Make fairness graphs for each experiment</p></li>
+<li><p>Experiment 1+2:</p>
+<ul>
+<li>remove nodes based on mean of IC calculations (experiment 1)</li>
+<li>then seed equally across communities</li>
+<li>measure disparity/access</li>
+<li>plot degree distribution</li>
+</ul></li>
+<li><p>Experiment “3”: equitable vaccine distribution</p>
+<ul>
+<li>specific graph: 12 communities, 1 is essential worker community; SBM described on the paper</li>
+<li>fairness calculation is essential workers over non-essential workers</li>
+<li>equal vaccination rate, look at resulting distributions
+<ul>
+<li>measure direct harm</li>
+<li>measure collateral consequences</li>
+</ul></li>
+<li>vaccinate proportionally to degree distribution &lt;- this is a proxy for direct harm
+<ul>
+<li>measure direct harm</li>
+<li>measure collateral consequences</li>
+</ul></li>
+<li>vaccinate proportionally to “purely network-centric collateral consequences” &lt;- what is the proxy for collateral consequence?
+<ul>
+<li>measure direct harm</li>
+<li>measure collateral consequences</li>
+</ul></li>
+</ul></li>
+<li><p>Graphs (each repeated n times):</p>
+<ol type="1">
+<li>SBM</li>
+<li>LFR</li>
+<li>SBM “more connected”</li>
+<li>LFR “more connected”</li>
+<li>Essential worker community</li>
+</ol></li>
+<li><p>Carlos works with Jade and Nasanbayar to make sure everyone can run things everywhere.</p>
+<ul>
+<li>Get graph files in the repo.</li>
+<li>Get Nasanbayar and Jade up and running with quarto.</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="supporting-files" class="level1">
+<h1>Supporting files</h1>
 <ul>
 <li><a href="utils.py">utils.py</a></li>
 <li><a href="exps.py">exps.py</a></li>
@@ -128,24 +193,70 @@
 
 
 <!-- -->
-<div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title anchored" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div><div class="modal-body"><div class="">
+<div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title anchored" id="quarto-embedded-source-code-modal-label" data-anchor-id="supporting-files">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
 <div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Network fairness experiments"</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> html</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>Reports:</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu"># Reports</span></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span><span class="co">[</span><span class="ot">Experiment 1</span><span class="co">](exp1.qmd)</span>: some overseeding, collateral dmg as "square"</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span><span class="co">[</span><span class="ot">Experiment 2</span><span class="co">](exp2.qmd)</span>: some overseeding, collateral dmg as average or min over neighbors</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span><span class="co">[</span><span class="ot">Experiment 3</span><span class="co">](exp3.qmd)</span>: (5.2) vary overseeding, look also at collateral dmg</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span><span class="co">[</span><span class="ot">Experiment 4</span><span class="co">](exp4.qmd)</span>: (5.3) vary node removal, look also at collateral dmg</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span><span class="co">[</span><span class="ot">Experiment 1 (1)</span><span class="co">](exp1.qmd)</span>: some overseeding, collateral dmg as "square"</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span><span class="co">[</span><span class="ot">Experiment 2 (1)</span><span class="co">](exp2.qmd)</span>: some overseeding, collateral dmg as average or min over neighbors</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span><span class="co">[</span><span class="ot">Experiment 3 (1)</span><span class="co">](exp3.qmd)</span>: (5.2) vary overseeding, look also at collateral dmg</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span><span class="co">[</span><span class="ot">Experiment 4 (2)</span><span class="co">](exp4.qmd)</span>: (5.3) vary node removal, look also at collateral dmg</span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>Supporting files:</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">## TODO</span></span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span><span class="co">[</span><span class="ot">utils.py</span><span class="co">](utils.py)</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span><span class="co">[</span><span class="ot">exps.py</span><span class="co">](exps.py)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Collateral consequences: run <span class="in">`ic`</span> with <span class="in">`n=1`</span> instead of <span class="in">`n=10000`</span>,</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  and change <span class="in">`min`</span> and <span class="in">`mean`</span> to run <span class="in">`ic`</span> inside of them instead of</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  taking a result</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="ss">  * </span>in addition to the "default" aggregation, also allow each node to</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    get a random univariate <span class="co">[</span><span class="ot">0,1</span><span class="co">]</span> that scales the value before the</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    aggregation</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Make fairness graphs for each experiment</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Experiment 1+2: </span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="ss">  * </span>remove nodes based on mean of IC calculations (experiment 1)</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="ss">  * </span>then seed equally across communities</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="ss">  * </span>measure disparity/access</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="ss">  * </span>plot degree distribution</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Experiment "3": equitable vaccine distribution</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="ss">  * </span>specific graph: 12 communities, 1 is essential worker community; SBM described on the paper</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="ss">  * </span>fairness calculation is essential workers over non-essential workers</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="ss">  * </span>equal vaccination rate, look at resulting distributions</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="ss">    * </span>measure direct harm</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="ss">    * </span>measure collateral consequences</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="ss">  * </span>vaccinate proportionally to degree distribution &lt;- this is a proxy for direct harm</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="ss">    * </span>measure direct harm</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="ss">    * </span>measure collateral consequences</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="ss">  * </span>vaccinate proportionally to "purely network-centric collateral consequences" &lt;- what is the proxy for collateral consequence?</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a><span class="ss">    * </span>measure direct harm</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a><span class="ss">    * </span>measure collateral consequences</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Graphs (each repeated n times):</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a><span class="ss">  1. </span>SBM</span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a><span class="ss">  2. </span>LFR</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a><span class="ss">  3. </span>SBM "more connected"</span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a><span class="ss">  4. </span>LFR "more connected"</span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a><span class="ss">  5. </span>Essential worker community</span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Carlos works with Jade and Nasanbayar to make sure everyone can run things everywhere.</span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a><span class="ss">  * </span>Get graph files in the repo.</span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a><span class="ss">  * </span>Get Nasanbayar and Jade up and running with quarto.</span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a><span class="fu"># Supporting files</span></span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span><span class="co">[</span><span class="ot">utils.py</span><span class="co">](utils.py)</span></span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span><span class="co">[</span><span class="ot">exps.py</span><span class="co">](exps.py)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
+</section>
+</main> <!-- /main -->
 <script type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const icon = "";
@@ -224,17 +335,21 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     showAllCode.addEventListener("click", toggleCodeHandler(true));
   }
   function tippyHover(el, contentFn) {
-    window.tippy(el, {
+    const config = {
       allowHTML: true,
       content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
       placement: 'bottom-start'
-    }); 
+    };
+    window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
   for (var i=0; i<noterefs.length; i++) {
@@ -268,16 +383,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
-</main>
-<div class="page-navigation ">
+<nav class="page-navigation">
   <div class="nav-page nav-page-previous">
   </div>
   <div class="nav-page nav-page-next">
   </div>
-</div>
-</div> <!-- /main column -->
-</div> <!-- /row -->
-</div> <!-- /container fluid -->
+</nav>
+</div> <!-- /content -->
 
 
 </body></html>
