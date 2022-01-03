@@ -34,6 +34,8 @@ def delete_nodes_from_network(network):
     network = read_graph(network)
     edge_list = graph_to_edge_list(network)
     nodes_to_delete = set() # solve_this_later()
+    # NB we're deleting all edges instead of the nodes so that
+    # the communities stay the same
     #for i in range(1000):
     #    r = random.random()
     #    if r < 0.1:
@@ -68,11 +70,11 @@ def run_experiment_range(network, communities, factors, f):
         params["n1"] = 1000
         params["n2"] = 1000
         params["graph"] = delete_nodes_from_network(network)
-        seeds = set_seeds(params)
-        params["seeds"] = seeds
+        params["communities"] = communities
+        params["seeds"] = set_seeds(params)
         ic_result = run_experiment(params)
         ic_result = f(ic_result, params)
-        c1, c2 = split_result_by_communities(ic_result, seeds, communities)
+        c1, c2 = split_result_by_communities(ic_result, params)
         c1s.append(numpy.mean(c1))
         c2s.append(numpy.mean(c2))
     return c1s, c2s
@@ -83,10 +85,19 @@ def square(r, params):
     return numpy.array(r) ** 2
 def mean(r, params):
     r = collect_neighbor_data(r, params)
-    return list(numpy.mean(v) for v in r if len(v))
+    def mean_or_none(v):
+        if len(v) == 0:
+            return None
+        return numpy.mean(v)
+    return list(mean_or_none(v) for v in r)
 def min(r, params):
     r = collect_neighbor_data(r, params)
-    return list(numpy.min(v) for v in r if len(v))
+    def min_or_none(v):
+        if len(v) == 0:
+            return None
+        return numpy.min(v)
+    return list(min_or_none(v) for v in r)
+
 factors = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]
 def plot_curve(network, community, f, label):
     c1s, c2s = run_experiment_range(network, community, factors, f)
@@ -102,7 +113,9 @@ def plot_curve(network, community, f, label):
 No transformation:
 
 ```{python}
-communities = [list(range(1000)), list(i + 1000 for i in range(1000))]
+# Note, we'll have to fix the community calculate to create the right communities when
+# using the different graphs
+communities = [list(range(1000)), list(range(1000, 2000))]
 network = "../data/reference_communities/Isolated_communities/SBM/Run_1/twocommunities_edgelist.txt"
 plot_curve(
     network,
