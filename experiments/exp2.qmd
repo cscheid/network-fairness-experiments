@@ -28,7 +28,7 @@ params = dict(
     # IC params
     alpha = 0.1,
     reprs = 10000)
-
+communities = [list(range(0, 1000)), list(range(1000, 2000))]
 graph = two_communities(params)
 seeds = set_seeds(params)
 ```
@@ -50,7 +50,7 @@ import matplotlib.pyplot as plt
 ic_neighbor_result = collect_neighbor_data(ic_result, params)
 ic_neighbor_result = list(numpy.mean(lst) for lst in ic_neighbor_result)
 plt.figure()
-plot_community_dists(ic_neighbor_result, params)
+plot_community_dists(ic_neighbor_result, params, communities)
 plt.show()
 ```
 
@@ -60,6 +60,6 @@ Or the min:
 ic_neighbor_result = collect_neighbor_data(ic_result, params)
 ic_neighbor_result = list(numpy.min(lst) for lst in ic_neighbor_result)
 plt.figure()
-plot_community_dists(ic_neighbor_result, params)
+plot_community_dists(ic_neighbor_result, params, communities)
 plt.show()
 ```

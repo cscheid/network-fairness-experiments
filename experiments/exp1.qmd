@@ -32,6 +32,8 @@ params = dict(
     # IC params
     alpha = 0.1,
     reprs = 10000)
+    
+communities = [list(range(0, 1000)), list(range(1000, 2000))]
 
 graph = two_communities(params)
 seeds = set_seeds(params)
@@ -54,7 +56,7 @@ Access probs:
 ```{python}
 #| echo: false
 plt.figure()
-plot_community_dists(ic_result, params)
+plot_community_dists(ic_result, params, communities)
 plt.show()
 ```
 
@@ -64,7 +66,7 @@ Access probs:
 ```{python}
 #| echo: false
 plt.figure()
-plot_community_dists(list(v ** 2 for v in ic_result), params)
+plot_community_dists(list(v ** 2 for v in ic_result), params, communities)
 plt.show()
 ```
 

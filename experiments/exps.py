@@ -23,6 +23,7 @@ def split_result_by_communities(experiment_result, seeds, communities):
     result_list = []
     for community in communities:
         community_result = []
+        print(len(experiment_result))
         for node in community:
             if node in seeds:
                 continue
@@ -30,10 +31,11 @@ def split_result_by_communities(experiment_result, seeds, communities):
         result_list.append(community_result)
     return result_list
     
-def plot_community_dists(result, params):
-    c1, c2 = split_result_by_communities(result, params)
-    hist(c1)
-    hist(c2)
+def plot_community_dists(result, params, communities):
+    for result in split_result_by_communities(result, params, communities):
+        hist(result)
+    # hist(c1)
+    # hist(c2)
     
 def array_into_file(vec):
     n = temp_name()
