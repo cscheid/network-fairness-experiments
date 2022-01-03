@@ -138,6 +138,39 @@ def f_min(r, params):
     return list(min_or_none(v) for v in r)
 
 ##############################################################################
+# graph IO
+
+def graph_to_edge_list(network):
+    result = []
+    for (node_id, neighbors) in enumerate(network):
+        for neighbor in neighbors:
+            result.append([node_id, neighbor])
+    return result
+    
+def write_output(G, filename):
+    with open(filename, 'w') as txt_file:
+        num_of_nodes = len(G.nodes)
+        directed = 0
+        txt_file.write("{}\t{}\n".format(num_of_nodes, directed))
+        for edge in G.edges:
+            txt_file.write("{}\t{}\n".format(edge[0], edge[1]))
+
+def write_graph(network, filename):
+    with open(filename, 'w') as txt_file:
+        num_of_nodes = len(network)
+        directed = 0
+        txt_file.write("{}\t{}\n".format(num_of_nodes, directed))
+        for f, l in enumerate(network):
+            for t in l:
+                txt_file.write("{}\t{}\n".format(f, t))
+    
+# def network_into_file(network):
+#     n = temp_name(".txt")
+#     g = nx.Graph(graph_to_edge_list(network))
+#     write_output(g, n)
+#     return n
+
+##############################################################################
 # Data access
 
 graphs = []

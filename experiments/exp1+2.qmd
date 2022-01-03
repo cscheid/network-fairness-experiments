@@ -14,22 +14,7 @@ import numpy
 import matplotlib.pyplot as plt
 import networkx as nx
 import random
-
-def graph_to_edge_list(network):
-    result = []
-    for (node_id, neighbors) in enumerate(network):
-        for neighbor in neighbors:
-            result.append([node_id, neighbor])
-    return result
-    
-def write_output(G, filename):
-    with open(filename, 'w') as txt_file:
-        num_of_nodes = len(G.nodes)
-        directed = 0
-        txt_file.write("{}\t{}\n".format(num_of_nodes, directed))
-        for edge in G.edges:
-            txt_file.write("{}\t{}\n".format(edge[0], edge[1]))
-    
+   
 def delete_nodes_from_network(network):
     network = read_graph(network)
     edge_list = graph_to_edge_list(network)
