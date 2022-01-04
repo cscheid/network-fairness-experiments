@@ -199,18 +199,15 @@
 <span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>    plt.legend(<span class="st">""</span>)</span>
 <span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a>    plt.show()</span>
 <span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a>k <span class="op">=</span> (<span class="dv">5</span>, graphs[<span class="dv">0</span>][<span class="st">"files"</span>][<span class="dv">0</span>])</span>
-<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> run_and_plot(conf):</span>
-<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a>    r <span class="op">=</span> run_experiment_batch(conf)</span>
-<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a>    figure_1(r[k])</span>
-<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a>    figure_2(r)</span>
-<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a>    figure_3(r)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> run_and_plot(conf, k):</span>
+<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a>    r <span class="op">=</span> run_experiment_batch(conf)</span>
+<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a>    figure_1(r[k])</span>
+<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a>    figure_2(r)</span>
+<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a>    figure_3(r)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </section>
 <section id="experiment-1-overseeding" class="level1">
 <h1>Experiment 1: Overseeding</h1>
-<div class="cell" data-execution_count="2">
 <p></p><details>
 <summary>Code</summary><p></p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> configure_experiment_1(factors, graphs):</span>
@@ -231,261 +228,359 @@
 <span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>            params[<span class="st">"reprs"</span>] <span class="op">=</span> n_reps</span>
 <span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>            params[<span class="st">"communities"</span>] <span class="op">=</span> [<span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">0</span>, <span class="dv">1000</span>)), <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">1000</span>, <span class="dv">2000</span>))]</span>
 <span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>            result[(f, g)] <span class="op">=</span> copy.copy(params)</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> result</span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>full_params_1 <span class="op">=</span> configure_experiment_1(</span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">1</span>,<span class="dv">10</span>)),</span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    graphs[<span class="dv">0</span>][<span class="st">"files"</span>])</span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>run_and_plot(full_params_1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> result</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output-display">
-<p><img src="fig-4_files/figure-html/cell-3-output-1.png" width="576" height="422"></p>
-</div>
-<div class="cell-output-display">
-<p><img src="fig-4_files/figure-html/cell-3-output-2.png" width="597" height="422"></p>
-</div>
-<div class="cell-output-display">
-<p><img src="fig-4_files/figure-html/cell-3-output-3.png" width="589" height="422"></p>
-</div>
-</div>
-</section>
-<section id="experiment-2-deletions" class="level1">
-<h1>Experiment 2: Deletions</h1>
+<section id="sbm-isolated-communities" class="level2">
+<h2 class="anchored" data-anchor-id="sbm-isolated-communities">SBM, Isolated Communities</h2>
 <div class="cell" data-execution_count="3">
 <p></p><details>
 <summary>Code</summary><p></p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> delete_nodes_from_network(network, nodes_to_delete):</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    network <span class="op">=</span> read_graph(network)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    edge_list <span class="op">=</span> graph_to_edge_list(network)</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> n <span class="kw">in</span> nodes_to_delete:</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        network[n] <span class="op">=</span> []</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    network <span class="op">=</span> <span class="bu">list</span>(<span class="bu">list</span>(e <span class="cf">for</span> e <span class="kw">in</span> l <span class="cf">if</span> e <span class="kw">not</span> <span class="kw">in</span> nodes_to_delete)</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> l <span class="kw">in</span> network)</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> temp_name(<span class="st">".txt"</span>)</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    write_graph(network, n)</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> n</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> configure_experiment_2(factors, graphs):</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    result <span class="op">=</span> {}</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    params <span class="op">=</span> <span class="bu">dict</span>(</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>        n <span class="op">=</span> <span class="dv">1000</span>,</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>        n1 <span class="op">=</span> <span class="dv">1000</span>,</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>        n2 <span class="op">=</span> <span class="dv">1000</span>)</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> f <span class="kw">in</span> factors:</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> g <span class="kw">in</span> graphs:</span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>            <span class="co"># n = read_graph(g)</span></span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>            params[<span class="st">"seed1"</span>] <span class="op">=</span> <span class="fl">0.1</span></span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>            params[<span class="st">"seed2"</span>] <span class="op">=</span> <span class="fl">0.1</span></span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>            nodes_to_delete <span class="op">=</span> <span class="bu">set</span>(set_seeds(<span class="bu">dict</span>(</span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>                n1 <span class="op">=</span> <span class="dv">1000</span>,</span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>                n2 <span class="op">=</span> <span class="dv">1000</span>,</span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>                seed1 <span class="op">=</span> <span class="fl">0.1</span>,</span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>                seed2 <span class="op">=</span> <span class="fl">0.1</span> <span class="op">*</span> f)))</span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>            params[<span class="st">"nodes_to_delete"</span>] <span class="op">=</span> nodes_to_delete</span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>            network <span class="op">=</span> delete_nodes_from_network(g, nodes_to_delete)</span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>            params[<span class="st">"graph"</span>] <span class="op">=</span> network</span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>            params[<span class="st">"seeds"</span>] <span class="op">=</span> set_seeds(params)</span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>            params[<span class="st">"factor"</span>] <span class="op">=</span> f</span>
-<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>            params[<span class="st">"graph_name"</span>] <span class="op">=</span> g</span>
-<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>            params[<span class="st">"alpha"</span>] <span class="op">=</span> <span class="fl">0.1</span></span>
-<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>            params[<span class="st">"reprs"</span>] <span class="op">=</span> n_reps</span>
-<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>            params[<span class="st">"communities"</span>] <span class="op">=</span> [<span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">0</span>, <span class="dv">1000</span>)), <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">1000</span>, <span class="dv">2000</span>))]</span>
-<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>            result[(f, g)] <span class="op">=</span> copy.copy(params)</span>
-<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> result</span>
-<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a><span class="co">#full_params_2 = configure_experiment_2(</span></span>
-<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a><span class="co">#    [5], [graphs[0]["files"][0]])</span></span>
-<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>full_params_2 <span class="op">=</span> configure_experiment_2(</span>
-<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>    <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">1</span>,<span class="dv">10</span>)),</span>
-<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>    graphs[<span class="dv">0</span>][<span class="st">"files"</span>])</span>
-<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>run_and_plot(full_params_2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>k <span class="op">=</span> (<span class="dv">5</span>, graphs[<span class="dv">0</span>][<span class="st">"files"</span>][<span class="dv">0</span>])</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>run_and_plot(configure_experiment_1(</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">1</span>,<span class="dv">10</span>)),</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    graphs[<span class="dv">0</span>][<span class="st">"files"</span>]), k)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="fig-4_files/figure-html/cell-4-output-1.png" width="589" height="422"></p>
 </div>
 <div class="cell-output-display">
-<p><img src="fig-4_files/figure-html/cell-4-output-2.png" width="589" height="422"></p>
+<p><img src="fig-4_files/figure-html/cell-4-output-2.png" width="597" height="422"></p>
 </div>
 <div class="cell-output-display">
 <p><img src="fig-4_files/figure-html/cell-4-output-3.png" width="589" height="422"></p>
+</div>
+</div>
+</section>
+<section id="sbm-connected-communities" class="level2">
+<h2 class="anchored" data-anchor-id="sbm-connected-communities">SBM, Connected Communities</h2>
+<div class="cell" data-execution_count="4">
+<p></p><details>
+<summary>Code</summary><p></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>k <span class="op">=</span> (<span class="dv">5</span>, graphs[<span class="dv">1</span>][<span class="st">"files"</span>][<span class="dv">0</span>])</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>run_and_plot(configure_experiment_1(</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">1</span>,<span class="dv">10</span>)),</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    graphs[<span class="dv">1</span>][<span class="st">"files"</span>]), k)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="fig-4_files/figure-html/cell-5-output-1.png" width="576" height="422"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="fig-4_files/figure-html/cell-5-output-2.png" width="597" height="422"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="fig-4_files/figure-html/cell-5-output-3.png" width="597" height="422"></p>
+</div>
+</div>
+</section>
+<section id="fcr-isolated-communities" class="level2">
+<h2 class="anchored" data-anchor-id="fcr-isolated-communities">FCR, Isolated Communities</h2>
+<div class="cell" data-execution_count="5">
+<p></p><details>
+<summary>Code</summary><p></p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>k <span class="op">=</span> (<span class="dv">5</span>, graphs[<span class="dv">2</span>][<span class="st">"files"</span>][<span class="dv">0</span>])</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>run_and_plot(configure_experiment_1(</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">1</span>,<span class="dv">10</span>)),</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    graphs[<span class="dv">2</span>][<span class="st">"files"</span>]), k)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="fig-4_files/figure-html/cell-6-output-1.png" width="589" height="422"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="fig-4_files/figure-html/cell-6-output-2.png" width="597" height="422"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="fig-4_files/figure-html/cell-6-output-3.png" width="597" height="423"></p>
+</div>
+</div>
+</section>
+<section id="fcr-connected-communities" class="level2">
+<h2 class="anchored" data-anchor-id="fcr-connected-communities">FCR, Connected Communities</h2>
+<div class="cell" data-execution_count="6">
+<p></p><details>
+<summary>Code</summary><p></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>k <span class="op">=</span> (<span class="dv">5</span>, graphs[<span class="dv">3</span>][<span class="st">"files"</span>][<span class="dv">0</span>])</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>run_and_plot(configure_experiment_1(</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">1</span>,<span class="dv">10</span>)),</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    graphs[<span class="dv">3</span>][<span class="st">"files"</span>]), k)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="fig-4_files/figure-html/cell-7-output-1.png" width="589" height="422"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="fig-4_files/figure-html/cell-7-output-2.png" width="597" height="422"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="fig-4_files/figure-html/cell-7-output-3.png" width="597" height="422"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="experiment-2-deletions" class="level1">
+<h1>Experiment 2: Deletions</h1>
+<div class="cell" data-execution_count="7">
+<p></p><details>
+<summary>Code</summary><p></p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> delete_nodes_from_network(network, nodes_to_delete):</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    network <span class="op">=</span> read_graph(network)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    edge_list <span class="op">=</span> graph_to_edge_list(network)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> n <span class="kw">in</span> nodes_to_delete:</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>        network[n] <span class="op">=</span> []</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    network <span class="op">=</span> <span class="bu">list</span>(<span class="bu">list</span>(e <span class="cf">for</span> e <span class="kw">in</span> l <span class="cf">if</span> e <span class="kw">not</span> <span class="kw">in</span> nodes_to_delete)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> l <span class="kw">in</span> network)</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> temp_name(<span class="st">".txt"</span>)</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    write_graph(network, n)</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> n</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> configure_experiment_2(factors, graphs):</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    result <span class="op">=</span> {}</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    params <span class="op">=</span> <span class="bu">dict</span>(</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>        n <span class="op">=</span> <span class="dv">1000</span>,</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>        n1 <span class="op">=</span> <span class="dv">1000</span>,</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>        n2 <span class="op">=</span> <span class="dv">1000</span>)</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> f <span class="kw">in</span> factors:</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> g <span class="kw">in</span> graphs:</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>            <span class="co"># n = read_graph(g)</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>            params[<span class="st">"seed1"</span>] <span class="op">=</span> <span class="fl">0.1</span></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>            params[<span class="st">"seed2"</span>] <span class="op">=</span> <span class="fl">0.1</span></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>            nodes_to_delete <span class="op">=</span> <span class="bu">set</span>(set_seeds(<span class="bu">dict</span>(</span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>                n1 <span class="op">=</span> <span class="dv">1000</span>,</span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>                n2 <span class="op">=</span> <span class="dv">1000</span>,</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>                seed1 <span class="op">=</span> <span class="fl">0.1</span>,</span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>                seed2 <span class="op">=</span> <span class="fl">0.1</span> <span class="op">*</span> f)))</span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>            params[<span class="st">"nodes_to_delete"</span>] <span class="op">=</span> nodes_to_delete</span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>            network <span class="op">=</span> delete_nodes_from_network(g, nodes_to_delete)</span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>            params[<span class="st">"graph"</span>] <span class="op">=</span> network</span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>            params[<span class="st">"seeds"</span>] <span class="op">=</span> set_seeds(params)</span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>            params[<span class="st">"factor"</span>] <span class="op">=</span> f</span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>            params[<span class="st">"graph_name"</span>] <span class="op">=</span> g</span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>            params[<span class="st">"alpha"</span>] <span class="op">=</span> <span class="fl">0.1</span></span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>            params[<span class="st">"reprs"</span>] <span class="op">=</span> n_reps</span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>            params[<span class="st">"communities"</span>] <span class="op">=</span> [<span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">0</span>, <span class="dv">1000</span>)), <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">1000</span>, <span class="dv">2000</span>))]</span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a>            result[(f, g)] <span class="op">=</span> copy.copy(params)</span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> result</span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a><span class="co">#full_params_2 = configure_experiment_2(</span></span>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a><span class="co">#    [5], [graphs[0]["files"][0]])</span></span>
+<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a>full_params_2 <span class="op">=</span> configure_experiment_2(</span>
+<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a>    <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">1</span>,<span class="dv">10</span>)),</span>
+<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a>    graphs[<span class="dv">0</span>][<span class="st">"files"</span>])</span>
+<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a>k <span class="op">=</span> (<span class="dv">5</span>, graphs[<span class="dv">0</span>][<span class="st">"files"</span>][<span class="dv">0</span>])</span>
+<span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a>run_and_plot(full_params_2, k)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="fig-4_files/figure-html/cell-8-output-1.png" width="589" height="422"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="fig-4_files/figure-html/cell-8-output-2.png" width="589" height="422"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="fig-4_files/figure-html/cell-8-output-3.png" width="589" height="422"></p>
 </div>
 </div>
 
 
 <!-- -->
 <div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title anchored" id="quarto-embedded-source-code-modal-label" data-anchor-id="experiment-2-deletions">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb4" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Figure 4, etc"</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>Each result "row" is based off:</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>A set of graphs (realizations of a particular graph model)</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>A one-parameter family of experiments</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="fu"># Preamble</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> exps <span class="im">import</span> <span class="op">*</span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> copy</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>n_reps <span class="op">=</span> <span class="dv">100</span> <span class="co"># set this to 10000 when generating final results!</span></span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> run_experiment_batch(conf):</span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>    result <span class="op">=</span> {}</span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (k, params) <span class="kw">in</span> conf.items():</span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>        params <span class="op">=</span> copy.copy(params)</span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>        params[<span class="st">"ic_result"</span>] <span class="op">=</span> run_experiment(params)</span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>        result[k] <span class="op">=</span> params</span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> result</span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> figure_1(params):</span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>    c1, c2 <span class="op">=</span> split_result_by_communities(params[<span class="st">"ic_result"</span>], params)</span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>    plt.figure()</span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>    <span class="co"># </span><span class="al">FIXME</span><span class="co"> THESE CHECKS SHOULD BE ON NODES TO DELETE</span></span>
-<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>    hist(<span class="bu">list</span>(x <span class="cf">for</span> x <span class="kw">in</span> c1 <span class="cf">if</span> x <span class="op">&gt;</span> <span class="dv">0</span>)) <span class="co"># not in params.get("nodes_to_delete", [])))</span></span>
-<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>    hist(<span class="bu">list</span>(x <span class="cf">for</span> x <span class="kw">in</span> c2 <span class="cf">if</span> x <span class="op">&gt;</span> <span class="dv">0</span>)) <span class="co"># not in params.get("nodes_to_delete", [])))</span></span>
-<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>    plt.xlabel(<span class="st">"Access probability"</span>)</span>
-<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>    plt.ylabel(<span class="st">"Frequency"</span>)</span>
-<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>    plt.show()</span>
-<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> figure_2(conf):</span>
-<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>    x_values_1 <span class="op">=</span> []</span>
-<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>    x_values_2 <span class="op">=</span> []</span>
-<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>    y_values_1 <span class="op">=</span> []</span>
-<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>    y_values_2 <span class="op">=</span> []</span>
-<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (k, v) <span class="kw">in</span> conf.items():</span>
-<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>        c1, c2 <span class="op">=</span> split_result_by_communities(v[<span class="st">"ic_result"</span>], v)</span>
-<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>        <span class="co"># </span><span class="al">FIXME</span><span class="co"> THESE CHECKS SHOULD BE ON NODES TO DELETE</span></span>
-<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>        c1 <span class="op">=</span> numpy.mean(<span class="bu">list</span>(x <span class="cf">for</span> x <span class="kw">in</span> c1 <span class="cf">if</span> x <span class="op">&gt;</span> <span class="dv">0</span>))</span>
-<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>        c2 <span class="op">=</span> numpy.mean(<span class="bu">list</span>(x <span class="cf">for</span> x <span class="kw">in</span> c2 <span class="cf">if</span> x <span class="op">&gt;</span> <span class="dv">0</span>))</span>
-<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>        x_values_1.append(v[<span class="st">"factor"</span>])</span>
-<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a>        x_values_2.append(v[<span class="st">"factor"</span>])</span>
-<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a>        y_values_1.append(c1)</span>
-<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a>        y_values_2.append(c2)</span>
-<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a>    plt.figure()</span>
-<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a>    sns.lineplot(x <span class="op">=</span> x_values_1, y <span class="op">=</span> y_values_1, estimator <span class="op">=</span> numpy.mean, ci <span class="op">=</span> <span class="dv">95</span>)</span>
-<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a>    sns.lineplot(x <span class="op">=</span> x_values_2, y <span class="op">=</span> y_values_2, estimator <span class="op">=</span> numpy.mean, ci <span class="op">=</span> <span class="dv">95</span>)</span>
-<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a>    sns.scatterplot(x <span class="op">=</span> x_values_1, y <span class="op">=</span> y_values_1)</span>
-<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a>    sns.scatterplot(x <span class="op">=</span> x_values_2, y <span class="op">=</span> y_values_2)</span>
-<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a>    plt.xlabel(<span class="st">"Factor"</span>)</span>
-<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a>    plt.ylabel(<span class="st">"Access"</span>)</span>
-<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a>    plt.show()</span>
-<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> figure_3(conf):</span>
-<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a>    x_values <span class="op">=</span> []</span>
-<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a>    y_values <span class="op">=</span> []</span>
-<span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (k, v) <span class="kw">in</span> conf.items():</span>
-<span id="cb4-66"><a href="#cb4-66" aria-hidden="true" tabindex="-1"></a>        c1, c2 <span class="op">=</span> split_result_by_communities(v[<span class="st">"ic_result"</span>], v)</span>
-<span id="cb4-67"><a href="#cb4-67" aria-hidden="true" tabindex="-1"></a>        c1 <span class="op">=</span> numpy.mean(c1)</span>
-<span id="cb4-68"><a href="#cb4-68" aria-hidden="true" tabindex="-1"></a>        c2 <span class="op">=</span> numpy.mean(c2)</span>
-<span id="cb4-69"><a href="#cb4-69" aria-hidden="true" tabindex="-1"></a>        f <span class="op">=</span> <span class="bu">min</span>(c1, c2) <span class="op">/</span> <span class="bu">max</span>(c1, c2)</span>
-<span id="cb4-70"><a href="#cb4-70" aria-hidden="true" tabindex="-1"></a>        x_values.append(v[<span class="st">"factor"</span>])</span>
-<span id="cb4-71"><a href="#cb4-71" aria-hidden="true" tabindex="-1"></a>        y_values.append(f)</span>
-<span id="cb4-72"><a href="#cb4-72" aria-hidden="true" tabindex="-1"></a>    plt.figure()</span>
-<span id="cb4-73"><a href="#cb4-73" aria-hidden="true" tabindex="-1"></a>    sns.lineplot(x <span class="op">=</span> x_values, y <span class="op">=</span> y_values, estimator <span class="op">=</span> numpy.mean, ci <span class="op">=</span> <span class="dv">95</span>)</span>
-<span id="cb4-74"><a href="#cb4-74" aria-hidden="true" tabindex="-1"></a>    sns.scatterplot(x <span class="op">=</span> x_values, y <span class="op">=</span> y_values)</span>
-<span id="cb4-75"><a href="#cb4-75" aria-hidden="true" tabindex="-1"></a>    plt.xlabel(<span class="st">"Factor"</span>)</span>
-<span id="cb4-76"><a href="#cb4-76" aria-hidden="true" tabindex="-1"></a>    plt.ylabel(<span class="st">"Fairness"</span>)</span>
-<span id="cb4-77"><a href="#cb4-77" aria-hidden="true" tabindex="-1"></a>    plt.legend(<span class="st">""</span>)</span>
-<span id="cb4-78"><a href="#cb4-78" aria-hidden="true" tabindex="-1"></a>    plt.show()</span>
-<span id="cb4-79"><a href="#cb4-79" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-80"><a href="#cb4-80" aria-hidden="true" tabindex="-1"></a>k <span class="op">=</span> (<span class="dv">5</span>, graphs[<span class="dv">0</span>][<span class="st">"files"</span>][<span class="dv">0</span>])</span>
-<span id="cb4-81"><a href="#cb4-81" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-82"><a href="#cb4-82" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> run_and_plot(conf):</span>
-<span id="cb4-83"><a href="#cb4-83" aria-hidden="true" tabindex="-1"></a>    r <span class="op">=</span> run_experiment_batch(conf)</span>
-<span id="cb4-84"><a href="#cb4-84" aria-hidden="true" tabindex="-1"></a>    figure_1(r[k])</span>
-<span id="cb4-85"><a href="#cb4-85" aria-hidden="true" tabindex="-1"></a>    figure_2(r)</span>
-<span id="cb4-86"><a href="#cb4-86" aria-hidden="true" tabindex="-1"></a>    figure_3(r)</span>
-<span id="cb4-87"><a href="#cb4-87" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb4-88"><a href="#cb4-88" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-89"><a href="#cb4-89" aria-hidden="true" tabindex="-1"></a><span class="fu"># Experiment 1: Overseeding</span></span>
-<span id="cb4-90"><a href="#cb4-90" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb4-93"><a href="#cb4-93" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb4-94"><a href="#cb4-94" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> configure_experiment_1(factors, graphs):</span>
-<span id="cb4-95"><a href="#cb4-95" aria-hidden="true" tabindex="-1"></a>    result <span class="op">=</span> {}</span>
-<span id="cb4-96"><a href="#cb4-96" aria-hidden="true" tabindex="-1"></a>    params <span class="op">=</span> <span class="bu">dict</span>(</span>
-<span id="cb4-97"><a href="#cb4-97" aria-hidden="true" tabindex="-1"></a>        n1 <span class="op">=</span> <span class="dv">1000</span>,</span>
-<span id="cb4-98"><a href="#cb4-98" aria-hidden="true" tabindex="-1"></a>        n2 <span class="op">=</span> <span class="dv">1000</span>)</span>
-<span id="cb4-99"><a href="#cb4-99" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> f <span class="kw">in</span> factors:</span>
-<span id="cb4-100"><a href="#cb4-100" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> g <span class="kw">in</span> graphs:</span>
-<span id="cb4-101"><a href="#cb4-101" aria-hidden="true" tabindex="-1"></a>            <span class="co"># n = read_graph(g)</span></span>
-<span id="cb4-102"><a href="#cb4-102" aria-hidden="true" tabindex="-1"></a>            params[<span class="st">"seed1"</span>] <span class="op">=</span> f <span class="op">*</span> <span class="fl">0.1</span></span>
-<span id="cb4-103"><a href="#cb4-103" aria-hidden="true" tabindex="-1"></a>            params[<span class="st">"seed2"</span>] <span class="op">=</span> <span class="fl">0.1</span> </span>
-<span id="cb4-104"><a href="#cb4-104" aria-hidden="true" tabindex="-1"></a>            params[<span class="st">"graph"</span>] <span class="op">=</span> g</span>
-<span id="cb4-105"><a href="#cb4-105" aria-hidden="true" tabindex="-1"></a>            params[<span class="st">"seeds"</span>] <span class="op">=</span> set_seeds(params)</span>
-<span id="cb4-106"><a href="#cb4-106" aria-hidden="true" tabindex="-1"></a>            params[<span class="st">"factor"</span>] <span class="op">=</span> f</span>
-<span id="cb4-107"><a href="#cb4-107" aria-hidden="true" tabindex="-1"></a>            params[<span class="st">"graph_name"</span>] <span class="op">=</span> g</span>
-<span id="cb4-108"><a href="#cb4-108" aria-hidden="true" tabindex="-1"></a>            params[<span class="st">"alpha"</span>] <span class="op">=</span> <span class="fl">0.1</span></span>
-<span id="cb4-109"><a href="#cb4-109" aria-hidden="true" tabindex="-1"></a>            params[<span class="st">"reprs"</span>] <span class="op">=</span> n_reps</span>
-<span id="cb4-110"><a href="#cb4-110" aria-hidden="true" tabindex="-1"></a>            params[<span class="st">"communities"</span>] <span class="op">=</span> [<span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">0</span>, <span class="dv">1000</span>)), <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">1000</span>, <span class="dv">2000</span>))]</span>
-<span id="cb4-111"><a href="#cb4-111" aria-hidden="true" tabindex="-1"></a>            result[(f, g)] <span class="op">=</span> copy.copy(params)</span>
-<span id="cb4-112"><a href="#cb4-112" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> result</span>
-<span id="cb4-113"><a href="#cb4-113" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-114"><a href="#cb4-114" aria-hidden="true" tabindex="-1"></a>full_params_1 <span class="op">=</span> configure_experiment_1(</span>
-<span id="cb4-115"><a href="#cb4-115" aria-hidden="true" tabindex="-1"></a>    <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">1</span>,<span class="dv">10</span>)),</span>
-<span id="cb4-116"><a href="#cb4-116" aria-hidden="true" tabindex="-1"></a>    graphs[<span class="dv">0</span>][<span class="st">"files"</span>])</span>
-<span id="cb4-117"><a href="#cb4-117" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-118"><a href="#cb4-118" aria-hidden="true" tabindex="-1"></a>run_and_plot(full_params_1)</span>
-<span id="cb4-119"><a href="#cb4-119" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb4-120"><a href="#cb4-120" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-121"><a href="#cb4-121" aria-hidden="true" tabindex="-1"></a><span class="fu"># Experiment 2: Deletions</span></span>
-<span id="cb4-122"><a href="#cb4-122" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-125"><a href="#cb4-125" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb4-126"><a href="#cb4-126" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
-<span id="cb4-127"><a href="#cb4-127" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-128"><a href="#cb4-128" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> delete_nodes_from_network(network, nodes_to_delete):</span>
-<span id="cb4-129"><a href="#cb4-129" aria-hidden="true" tabindex="-1"></a>    network <span class="op">=</span> read_graph(network)</span>
-<span id="cb4-130"><a href="#cb4-130" aria-hidden="true" tabindex="-1"></a>    edge_list <span class="op">=</span> graph_to_edge_list(network)</span>
-<span id="cb4-131"><a href="#cb4-131" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> n <span class="kw">in</span> nodes_to_delete:</span>
-<span id="cb4-132"><a href="#cb4-132" aria-hidden="true" tabindex="-1"></a>        network[n] <span class="op">=</span> []</span>
-<span id="cb4-133"><a href="#cb4-133" aria-hidden="true" tabindex="-1"></a>    network <span class="op">=</span> <span class="bu">list</span>(<span class="bu">list</span>(e <span class="cf">for</span> e <span class="kw">in</span> l <span class="cf">if</span> e <span class="kw">not</span> <span class="kw">in</span> nodes_to_delete)</span>
-<span id="cb4-134"><a href="#cb4-134" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> l <span class="kw">in</span> network)</span>
-<span id="cb4-135"><a href="#cb4-135" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> temp_name(<span class="st">".txt"</span>)</span>
-<span id="cb4-136"><a href="#cb4-136" aria-hidden="true" tabindex="-1"></a>    write_graph(network, n)</span>
-<span id="cb4-137"><a href="#cb4-137" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> n</span>
-<span id="cb4-138"><a href="#cb4-138" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-139"><a href="#cb4-139" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> configure_experiment_2(factors, graphs):</span>
-<span id="cb4-140"><a href="#cb4-140" aria-hidden="true" tabindex="-1"></a>    result <span class="op">=</span> {}</span>
-<span id="cb4-141"><a href="#cb4-141" aria-hidden="true" tabindex="-1"></a>    params <span class="op">=</span> <span class="bu">dict</span>(</span>
-<span id="cb4-142"><a href="#cb4-142" aria-hidden="true" tabindex="-1"></a>        n <span class="op">=</span> <span class="dv">1000</span>,</span>
-<span id="cb4-143"><a href="#cb4-143" aria-hidden="true" tabindex="-1"></a>        n1 <span class="op">=</span> <span class="dv">1000</span>,</span>
-<span id="cb4-144"><a href="#cb4-144" aria-hidden="true" tabindex="-1"></a>        n2 <span class="op">=</span> <span class="dv">1000</span>)</span>
-<span id="cb4-145"><a href="#cb4-145" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> f <span class="kw">in</span> factors:</span>
-<span id="cb4-146"><a href="#cb4-146" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> g <span class="kw">in</span> graphs:</span>
-<span id="cb4-147"><a href="#cb4-147" aria-hidden="true" tabindex="-1"></a>            <span class="co"># n = read_graph(g)</span></span>
-<span id="cb4-148"><a href="#cb4-148" aria-hidden="true" tabindex="-1"></a>            params[<span class="st">"seed1"</span>] <span class="op">=</span> <span class="fl">0.1</span></span>
-<span id="cb4-149"><a href="#cb4-149" aria-hidden="true" tabindex="-1"></a>            params[<span class="st">"seed2"</span>] <span class="op">=</span> <span class="fl">0.1</span></span>
-<span id="cb4-150"><a href="#cb4-150" aria-hidden="true" tabindex="-1"></a>            nodes_to_delete <span class="op">=</span> <span class="bu">set</span>(set_seeds(<span class="bu">dict</span>(</span>
-<span id="cb4-151"><a href="#cb4-151" aria-hidden="true" tabindex="-1"></a>                n1 <span class="op">=</span> <span class="dv">1000</span>,</span>
-<span id="cb4-152"><a href="#cb4-152" aria-hidden="true" tabindex="-1"></a>                n2 <span class="op">=</span> <span class="dv">1000</span>,</span>
-<span id="cb4-153"><a href="#cb4-153" aria-hidden="true" tabindex="-1"></a>                seed1 <span class="op">=</span> <span class="fl">0.1</span>,</span>
-<span id="cb4-154"><a href="#cb4-154" aria-hidden="true" tabindex="-1"></a>                seed2 <span class="op">=</span> <span class="fl">0.1</span> <span class="op">*</span> f)))</span>
-<span id="cb4-155"><a href="#cb4-155" aria-hidden="true" tabindex="-1"></a>            params[<span class="st">"nodes_to_delete"</span>] <span class="op">=</span> nodes_to_delete</span>
-<span id="cb4-156"><a href="#cb4-156" aria-hidden="true" tabindex="-1"></a>            network <span class="op">=</span> delete_nodes_from_network(g, nodes_to_delete)</span>
-<span id="cb4-157"><a href="#cb4-157" aria-hidden="true" tabindex="-1"></a>            params[<span class="st">"graph"</span>] <span class="op">=</span> network</span>
-<span id="cb4-158"><a href="#cb4-158" aria-hidden="true" tabindex="-1"></a>            params[<span class="st">"seeds"</span>] <span class="op">=</span> set_seeds(params)</span>
-<span id="cb4-159"><a href="#cb4-159" aria-hidden="true" tabindex="-1"></a>            params[<span class="st">"factor"</span>] <span class="op">=</span> f</span>
-<span id="cb4-160"><a href="#cb4-160" aria-hidden="true" tabindex="-1"></a>            params[<span class="st">"graph_name"</span>] <span class="op">=</span> g</span>
-<span id="cb4-161"><a href="#cb4-161" aria-hidden="true" tabindex="-1"></a>            params[<span class="st">"alpha"</span>] <span class="op">=</span> <span class="fl">0.1</span></span>
-<span id="cb4-162"><a href="#cb4-162" aria-hidden="true" tabindex="-1"></a>            params[<span class="st">"reprs"</span>] <span class="op">=</span> n_reps</span>
-<span id="cb4-163"><a href="#cb4-163" aria-hidden="true" tabindex="-1"></a>            params[<span class="st">"communities"</span>] <span class="op">=</span> [<span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">0</span>, <span class="dv">1000</span>)), <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">1000</span>, <span class="dv">2000</span>))]</span>
-<span id="cb4-164"><a href="#cb4-164" aria-hidden="true" tabindex="-1"></a>            result[(f, g)] <span class="op">=</span> copy.copy(params)</span>
-<span id="cb4-165"><a href="#cb4-165" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> result</span>
-<span id="cb4-166"><a href="#cb4-166" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-167"><a href="#cb4-167" aria-hidden="true" tabindex="-1"></a><span class="co">#full_params_2 = configure_experiment_2(</span></span>
-<span id="cb4-168"><a href="#cb4-168" aria-hidden="true" tabindex="-1"></a><span class="co">#    [5], [graphs[0]["files"][0]])</span></span>
-<span id="cb4-169"><a href="#cb4-169" aria-hidden="true" tabindex="-1"></a>full_params_2 <span class="op">=</span> configure_experiment_2(</span>
-<span id="cb4-170"><a href="#cb4-170" aria-hidden="true" tabindex="-1"></a>    <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">1</span>,<span class="dv">10</span>)),</span>
-<span id="cb4-171"><a href="#cb4-171" aria-hidden="true" tabindex="-1"></a>    graphs[<span class="dv">0</span>][<span class="st">"files"</span>])</span>
-<span id="cb4-172"><a href="#cb4-172" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-173"><a href="#cb4-173" aria-hidden="true" tabindex="-1"></a>run_and_plot(full_params_2)</span>
-<span id="cb4-174"><a href="#cb4-174" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<div class="sourceCode" id="cb8" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Figure 4, etc"</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>Each result "row" is based off:</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>A set of graphs (realizations of a particular graph model)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>A one-parameter family of experiments</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="fu"># Preamble</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> exps <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> copy</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>n_reps <span class="op">=</span> <span class="dv">100</span> <span class="co"># set this to 10000 when generating final results!</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> run_experiment_batch(conf):</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>    result <span class="op">=</span> {}</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (k, params) <span class="kw">in</span> conf.items():</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>        params <span class="op">=</span> copy.copy(params)</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>        params[<span class="st">"ic_result"</span>] <span class="op">=</span> run_experiment(params)</span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>        result[k] <span class="op">=</span> params</span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> result</span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> figure_1(params):</span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>    c1, c2 <span class="op">=</span> split_result_by_communities(params[<span class="st">"ic_result"</span>], params)</span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>    plt.figure()</span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>    <span class="co"># </span><span class="al">FIXME</span><span class="co"> THESE CHECKS SHOULD BE ON NODES TO DELETE</span></span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>    hist(<span class="bu">list</span>(x <span class="cf">for</span> x <span class="kw">in</span> c1 <span class="cf">if</span> x <span class="op">&gt;</span> <span class="dv">0</span>)) <span class="co"># not in params.get("nodes_to_delete", [])))</span></span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>    hist(<span class="bu">list</span>(x <span class="cf">for</span> x <span class="kw">in</span> c2 <span class="cf">if</span> x <span class="op">&gt;</span> <span class="dv">0</span>)) <span class="co"># not in params.get("nodes_to_delete", [])))</span></span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a>    plt.xlabel(<span class="st">"Access probability"</span>)</span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a>    plt.ylabel(<span class="st">"Frequency"</span>)</span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a>    plt.show()</span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> figure_2(conf):</span>
+<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a>    x_values_1 <span class="op">=</span> []</span>
+<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a>    x_values_2 <span class="op">=</span> []</span>
+<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a>    y_values_1 <span class="op">=</span> []</span>
+<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a>    y_values_2 <span class="op">=</span> []</span>
+<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (k, v) <span class="kw">in</span> conf.items():</span>
+<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a>        c1, c2 <span class="op">=</span> split_result_by_communities(v[<span class="st">"ic_result"</span>], v)</span>
+<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a>        <span class="co"># </span><span class="al">FIXME</span><span class="co"> THESE CHECKS SHOULD BE ON NODES TO DELETE</span></span>
+<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a>        c1 <span class="op">=</span> numpy.mean(<span class="bu">list</span>(x <span class="cf">for</span> x <span class="kw">in</span> c1 <span class="cf">if</span> x <span class="op">&gt;</span> <span class="dv">0</span>))</span>
+<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a>        c2 <span class="op">=</span> numpy.mean(<span class="bu">list</span>(x <span class="cf">for</span> x <span class="kw">in</span> c2 <span class="cf">if</span> x <span class="op">&gt;</span> <span class="dv">0</span>))</span>
+<span id="cb8-49"><a href="#cb8-49" aria-hidden="true" tabindex="-1"></a>        x_values_1.append(v[<span class="st">"factor"</span>])</span>
+<span id="cb8-50"><a href="#cb8-50" aria-hidden="true" tabindex="-1"></a>        x_values_2.append(v[<span class="st">"factor"</span>])</span>
+<span id="cb8-51"><a href="#cb8-51" aria-hidden="true" tabindex="-1"></a>        y_values_1.append(c1)</span>
+<span id="cb8-52"><a href="#cb8-52" aria-hidden="true" tabindex="-1"></a>        y_values_2.append(c2)</span>
+<span id="cb8-53"><a href="#cb8-53" aria-hidden="true" tabindex="-1"></a>    plt.figure()</span>
+<span id="cb8-54"><a href="#cb8-54" aria-hidden="true" tabindex="-1"></a>    sns.lineplot(x <span class="op">=</span> x_values_1, y <span class="op">=</span> y_values_1, estimator <span class="op">=</span> numpy.mean, ci <span class="op">=</span> <span class="dv">95</span>)</span>
+<span id="cb8-55"><a href="#cb8-55" aria-hidden="true" tabindex="-1"></a>    sns.lineplot(x <span class="op">=</span> x_values_2, y <span class="op">=</span> y_values_2, estimator <span class="op">=</span> numpy.mean, ci <span class="op">=</span> <span class="dv">95</span>)</span>
+<span id="cb8-56"><a href="#cb8-56" aria-hidden="true" tabindex="-1"></a>    sns.scatterplot(x <span class="op">=</span> x_values_1, y <span class="op">=</span> y_values_1)</span>
+<span id="cb8-57"><a href="#cb8-57" aria-hidden="true" tabindex="-1"></a>    sns.scatterplot(x <span class="op">=</span> x_values_2, y <span class="op">=</span> y_values_2)</span>
+<span id="cb8-58"><a href="#cb8-58" aria-hidden="true" tabindex="-1"></a>    plt.xlabel(<span class="st">"Factor"</span>)</span>
+<span id="cb8-59"><a href="#cb8-59" aria-hidden="true" tabindex="-1"></a>    plt.ylabel(<span class="st">"Access"</span>)</span>
+<span id="cb8-60"><a href="#cb8-60" aria-hidden="true" tabindex="-1"></a>    plt.show()</span>
+<span id="cb8-61"><a href="#cb8-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-62"><a href="#cb8-62" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> figure_3(conf):</span>
+<span id="cb8-63"><a href="#cb8-63" aria-hidden="true" tabindex="-1"></a>    x_values <span class="op">=</span> []</span>
+<span id="cb8-64"><a href="#cb8-64" aria-hidden="true" tabindex="-1"></a>    y_values <span class="op">=</span> []</span>
+<span id="cb8-65"><a href="#cb8-65" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (k, v) <span class="kw">in</span> conf.items():</span>
+<span id="cb8-66"><a href="#cb8-66" aria-hidden="true" tabindex="-1"></a>        c1, c2 <span class="op">=</span> split_result_by_communities(v[<span class="st">"ic_result"</span>], v)</span>
+<span id="cb8-67"><a href="#cb8-67" aria-hidden="true" tabindex="-1"></a>        c1 <span class="op">=</span> numpy.mean(c1)</span>
+<span id="cb8-68"><a href="#cb8-68" aria-hidden="true" tabindex="-1"></a>        c2 <span class="op">=</span> numpy.mean(c2)</span>
+<span id="cb8-69"><a href="#cb8-69" aria-hidden="true" tabindex="-1"></a>        f <span class="op">=</span> <span class="bu">min</span>(c1, c2) <span class="op">/</span> <span class="bu">max</span>(c1, c2)</span>
+<span id="cb8-70"><a href="#cb8-70" aria-hidden="true" tabindex="-1"></a>        x_values.append(v[<span class="st">"factor"</span>])</span>
+<span id="cb8-71"><a href="#cb8-71" aria-hidden="true" tabindex="-1"></a>        y_values.append(f)</span>
+<span id="cb8-72"><a href="#cb8-72" aria-hidden="true" tabindex="-1"></a>    plt.figure()</span>
+<span id="cb8-73"><a href="#cb8-73" aria-hidden="true" tabindex="-1"></a>    sns.lineplot(x <span class="op">=</span> x_values, y <span class="op">=</span> y_values, estimator <span class="op">=</span> numpy.mean, ci <span class="op">=</span> <span class="dv">95</span>)</span>
+<span id="cb8-74"><a href="#cb8-74" aria-hidden="true" tabindex="-1"></a>    sns.scatterplot(x <span class="op">=</span> x_values, y <span class="op">=</span> y_values)</span>
+<span id="cb8-75"><a href="#cb8-75" aria-hidden="true" tabindex="-1"></a>    plt.xlabel(<span class="st">"Factor"</span>)</span>
+<span id="cb8-76"><a href="#cb8-76" aria-hidden="true" tabindex="-1"></a>    plt.ylabel(<span class="st">"Fairness"</span>)</span>
+<span id="cb8-77"><a href="#cb8-77" aria-hidden="true" tabindex="-1"></a>    plt.legend(<span class="st">""</span>)</span>
+<span id="cb8-78"><a href="#cb8-78" aria-hidden="true" tabindex="-1"></a>    plt.show()</span>
+<span id="cb8-79"><a href="#cb8-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-80"><a href="#cb8-80" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> run_and_plot(conf, k):</span>
+<span id="cb8-81"><a href="#cb8-81" aria-hidden="true" tabindex="-1"></a>    r <span class="op">=</span> run_experiment_batch(conf)</span>
+<span id="cb8-82"><a href="#cb8-82" aria-hidden="true" tabindex="-1"></a>    figure_1(r[k])</span>
+<span id="cb8-83"><a href="#cb8-83" aria-hidden="true" tabindex="-1"></a>    figure_2(r)</span>
+<span id="cb8-84"><a href="#cb8-84" aria-hidden="true" tabindex="-1"></a>    figure_3(r)</span>
+<span id="cb8-85"><a href="#cb8-85" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-86"><a href="#cb8-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-87"><a href="#cb8-87" aria-hidden="true" tabindex="-1"></a><span class="fu"># Experiment 1: Overseeding</span></span>
+<span id="cb8-88"><a href="#cb8-88" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb8-91"><a href="#cb8-91" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb8-92"><a href="#cb8-92" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> configure_experiment_1(factors, graphs):</span>
+<span id="cb8-93"><a href="#cb8-93" aria-hidden="true" tabindex="-1"></a>    result <span class="op">=</span> {}</span>
+<span id="cb8-94"><a href="#cb8-94" aria-hidden="true" tabindex="-1"></a>    params <span class="op">=</span> <span class="bu">dict</span>(</span>
+<span id="cb8-95"><a href="#cb8-95" aria-hidden="true" tabindex="-1"></a>        n1 <span class="op">=</span> <span class="dv">1000</span>,</span>
+<span id="cb8-96"><a href="#cb8-96" aria-hidden="true" tabindex="-1"></a>        n2 <span class="op">=</span> <span class="dv">1000</span>)</span>
+<span id="cb8-97"><a href="#cb8-97" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> f <span class="kw">in</span> factors:</span>
+<span id="cb8-98"><a href="#cb8-98" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> g <span class="kw">in</span> graphs:</span>
+<span id="cb8-99"><a href="#cb8-99" aria-hidden="true" tabindex="-1"></a>            <span class="co"># n = read_graph(g)</span></span>
+<span id="cb8-100"><a href="#cb8-100" aria-hidden="true" tabindex="-1"></a>            params[<span class="st">"seed1"</span>] <span class="op">=</span> f <span class="op">*</span> <span class="fl">0.1</span></span>
+<span id="cb8-101"><a href="#cb8-101" aria-hidden="true" tabindex="-1"></a>            params[<span class="st">"seed2"</span>] <span class="op">=</span> <span class="fl">0.1</span> </span>
+<span id="cb8-102"><a href="#cb8-102" aria-hidden="true" tabindex="-1"></a>            params[<span class="st">"graph"</span>] <span class="op">=</span> g</span>
+<span id="cb8-103"><a href="#cb8-103" aria-hidden="true" tabindex="-1"></a>            params[<span class="st">"seeds"</span>] <span class="op">=</span> set_seeds(params)</span>
+<span id="cb8-104"><a href="#cb8-104" aria-hidden="true" tabindex="-1"></a>            params[<span class="st">"factor"</span>] <span class="op">=</span> f</span>
+<span id="cb8-105"><a href="#cb8-105" aria-hidden="true" tabindex="-1"></a>            params[<span class="st">"graph_name"</span>] <span class="op">=</span> g</span>
+<span id="cb8-106"><a href="#cb8-106" aria-hidden="true" tabindex="-1"></a>            params[<span class="st">"alpha"</span>] <span class="op">=</span> <span class="fl">0.1</span></span>
+<span id="cb8-107"><a href="#cb8-107" aria-hidden="true" tabindex="-1"></a>            params[<span class="st">"reprs"</span>] <span class="op">=</span> n_reps</span>
+<span id="cb8-108"><a href="#cb8-108" aria-hidden="true" tabindex="-1"></a>            params[<span class="st">"communities"</span>] <span class="op">=</span> [<span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">0</span>, <span class="dv">1000</span>)), <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">1000</span>, <span class="dv">2000</span>))]</span>
+<span id="cb8-109"><a href="#cb8-109" aria-hidden="true" tabindex="-1"></a>            result[(f, g)] <span class="op">=</span> copy.copy(params)</span>
+<span id="cb8-110"><a href="#cb8-110" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> result</span>
+<span id="cb8-111"><a href="#cb8-111" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-112"><a href="#cb8-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-113"><a href="#cb8-113" aria-hidden="true" tabindex="-1"></a><span class="fu">## SBM, Isolated Communities</span></span>
+<span id="cb8-114"><a href="#cb8-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-117"><a href="#cb8-117" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb8-118"><a href="#cb8-118" aria-hidden="true" tabindex="-1"></a>k <span class="op">=</span> (<span class="dv">5</span>, graphs[<span class="dv">0</span>][<span class="st">"files"</span>][<span class="dv">0</span>])</span>
+<span id="cb8-119"><a href="#cb8-119" aria-hidden="true" tabindex="-1"></a>run_and_plot(configure_experiment_1(</span>
+<span id="cb8-120"><a href="#cb8-120" aria-hidden="true" tabindex="-1"></a>    <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">1</span>,<span class="dv">10</span>)),</span>
+<span id="cb8-121"><a href="#cb8-121" aria-hidden="true" tabindex="-1"></a>    graphs[<span class="dv">0</span>][<span class="st">"files"</span>]), k)</span>
+<span id="cb8-122"><a href="#cb8-122" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-123"><a href="#cb8-123" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-124"><a href="#cb8-124" aria-hidden="true" tabindex="-1"></a><span class="fu">## SBM, Connected Communities</span></span>
+<span id="cb8-125"><a href="#cb8-125" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-128"><a href="#cb8-128" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb8-129"><a href="#cb8-129" aria-hidden="true" tabindex="-1"></a>k <span class="op">=</span> (<span class="dv">5</span>, graphs[<span class="dv">1</span>][<span class="st">"files"</span>][<span class="dv">0</span>])</span>
+<span id="cb8-130"><a href="#cb8-130" aria-hidden="true" tabindex="-1"></a>run_and_plot(configure_experiment_1(</span>
+<span id="cb8-131"><a href="#cb8-131" aria-hidden="true" tabindex="-1"></a>    <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">1</span>,<span class="dv">10</span>)),</span>
+<span id="cb8-132"><a href="#cb8-132" aria-hidden="true" tabindex="-1"></a>    graphs[<span class="dv">1</span>][<span class="st">"files"</span>]), k)</span>
+<span id="cb8-133"><a href="#cb8-133" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-134"><a href="#cb8-134" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-135"><a href="#cb8-135" aria-hidden="true" tabindex="-1"></a><span class="fu">## FCR, Isolated Communities</span></span>
+<span id="cb8-136"><a href="#cb8-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-139"><a href="#cb8-139" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb8-140"><a href="#cb8-140" aria-hidden="true" tabindex="-1"></a>k <span class="op">=</span> (<span class="dv">5</span>, graphs[<span class="dv">2</span>][<span class="st">"files"</span>][<span class="dv">0</span>])</span>
+<span id="cb8-141"><a href="#cb8-141" aria-hidden="true" tabindex="-1"></a>run_and_plot(configure_experiment_1(</span>
+<span id="cb8-142"><a href="#cb8-142" aria-hidden="true" tabindex="-1"></a>    <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">1</span>,<span class="dv">10</span>)),</span>
+<span id="cb8-143"><a href="#cb8-143" aria-hidden="true" tabindex="-1"></a>    graphs[<span class="dv">2</span>][<span class="st">"files"</span>]), k)</span>
+<span id="cb8-144"><a href="#cb8-144" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-145"><a href="#cb8-145" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-146"><a href="#cb8-146" aria-hidden="true" tabindex="-1"></a><span class="fu">## FCR, Connected Communities</span></span>
+<span id="cb8-147"><a href="#cb8-147" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-150"><a href="#cb8-150" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb8-151"><a href="#cb8-151" aria-hidden="true" tabindex="-1"></a>k <span class="op">=</span> (<span class="dv">5</span>, graphs[<span class="dv">3</span>][<span class="st">"files"</span>][<span class="dv">0</span>])</span>
+<span id="cb8-152"><a href="#cb8-152" aria-hidden="true" tabindex="-1"></a>run_and_plot(configure_experiment_1(</span>
+<span id="cb8-153"><a href="#cb8-153" aria-hidden="true" tabindex="-1"></a>    <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">1</span>,<span class="dv">10</span>)),</span>
+<span id="cb8-154"><a href="#cb8-154" aria-hidden="true" tabindex="-1"></a>    graphs[<span class="dv">3</span>][<span class="st">"files"</span>]), k)</span>
+<span id="cb8-155"><a href="#cb8-155" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb8-156"><a href="#cb8-156" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-157"><a href="#cb8-157" aria-hidden="true" tabindex="-1"></a><span class="fu"># Experiment 2: Deletions</span></span>
+<span id="cb8-158"><a href="#cb8-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-161"><a href="#cb8-161" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb8-162"><a href="#cb8-162" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb8-163"><a href="#cb8-163" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-164"><a href="#cb8-164" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> delete_nodes_from_network(network, nodes_to_delete):</span>
+<span id="cb8-165"><a href="#cb8-165" aria-hidden="true" tabindex="-1"></a>    network <span class="op">=</span> read_graph(network)</span>
+<span id="cb8-166"><a href="#cb8-166" aria-hidden="true" tabindex="-1"></a>    edge_list <span class="op">=</span> graph_to_edge_list(network)</span>
+<span id="cb8-167"><a href="#cb8-167" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> n <span class="kw">in</span> nodes_to_delete:</span>
+<span id="cb8-168"><a href="#cb8-168" aria-hidden="true" tabindex="-1"></a>        network[n] <span class="op">=</span> []</span>
+<span id="cb8-169"><a href="#cb8-169" aria-hidden="true" tabindex="-1"></a>    network <span class="op">=</span> <span class="bu">list</span>(<span class="bu">list</span>(e <span class="cf">for</span> e <span class="kw">in</span> l <span class="cf">if</span> e <span class="kw">not</span> <span class="kw">in</span> nodes_to_delete)</span>
+<span id="cb8-170"><a href="#cb8-170" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> l <span class="kw">in</span> network)</span>
+<span id="cb8-171"><a href="#cb8-171" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> temp_name(<span class="st">".txt"</span>)</span>
+<span id="cb8-172"><a href="#cb8-172" aria-hidden="true" tabindex="-1"></a>    write_graph(network, n)</span>
+<span id="cb8-173"><a href="#cb8-173" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> n</span>
+<span id="cb8-174"><a href="#cb8-174" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-175"><a href="#cb8-175" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> configure_experiment_2(factors, graphs):</span>
+<span id="cb8-176"><a href="#cb8-176" aria-hidden="true" tabindex="-1"></a>    result <span class="op">=</span> {}</span>
+<span id="cb8-177"><a href="#cb8-177" aria-hidden="true" tabindex="-1"></a>    params <span class="op">=</span> <span class="bu">dict</span>(</span>
+<span id="cb8-178"><a href="#cb8-178" aria-hidden="true" tabindex="-1"></a>        n <span class="op">=</span> <span class="dv">1000</span>,</span>
+<span id="cb8-179"><a href="#cb8-179" aria-hidden="true" tabindex="-1"></a>        n1 <span class="op">=</span> <span class="dv">1000</span>,</span>
+<span id="cb8-180"><a href="#cb8-180" aria-hidden="true" tabindex="-1"></a>        n2 <span class="op">=</span> <span class="dv">1000</span>)</span>
+<span id="cb8-181"><a href="#cb8-181" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> f <span class="kw">in</span> factors:</span>
+<span id="cb8-182"><a href="#cb8-182" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> g <span class="kw">in</span> graphs:</span>
+<span id="cb8-183"><a href="#cb8-183" aria-hidden="true" tabindex="-1"></a>            <span class="co"># n = read_graph(g)</span></span>
+<span id="cb8-184"><a href="#cb8-184" aria-hidden="true" tabindex="-1"></a>            params[<span class="st">"seed1"</span>] <span class="op">=</span> <span class="fl">0.1</span></span>
+<span id="cb8-185"><a href="#cb8-185" aria-hidden="true" tabindex="-1"></a>            params[<span class="st">"seed2"</span>] <span class="op">=</span> <span class="fl">0.1</span></span>
+<span id="cb8-186"><a href="#cb8-186" aria-hidden="true" tabindex="-1"></a>            nodes_to_delete <span class="op">=</span> <span class="bu">set</span>(set_seeds(<span class="bu">dict</span>(</span>
+<span id="cb8-187"><a href="#cb8-187" aria-hidden="true" tabindex="-1"></a>                n1 <span class="op">=</span> <span class="dv">1000</span>,</span>
+<span id="cb8-188"><a href="#cb8-188" aria-hidden="true" tabindex="-1"></a>                n2 <span class="op">=</span> <span class="dv">1000</span>,</span>
+<span id="cb8-189"><a href="#cb8-189" aria-hidden="true" tabindex="-1"></a>                seed1 <span class="op">=</span> <span class="fl">0.1</span>,</span>
+<span id="cb8-190"><a href="#cb8-190" aria-hidden="true" tabindex="-1"></a>                seed2 <span class="op">=</span> <span class="fl">0.1</span> <span class="op">*</span> f)))</span>
+<span id="cb8-191"><a href="#cb8-191" aria-hidden="true" tabindex="-1"></a>            params[<span class="st">"nodes_to_delete"</span>] <span class="op">=</span> nodes_to_delete</span>
+<span id="cb8-192"><a href="#cb8-192" aria-hidden="true" tabindex="-1"></a>            network <span class="op">=</span> delete_nodes_from_network(g, nodes_to_delete)</span>
+<span id="cb8-193"><a href="#cb8-193" aria-hidden="true" tabindex="-1"></a>            params[<span class="st">"graph"</span>] <span class="op">=</span> network</span>
+<span id="cb8-194"><a href="#cb8-194" aria-hidden="true" tabindex="-1"></a>            params[<span class="st">"seeds"</span>] <span class="op">=</span> set_seeds(params)</span>
+<span id="cb8-195"><a href="#cb8-195" aria-hidden="true" tabindex="-1"></a>            params[<span class="st">"factor"</span>] <span class="op">=</span> f</span>
+<span id="cb8-196"><a href="#cb8-196" aria-hidden="true" tabindex="-1"></a>            params[<span class="st">"graph_name"</span>] <span class="op">=</span> g</span>
+<span id="cb8-197"><a href="#cb8-197" aria-hidden="true" tabindex="-1"></a>            params[<span class="st">"alpha"</span>] <span class="op">=</span> <span class="fl">0.1</span></span>
+<span id="cb8-198"><a href="#cb8-198" aria-hidden="true" tabindex="-1"></a>            params[<span class="st">"reprs"</span>] <span class="op">=</span> n_reps</span>
+<span id="cb8-199"><a href="#cb8-199" aria-hidden="true" tabindex="-1"></a>            params[<span class="st">"communities"</span>] <span class="op">=</span> [<span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">0</span>, <span class="dv">1000</span>)), <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">1000</span>, <span class="dv">2000</span>))]</span>
+<span id="cb8-200"><a href="#cb8-200" aria-hidden="true" tabindex="-1"></a>            result[(f, g)] <span class="op">=</span> copy.copy(params)</span>
+<span id="cb8-201"><a href="#cb8-201" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> result</span>
+<span id="cb8-202"><a href="#cb8-202" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-203"><a href="#cb8-203" aria-hidden="true" tabindex="-1"></a><span class="co">#full_params_2 = configure_experiment_2(</span></span>
+<span id="cb8-204"><a href="#cb8-204" aria-hidden="true" tabindex="-1"></a><span class="co">#    [5], [graphs[0]["files"][0]])</span></span>
+<span id="cb8-205"><a href="#cb8-205" aria-hidden="true" tabindex="-1"></a>full_params_2 <span class="op">=</span> configure_experiment_2(</span>
+<span id="cb8-206"><a href="#cb8-206" aria-hidden="true" tabindex="-1"></a>    <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">1</span>,<span class="dv">10</span>)),</span>
+<span id="cb8-207"><a href="#cb8-207" aria-hidden="true" tabindex="-1"></a>    graphs[<span class="dv">0</span>][<span class="st">"files"</span>])</span>
+<span id="cb8-208"><a href="#cb8-208" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-209"><a href="#cb8-209" aria-hidden="true" tabindex="-1"></a>k <span class="op">=</span> (<span class="dv">5</span>, graphs[<span class="dv">0</span>][<span class="st">"files"</span>][<span class="dv">0</span>])</span>
+<span id="cb8-210"><a href="#cb8-210" aria-hidden="true" tabindex="-1"></a>run_and_plot(full_params_2, k)</span>
+<span id="cb8-211"><a href="#cb8-211" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </section>

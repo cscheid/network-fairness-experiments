@@ -75,9 +75,7 @@ def figure_3(conf):
     plt.legend("")
     plt.show()
 
-k = (5, graphs[0]["files"][0])
-
-def run_and_plot(conf):
+def run_and_plot(conf, k):
     r = run_experiment_batch(conf)
     figure_1(r[k])
     figure_2(r)
@@ -106,12 +104,42 @@ def configure_experiment_1(factors, graphs):
             params["communities"] = [list(range(0, 1000)), list(range(1000, 2000))]
             result[(f, g)] = copy.copy(params)
     return result
+```
 
-full_params_1 = configure_experiment_1(
+## SBM, Isolated Communities
+
+```{python}
+k = (5, graphs[0]["files"][0])
+run_and_plot(configure_experiment_1(
     list(range(1,10)),
-    graphs[0]["files"])
+    graphs[0]["files"]), k)
+```
 
-run_and_plot(full_params_1)
+## SBM, Connected Communities
+
+```{python}
+k = (5, graphs[1]["files"][0])
+run_and_plot(configure_experiment_1(
+    list(range(1,10)),
+    graphs[1]["files"]), k)
+```
+
+## FCR, Isolated Communities
+
+```{python}
+k = (5, graphs[2]["files"][0])
+run_and_plot(configure_experiment_1(
+    list(range(1,10)),
+    graphs[2]["files"]), k)
+```
+
+## FCR, Connected Communities
+
+```{python}
+k = (5, graphs[3]["files"][0])
+run_and_plot(configure_experiment_1(
+    list(range(1,10)),
+    graphs[3]["files"]), k)
 ```
 
 # Experiment 2: Deletions
@@ -164,5 +192,6 @@ full_params_2 = configure_experiment_2(
     list(range(1,10)),
     graphs[0]["files"])
 
-run_and_plot(full_params_2)
+k = (5, graphs[0]["files"][0])
+run_and_plot(full_params_2, k)
 ```

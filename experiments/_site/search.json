@@ -68,5 +68,33 @@
     "title": "",
     "section": "",
     "text": "Community-wide impact of network modifications\n(This is Section 5.3)\nSame as experiment 3, but we range the community shrinkage from 0.1 to 0.9.\n\nCode\nfrom exps import *\nimport numpy\nimport matplotlib.pyplot as plt\n\ndef make_params(shrink_factor):\n    return dict(\n        # graph params\n        n = 1000,\n        p1 = 0.01 / 2,\n        p2 = 0.01 / 2,\n        p_inter = 0.0001 / 2,\n        # seeding params\n        seed1 = 0.3,\n        seed2 = 0.3,\n        # IC params\n        alpha = 0.1,\n        reprs = 100)\n\ndef run_experiment_range(factors, f):\n    c1s = []\n    c2s = []\n    for factor in factors:\n        params = make_params(factor)\n        n1 = int(params[\"n\"] * (1 - factor))\n        n2 = int(params[\"n\"] * (1 - 0.1))\n        params[\"n1\"] = n1\n        params[\"n2\"] = n2\n        params[\"communities\"] = [list(range(0, n1)), list(range(n1, n1 + n2))]\n        params[\"graph\"] = two_communities(params)\n        params[\"seeds\"] = set_seeds(params)\n        ic_result = run_experiment(params)\n        ic_result = f(ic_result, params)\n        c1, c2 = split_result_by_communities(ic_result, params)\n        c1s.append(numpy.mean(c1))\n        c2s.append(numpy.mean(c2))\n    return c1s, c2s\n\nfactors = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]\ndef plot_curve(f, label):\n    c1s, c2s = run_experiment_range(factors, f)\n    plt.figure()\n    plt.plot(factors, c1s)\n    plt.plot(factors, c2s)\n    plt.xlabel(\"Shrinkage factor\")\n    plt.ylabel(label)\n    plt.show()\n\nNo transformation:\n\n\nCode\nplot_curve(id, \"prob\")\n\n\n\n\n\nSquare:\n\n\nCode\nplot_curve(square, \"squared prob\")\n\n\n\n\n\nMean of neighbors:\n\n\nCode\nplot_curve(f_mean, \"mean of neighbors' prob\")\n\n\n\n\n\nMin of neighbors:\n\n\nCode\nplot_curve(f_min, \"min of neighbors' prob\")\n\n\n\n\n\n\n\n\nSource Code\n---\nTitle: \"Experiment 4\"\nformat: \n  html:\n    code-tools: true\n    code-fold: true\n---\n\n# Community-wide impact of network modifications\n\n(This is Section 5.3)\n\nSame as [experiment 3](exp3.qmd), but we range the community shrinkage from 0.1 to 0.9.\n\n```{python}\nfrom exps import *\nimport numpy\nimport matplotlib.pyplot as plt\n\ndef make_params(shrink_factor):\n    return dict(\n        # graph params\n        n = 1000,\n        p1 = 0.01 / 2,\n        p2 = 0.01 / 2,\n        p_inter = 0.0001 / 2,\n        # seeding params\n        seed1 = 0.3,\n        seed2 = 0.3,\n        # IC params\n        alpha = 0.1,\n        reprs = 100)\n\ndef run_experiment_range(factors, f):\n    c1s = []\n    c2s = []\n    for factor in factors:\n        params = make_params(factor)\n        n1 = int(params[\"n\"] * (1 - factor))\n        n2 = int(params[\"n\"] * (1 - 0.1))\n        params[\"n1\"] = n1\n        params[\"n2\"] = n2\n        params[\"communities\"] = [list(range(0, n1)), list(range(n1, n1 + n2))]\n        params[\"graph\"] = two_communities(params)\n        params[\"seeds\"] = set_seeds(params)\n        ic_result = run_experiment(params)\n        ic_result = f(ic_result, params)\n        c1, c2 = split_result_by_communities(ic_result, params)\n        c1s.append(numpy.mean(c1))\n        c2s.append(numpy.mean(c2))\n    return c1s, c2s\n\nfactors = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]\ndef plot_curve(f, label):\n    c1s, c2s = run_experiment_range(factors, f)\n    plt.figure()\n    plt.plot(factors, c1s)\n    plt.plot(factors, c2s)\n    plt.xlabel(\"Shrinkage factor\")\n    plt.ylabel(label)\n    plt.show()\n\n```\n\nNo transformation:\n\n```{python}\nplot_curve(id, \"prob\")\n```\n\nSquare:\n\n```{python}\nplot_curve(square, \"squared prob\")\n```\n\nMean of neighbors:\n\n```{python}\nplot_curve(f_mean, \"mean of neighbors' prob\")\n```\n\nMin of neighbors:\n\n```{python}\nplot_curve(f_min, \"min of neighbors' prob\")\n```"
+  },
+  {
+    "objectID": "fig-4.html#sbm-isolated-communities",
+    "href": "fig-4.html#sbm-isolated-communities",
+    "title": "Figure 4, etc",
+    "section": "SBM, Isolated Communities",
+    "text": "SBM, Isolated Communities\n\n\nCode\nk = (5, graphs[0][\"files\"][0])\nrun_and_plot(configure_experiment_1(\n    list(range(1,10)),\n    graphs[0][\"files\"]), k)"
+  },
+  {
+    "objectID": "fig-4.html#sbm-connected-communities",
+    "href": "fig-4.html#sbm-connected-communities",
+    "title": "Figure 4, etc",
+    "section": "SBM, Connected Communities",
+    "text": "SBM, Connected Communities\n\n\nCode\nk = (5, graphs[1][\"files\"][0])\nrun_and_plot(configure_experiment_1(\n    list(range(1,10)),\n    graphs[1][\"files\"]), k)"
+  },
+  {
+    "objectID": "fig-4.html#fcr-isolated-communities",
+    "href": "fig-4.html#fcr-isolated-communities",
+    "title": "Figure 4, etc",
+    "section": "FCR, Isolated Communities",
+    "text": "FCR, Isolated Communities\n\n\nCode\nk = (5, graphs[2][\"files\"][0])\nrun_and_plot(configure_experiment_1(\n    list(range(1,10)),\n    graphs[2][\"files\"]), k)"
+  },
+  {
+    "objectID": "fig-4.html#fcr-connected-communities",
+    "href": "fig-4.html#fcr-connected-communities",
+    "title": "Figure 4, etc",
+    "section": "FCR, Connected Communities",
+    "text": "FCR, Connected Communities\n\n\nCode\nk = (5, graphs[3][\"files\"][0])\nrun_and_plot(configure_experiment_1(\n    list(range(1,10)),\n    graphs[3][\"files\"]), k)"
   }
 ]
