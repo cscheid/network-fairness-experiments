@@ -1,7 +1,6 @@
 #include "independent_cascade.h"
 #include <iostream>
 #include <cstdlib>
-#include <queue>
 
 using namespace std;
 
@@ -42,3 +41,4 @@ vector<float> run_ic(vector<int> &seeds, float alpha, int n_rounds, const Graph 
   }
   return result;
 }
+

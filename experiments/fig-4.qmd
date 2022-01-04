@@ -26,13 +26,11 @@ def run_experiment_batch(conf):
 
 def figure_1(params):
     c1, c2 = split_result_by_communities(params["ic_result"], params)
-    plt.figure()
     # FIXME THESE CHECKS SHOULD BE ON NODES TO DELETE
     hist(list(x for x in c1 if x > 0)) # not in params.get("nodes_to_delete", [])))
     hist(list(x for x in c2 if x > 0)) # not in params.get("nodes_to_delete", [])))
     plt.xlabel("Access probability")
     plt.ylabel("Frequency")
-    plt.show()
     
 def figure_2(conf):
     x_values_1 = []
@@ -48,14 +46,12 @@ def figure_2(conf):
         x_values_2.append(v["factor"])
         y_values_1.append(c1)
         y_values_2.append(c2)
-    plt.figure()
     sns.lineplot(x = x_values_1, y = y_values_1, estimator = numpy.mean, ci = 95)
     sns.lineplot(x = x_values_2, y = y_values_2, estimator = numpy.mean, ci = 95)
     sns.scatterplot(x = x_values_1, y = y_values_1)
     sns.scatterplot(x = x_values_2, y = y_values_2)
     plt.xlabel("Factor")
     plt.ylabel("Access")
-    plt.show()
 
 def figure_3(conf):
     x_values = []
@@ -67,19 +63,27 @@ def figure_3(conf):
         f = min(c1, c2) / max(c1, c2)
         x_values.append(v["factor"])
         y_values.append(f)
-    plt.figure()
     sns.lineplot(x = x_values, y = y_values, estimator = numpy.mean, ci = 95)
     sns.scatterplot(x = x_values, y = y_values)
     plt.xlabel("Factor")
     plt.ylabel("Fairness")
-    plt.legend("")
+
+def run_and_plot(conf, k, prefix):
+    r = run_experiment_batch(conf)
+    plt.figure()
+    figure_1(r[k])
+    plt.savefig(prefix + "-fig-1.png")
+    plt.show()
+    
+    plt.figure()
+    figure_2(r)
+    plt.savefig(prefix + "-fig-2.png")
     plt.show()
 
-def run_and_plot(conf, k):
-    r = run_experiment_batch(conf)
-    figure_1(r[k])
-    figure_2(r)
+    plt.figure()
     figure_3(r)
+    plt.savefig(prefix + "-fig-3.png")
+    plt.show()
 ```
 
 # Experiment 1: Overseeding
@@ -112,7 +116,7 @@ def configure_experiment_1(factors, graphs):
 k = (5, graphs[0]["files"][0])
 run_and_plot(configure_experiment_1(
     list(range(1,10)),
-    graphs[0]["files"]), k)
+    graphs[0]["files"]), k, "figures/exp-1-sbm-isolated")
 ```
 
 ## SBM, Connected Communities
@@ -121,7 +125,7 @@ run_and_plot(configure_experiment_1(
 k = (5, graphs[1]["files"][0])
 run_and_plot(configure_experiment_1(
     list(range(1,10)),
-    graphs[1]["files"]), k)
+    graphs[1]["files"]), k, "figures/exp-1-sbm-connected")
 ```
 
 ## FCR, Isolated Communities
@@ -130,7 +134,7 @@ run_and_plot(configure_experiment_1(
 k = (5, graphs[2]["files"][0])
 run_and_plot(configure_experiment_1(
     list(range(1,10)),
-    graphs[2]["files"]), k)
+    graphs[2]["files"]), k, "figures/exp-1-fcr-isolated")
 ```
 
 ## FCR, Connected Communities
@@ -139,7 +143,7 @@ run_and_plot(configure_experiment_1(
 k = (5, graphs[3]["files"][0])
 run_and_plot(configure_experiment_1(
     list(range(1,10)),
-    graphs[3]["files"]), k)
+    graphs[3]["files"]), k, "figures/exp-1-fcr-connected")
 ```
 
 # Experiment 2: Deletions
@@ -185,13 +189,40 @@ def configure_experiment_2(factors, graphs):
             params["communities"] = [list(range(0, 1000)), list(range(1000, 2000))]
             result[(f, g)] = copy.copy(params)
     return result
+```
 
-#full_params_2 = configure_experiment_2(
-#    [5], [graphs[0]["files"][0]])
-full_params_2 = configure_experiment_2(
-    list(range(1,10)),
-    graphs[0]["files"])
+## SBM, Isolated Communities
 
+```{python}
 k = (5, graphs[0]["files"][0])
-run_and_plot(full_params_2, k)
+run_and_plot(configure_experiment_2(
+    list(range(1,10)),
+    graphs[0]["files"]), k, "figures/exp-2-sbm-isolated")
+```
+
+## SBM, Connected Communities
+
+```{python}
+k = (5, graphs[1]["files"][0])
+run_and_plot(configure_experiment_2(
+    list(range(1,10)),
+    graphs[1]["files"]), k, "figures/exp-2-sbm-connected")
+```
+
+## FCR, Isolated Communities
+
+```{python}
+k = (5, graphs[2]["files"][0])
+run_and_plot(configure_experiment_2(
+    list(range(1,10)),
+    graphs[2]["files"]), k, "figures/exp-2-fcr-isolated")
+```
+
+## FCR, Connected Communities
+
+```{python}
+k = (5, graphs[3]["files"][0])
+run_and_plot(configure_experiment_2(
+    list(range(1,10)),
+    graphs[3]["files"]), k, "figures/exp-2-fcr-connected")
 ```
