@@ -128,22 +128,22 @@ run_and_plot(configure_experiment_1(
     graphs[1]["files"]), k, "figures/exp-1-sbm-connected")
 ```
 
-## FCR, Isolated Communities
+## LFR, Isolated Communities
 
 ```{python}
 k = (5, graphs[2]["files"][0])
 run_and_plot(configure_experiment_1(
     list(range(1,10)),
-    graphs[2]["files"]), k, "figures/exp-1-fcr-isolated")
+    graphs[2]["files"]), k, "figures/exp-1-lfr-isolated")
 ```
 
-## FCR, Connected Communities
+## LFR, Connected Communities
 
 ```{python}
 k = (5, graphs[3]["files"][0])
 run_and_plot(configure_experiment_1(
     list(range(1,10)),
-    graphs[3]["files"]), k, "figures/exp-1-fcr-connected")
+    graphs[3]["files"]), k, "figures/exp-1-lfr-connected")
 ```
 
 # Experiment 2: Deletions
@@ -209,20 +209,20 @@ run_and_plot(configure_experiment_2(
     graphs[1]["files"]), k, "figures/exp-2-sbm-connected")
 ```
 
-## FCR, Isolated Communities
+## LFR, Isolated Communities
 
 ```{python}
 k = (5, graphs[2]["files"][0])
 run_and_plot(configure_experiment_2(
     list(range(1,10)),
-    graphs[2]["files"]), k, "figures/exp-2-fcr-isolated")
+    graphs[2]["files"]), k, "figures/exp-2-lfr-isolated")
 ```
 
-## FCR, Connected Communities
+## LFR, Connected Communities
 
 ```{python}
 k = (5, graphs[3]["files"][0])
 run_and_plot(configure_experiment_2(
     list(range(1,10)),
-    graphs[3]["files"]), k, "figures/exp-2-fcr-connected")
+    graphs[3]["files"]), k, "figures/exp-2-lfr-connected")
 ```
