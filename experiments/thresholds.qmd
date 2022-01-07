@@ -1,0 +1,56 @@
+---
+title: "Threshold tests"
+---
+
+```{python}
+#| code-fold: show
+from exps import *
+import numpy
+import seaborn as sns
+
+overseeding_factor = 4
+
+params = dict(
+    # graph params
+    n = 1000,
+    p1 = 0.01 / 2,
+    p2 = 0.01 / 2,
+    p_inter = 0.0001 / 2,
+    # seeding params
+    seed1 = overseeding_factor * 0.1,
+    seed2 = 0.1,
+    # IC params
+    alpha = 0.1,
+    reprs = 10000,
+    communities = [list(range(0, 1000)), list(range(1000, 2000))])
+
+def make_thresholds(params):
+    n = read_graph(params["graph"])
+    degrees = numpy.array(list(len(e) for e in n))
+    return 
+
+params["graph"] = two_communities(params)
+degrees = numpy.array(list(len(n) for n in read_graph(params["graph"])))
+params["seeds"] = set_seeds(params)
+params["thresholds"] = numpy.random.random(len(degrees)) * degrees
+
+result = numpy.array(run_thresh_experiment(params))
+
+nonseeds = numpy.array([True] * 2000)
+nonseeds[params["seeds"]] = False
+norm_thresh = params["thresholds"] / degrees
+```
+
+(Communities encoded with colors)
+```{python}
+plt.figure()
+sns.scatterplot(
+    x = norm_thresh[:1000][nonseeds[:1000]],
+    y = result[:1000][nonseeds[:1000]])
+sns.scatterplot(
+    x = norm_thresh[1000:][nonseeds[1000:]],
+    y = result[1000:][nonseeds[1000:]])
+plt.xlabel("Threshold")
+plt.ylabel("Average activation")
+plt.show()
+```

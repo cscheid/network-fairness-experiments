@@ -17,7 +17,6 @@ def hist(v, **kwargs):
         histtype = "stepfilled", 
         alpha = 0.3,
         bins = 20, 
-        range = (0, 1), 
         density = True
     )
     for (k, value) in kwargs.items():
@@ -65,6 +64,11 @@ def ic(graph_file_name, seeds, alpha, reps):
 def ic_fun(graph_file_name, seeds, alpha, reps, fun):
     return run_cmd(["../ic/ic_fun", graph_file_name, seeds, str(alpha), str(reps), fun])
 
+def threshold_sim(graph, seeds, thresholds, alpha, reps):
+    return run_cmd([
+        "../ic/threshold_sim", graph, seeds, thresholds,
+        str(alpha), str(reps)])
+
 def read_array(filename):
     with open(filename) as f:
         return list(float(v) for v in f.readline().split())
@@ -89,6 +93,12 @@ def run_experiment(params):
     graph, seeds, alpha, reprs = itemgetter('graph', 'seeds', 'alpha', 'reprs')(params)
     return read_array(ic(graph, array_into_file(seeds), alpha, reprs))
 
+def run_thresh_experiment(params):
+    graph, seeds, alpha, reprs, thresholds = itemgetter(
+        'graph', 'seeds', 'alpha', 'reprs', 'thresholds')(params)
+    return read_array(threshold_sim(
+        graph, array_into_file(seeds), array_into_file(thresholds), alpha, reprs))
+
 def two_communities(params):
     n1 = params.get('n1', params.get("n", 0))
     n2 = params.get('n2', params.get("n", 0))
@@ -108,10 +118,14 @@ def read_graph(name):
         for i in range(n):
             g.append([])
         for l in f:
-            f, t = list(int(v) for v in l.strip().split())
-            g[f].append(t)
-            if d == 0:
-                g[t].append(f)
+            if l.startswith('s'):
+                continue
+            endpoints = list(int(v) for v in l.strip().split())
+            for i in range(0, len(endpoints), 2):
+                f, t = endpoints[i], endpoints[i+1]
+                g[f].append(t)
+                if d == 0:
+                    g[t].append(f)
     return g
                 
 
@@ -136,6 +150,39 @@ def f_min(r, params):
             return None
         return numpy.min(v)
     return list(min_or_none(v) for v in r)
+
+##############################################################################
+# graph IO
+
+def graph_to_edge_list(network):
+    result = []
+    for (node_id, neighbors) in enumerate(network):
+        for neighbor in neighbors:
+            result.append([node_id, neighbor])
+    return result
+    
+def write_output(G, filename):
+    with open(filename, 'w') as txt_file:
+        num_of_nodes = len(G.nodes)
+        directed = 0
+        txt_file.write("{}\t{}\n".format(num_of_nodes, directed))
+        for edge in G.edges:
+            txt_file.write("{}\t{}\n".format(edge[0], edge[1]))
+
+def write_graph(network, filename):
+    with open(filename, 'w') as txt_file:
+        num_of_nodes = len(network)
+        directed = 0
+        txt_file.write("{}\t{}\n".format(num_of_nodes, directed))
+        for f, l in enumerate(network):
+            for t in l:
+                txt_file.write("{}\t{}\n".format(f, t))
+    
+# def network_into_file(network):
+#     n = temp_name(".txt")
+#     g = nx.Graph(graph_to_edge_list(network))
+#     write_output(g, n)
+#     return n
 
 ##############################################################################
 # Data access

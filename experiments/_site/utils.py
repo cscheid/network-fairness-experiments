@@ -12,8 +12,11 @@ def remove_all_temps():
             pass
 atexit.register(remove_all_temps)
 
-def temp_name():
-    (fd, name) = tempfile.mkstemp()
+def temp_name(suffix=None):
+    if suffix is not None:
+        (fd, name) = tempfile.mkstemp(suffix=suffix)
+    else:
+        (fd, name) = tempfile.mkstemp()
     os.close(fd)
     temps.append(name)
     return name

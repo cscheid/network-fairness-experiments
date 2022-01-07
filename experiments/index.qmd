@@ -12,6 +12,9 @@ title: "Network fairness experiments"
 ## Files with figures
 
 * [fig 2](fig-2.qmd)
+* [fig 5](fig-5.qmd)
+
+## [Thresholds](thresholds.qmd)
 
 ## Collateral Consequences
 

@@ -1,0 +1,31 @@
+---
+title: "Essential Worker Community Degree Distribution"
+---
+
+```{python}
+import glob
+from exps import *
+import numpy
+import matplotlib.pyplot as plt
+
+def degrees(network):
+    essential = list(len(l) for l in network[:1000])
+    rest = list(len(l) for l in network[1000:])
+    return [essential, rest]
+
+files = glob.glob(f'../data/graphs/experiment_essential_workers_basic/run_1/Pr0.0_Pr0.0_Pr0.0_Pr0.0_Pr0.0_Pr0.0_Pr0.0_Pr0.0_Pr0.0_Pr0.0_Pr0.0_Ps0.1_Ps0.1_Ps0.1_Ps0.1_Ps0.1_Ps0.1_Ps0.1_Ps0.1_Ps0.1_Ps0.1_Ps0.1/twocommunities_seed_edgelist.txt')
+for f in files:
+    n = read_graph(f)
+    [this_essential, this_rest] = degrees(n)
+    essential.extend(this_essential)
+    rest.extend(this_rest)
+print(essential)
+print(rest)
+plt.figure()
+hist(essential, label="Essential worker community")
+hist(rest, label="Rest")
+plt.legend()
+plt.xlabel("Node degree")
+plt.ylabel("Frequency")
+plt.show()
+```

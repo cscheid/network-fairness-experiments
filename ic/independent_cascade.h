@@ -6,6 +6,12 @@
 
 std::vector<float> run_ic(std::vector<int> &seeds, float alpha, int n_rounds, const Graph &graph);
 
+std::vector<float> run_thresh_sim_ic(
+    std::vector<int> &seeds,
+    std::vector<float> &thresholds,
+    float alpha, int n_rounds,
+    const Graph &graph);
+
 template <typename T>
 std::vector<float> run_ic_fun(
     std::vector<int> &seeds, float alpha, int n_rounds, const Graph &graph,
