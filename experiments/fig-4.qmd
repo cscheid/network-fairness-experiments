@@ -23,16 +23,25 @@ def run_experiment_batch(conf):
         result[k] = params
     return result
 
+def run_thresh_experiment_batch(conf):
+    result = {}
+    for (k, params) in conf.items():
+        params = copy.copy(params)
+        degrees = numpy.array(list(len(n) for n in read_graph(params["graph"])))
+        params["thresholds"] = numpy.random.random(len(degrees)) * degrees
+        params["ic_result"] = run_thresh_experiment(params)
+        result[k] = params
+    return result
 
-def figure_1(params):
+def figure_1(params, xlabel):
     c1, c2 = split_result_by_communities(params["ic_result"], params)
     # FIXME THESE CHECKS SHOULD BE ON NODES TO DELETE
     hist(list(x for x in c1 if x > 0)) # not in params.get("nodes_to_delete", [])))
     hist(list(x for x in c2 if x > 0)) # not in params.get("nodes_to_delete", [])))
-    plt.xlabel("Access probability")
+    plt.xlabel(xlabel)
     plt.ylabel("Frequency")
-    
-def figure_2(conf):
+
+def figure_2(conf, ylabel):
     x_values_1 = []
     x_values_2 = []
     y_values_1 = []
@@ -51,7 +60,7 @@ def figure_2(conf):
     sns.scatterplot(x = x_values_1, y = y_values_1)
     sns.scatterplot(x = x_values_2, y = y_values_2)
     plt.xlabel("Factor")
-    plt.ylabel("Access")
+    plt.ylabel(ylabel)
 
 def figure_3(conf):
     x_values = []
@@ -71,12 +80,12 @@ def figure_3(conf):
 def run_and_plot(conf, k, prefix):
     r = run_experiment_batch(conf)
     plt.figure()
-    figure_1(r[k])
+    figure_1(r[k], "Access probability")
     plt.savefig(prefix + "-fig-1.png")
     plt.show()
     
     plt.figure()
-    figure_2(r)
+    figure_2(r, "Access")
     plt.savefig(prefix + "-fig-2.png")
     plt.show()
 
@@ -226,3 +235,99 @@ run_and_plot(configure_experiment_2(
     list(range(1,10)),
     graphs[3]["files"]), k, "figures/exp-2-lfr-connected")
 ```
+
+# Experiment 3.1: Thresholds + Overseeding
+
+```{python}
+def run_thresh_and_plot(conf, k, prefix):
+    r = run_thresh_experiment_batch(conf)
+    plt.figure()
+    figure_1(r[k], "Activation probability")
+    plt.savefig(prefix + "-fig-1.png")
+    plt.show()
+    
+    plt.figure()
+    figure_2(r, "Activation")
+    plt.savefig(prefix + "-fig-2.png")
+    plt.show()
+
+    plt.figure()
+    figure_3(r)
+    plt.savefig(prefix + "-fig-3.png")
+    plt.show()
+```
+
+## SBM, Isolated Communities
+
+```{python}
+k = (5, graphs[0]["files"][0])
+run_thresh_and_plot(configure_experiment_1(
+    list(range(1,10)),
+    graphs[0]["files"]), k, "figures/exp-3-1-sbm-isolated")
+```
+
+## SBM, Connected Communities
+
+```{python}
+k = (5, graphs[1]["files"][0])
+run_thresh_and_plot(configure_experiment_1(
+    list(range(1,10)),
+    graphs[1]["files"]), k, "figures/exp-3-1-sbm-connected")
+```
+
+## LFR, Isolated Communities
+
+```{python}
+k = (5, graphs[2]["files"][0])
+run_thresh_and_plot(configure_experiment_1(
+    list(range(1,10)),
+    graphs[2]["files"]), k, "figures/exp-3-1-lfr-isolated")
+```
+
+## LFR, Connected Communities
+
+```{python}
+k = (5, graphs[3]["files"][0])
+run_thresh_and_plot(configure_experiment_1(
+    list(range(1,10)),
+    graphs[3]["files"]), k, "figures/exp-3-1-lfr-connected")
+```
+
+# Experiment 3.2: Thresholds + Deletions
+
+## SBM, Isolated Communities
+
+```{python}
+k = (5, graphs[0]["files"][0])
+run_thresh_and_plot(configure_experiment_2(
+    list(range(1,10)),
+    graphs[0]["files"]), k, "figures/exp-3-2-sbm-isolated")
+```
+
+## SBM, Connected Communities
+
+```{python}
+k = (5, graphs[1]["files"][0])
+run_thresh_and_plot(configure_experiment_2(
+    list(range(1,10)),
+    graphs[1]["files"]), k, "figures/exp-3-2-sbm-connected")
+```
+
+## LFR, Isolated Communities
+
+```{python}
+k = (5, graphs[2]["files"][0])
+run_thresh_and_plot(configure_experiment_2(
+    list(range(1,10)),
+    graphs[2]["files"]), k, "figures/exp-3-2-lfr-isolated")
+```
+
+## LFR, Connected Communities
+
+```{python}
+k = (5, graphs[3]["files"][0])
+run_thresh_and_plot(configure_experiment_2(
+    list(range(1,10)),
+    graphs[3]["files"]), k, "figures/exp-3-2-lfr-connected")
+```
+

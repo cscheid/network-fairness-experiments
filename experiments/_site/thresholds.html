@@ -176,10 +176,19 @@
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    y <span class="op">=</span> result[<span class="dv">1000</span>:][nonseeds[<span class="dv">1000</span>:]])</span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Threshold"</span>)</span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Average activation"</span>)</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>hist(result[:<span class="dv">1000</span>][nonseeds[:<span class="dv">1000</span>]])</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>hist(result[<span class="dv">1000</span>:][nonseeds[<span class="dv">1000</span>:]])</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Threshold"</span>)</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="thresholds_files/figure-html/cell-3-output-1.png" width="589" height="422"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="thresholds_files/figure-html/cell-3-output-2.png" width="558" height="422"></p>
 </div>
 </div>
 
@@ -241,7 +250,13 @@
 <span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Threshold"</span>)</span>
 <span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Average activation"</span>)</span>
 <span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
-<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
+<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a>hist(result[:<span class="dv">1000</span>][nonseeds[:<span class="dv">1000</span>]])</span>
+<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a>hist(result[<span class="dv">1000</span>:][nonseeds[<span class="dv">1000</span>:]])</span>
+<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Threshold"</span>)</span>
+<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </main> <!-- /main -->

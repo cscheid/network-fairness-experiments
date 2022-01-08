@@ -53,4 +53,10 @@ sns.scatterplot(
 plt.xlabel("Threshold")
 plt.ylabel("Average activation")
 plt.show()
+
+plt.figure()
+hist(result[:1000][nonseeds[:1000]])
+hist(result[1000:][nonseeds[1000:]])
+plt.xlabel("Threshold")
+plt.show()
 ```
