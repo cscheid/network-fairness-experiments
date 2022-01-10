@@ -74,6 +74,7 @@ def figure_3(conf):
         y_values.append(f)
     sns.lineplot(x = x_values, y = y_values, estimator = numpy.mean, ci = 95)
     sns.scatterplot(x = x_values, y = y_values)
+    plt.ylim(0,1)
     plt.xlabel("Factor")
     plt.ylabel("Fairness")
 
