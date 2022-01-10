@@ -13,7 +13,7 @@ def degrees(network):
     rest = list(len(l) for l in network[1000:])
     return [essential, rest]
 
-files = glob.glob(f'../data/graphs/experiment_essential_workers_basic/run_1/Pr0.0_Pr0.0_Pr0.0_Pr0.0_Pr0.0_Pr0.0_Pr0.0_Pr0.0_Pr0.0_Pr0.0_Pr0.0_Ps0.1_Ps0.1_Ps0.1_Ps0.1_Ps0.1_Ps0.1_Ps0.1_Ps0.1_Ps0.1_Ps0.1_Ps0.1/twocommunities_seed_edgelist.txt')
+files = glob.glob(f'../data/reference_communities/essential_workers_sbm/run_1/twocommunities_edgelist.txt')
 for f in files:
     n = read_graph(f)
     [this_essential, this_rest] = degrees(n)

@@ -86,7 +86,7 @@ No transformation:
 
 ```{python}
 communities = [list(range(1000)), list(range(1000, 2000))]
-network = "../data/graphs/experiment_isolated_2_sbm/run_1/twocommunities_edgelist.txt"
+network = "../data/reference_communities/Isolated_communities/SBM/run_1/twocommunities_edgelist.txt"
 plot_curve(
     network,
     communities,

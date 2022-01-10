@@ -193,7 +193,7 @@ communities = ["Isolated_communities", "More_connected_communities"]
 
 for m in model:
     for c in communities:
-        files = glob.glob(f'../data/reference_communities/{c}/{m}/Run_*/twocommunities_edgelist.txt')
+        files = glob.glob(f'../data/reference_communities/{c}/{m}/run_*/twocommunities_edgelist.txt')
         l = []
         graphs.append(
             dict(model=m,
