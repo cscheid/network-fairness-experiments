@@ -35,9 +35,8 @@ def run_thresh_experiment_batch(conf):
 
 def figure_1(params, xlabel):
     c1, c2 = split_result_by_communities(params["ic_result"], params)
-    # FIXME THESE CHECKS SHOULD BE ON NODES TO DELETE
-    hist(list(x for x in c1 if x > 0)) # not in params.get("nodes_to_delete", [])))
-    hist(list(x for x in c2 if x > 0)) # not in params.get("nodes_to_delete", [])))
+    hist(c1)
+    hist(c2)
     plt.xlabel(xlabel)
     plt.ylabel("Frequency")
 
@@ -48,9 +47,8 @@ def figure_2(conf, ylabel):
     y_values_2 = []
     for (k, v) in conf.items():
         c1, c2 = split_result_by_communities(v["ic_result"], v)
-        # FIXME THESE CHECKS SHOULD BE ON NODES TO DELETE
-        c1 = numpy.mean(list(x for x in c1 if x > 0))
-        c2 = numpy.mean(list(x for x in c2 if x > 0))
+        c1 = numpy.mean(c1)
+        c2 = numpy.mean(c2)
         x_values_1.append(v["factor"])
         x_values_2.append(v["factor"])
         y_values_1.append(c1)

@@ -27,11 +27,14 @@ def hist(v, **kwargs):
 def split_result_by_communities(experiment_result, params):
     seeds = params["seeds"]
     communities = params["communities"]
+    nodes_to_delete = set(params.get("nodes_to_delete", []))
     result_list = []
     for community in communities:
         community_result = []
         for node in community:
             if node in seeds:
+                continue
+            if node in nodes_to_delete:
                 continue
             v = experiment_result[node]
             if v == None:
