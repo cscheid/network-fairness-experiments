@@ -26,12 +26,15 @@ def hist(v, **kwargs):
 
 def split_result_by_communities(experiment_result, params):
     seeds = params["seeds"]
+    nodes_to_delete = params["nodes_to_delete"]
     communities = params["communities"]
     result_list = []
     for community in communities:
         community_result = []
         for node in community:
             if node in seeds:
+                continue
+            if node in nodes_to_delete:
                 continue
             v = experiment_result[node]
             if v == None:
@@ -127,7 +130,14 @@ def read_graph(name):
                 if d == 0:
                     g[t].append(f)
     return g
-                
+
+def fairness_ratio_of_means(access_probs_c1, access_probs_c2):
+      mean_access_c1 = numpy.mean(access_probs_c1)
+      mean_access_c2 = numpy.mean(access_probs_c2)
+      min_prob = min([mean_access_c1, mean_access_c2])
+      max_prob = max([mean_access_c1, mean_access_c2])
+      ratio = min_prob / max_prob
+      return ratio, mean_access_c1, mean_access_c2
 
 ##############################################################################
 # collateral consquence functions

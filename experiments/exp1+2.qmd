@@ -12,39 +12,18 @@ format:
 from exps import *
 import numpy
 import matplotlib.pyplot as plt
+import seaborn as sns
 import networkx as nx
 import random
    
-def delete_nodes_from_network(network):
-    network = read_graph(network)
-    edge_list = graph_to_edge_list(network)
-    nodes_to_delete = set() # solve_this_later()
-    # NB we're deleting all edges instead of the nodes so that
-    # the communities stay the same
-    #for i in range(1000):
-    #    r = random.random()
-    #    if r < 0.1:
-    #        nodes_to_delete.add(i)
-    #for i in range(1000, 2000):
-    #    r = random.random()
-    #    if r < 0.3:
-    #        nodes_to_delete.add(i)
-    edge_list = list(
-        edge for edge in edge_list
-        if (edge[0] not in nodes_to_delete and
-            edge[1] not in nodes_to_delete))
-    g = nx.Graph(edge_list)
-    write_output(g, "output.txt")
-    return "output.txt"
-    
-def make_params(shrink_factor):
+def make_params(factor):
     return dict(
         # seeding params
-        seed1 = 0.3,
-        seed2 = 0.3,
+        seed1 = factor,
+        seed2 = 0.1,
         # IC params
         alpha = 0.1,
-        reprs = 100)
+        reprs = 10000)
 
 def run_experiment_range(network, communities, factors, f):
     c1s = []
@@ -54,68 +33,194 @@ def run_experiment_range(network, communities, factors, f):
         params["n"] = 1000
         params["n1"] = 1000
         params["n2"] = 1000
-        params["graph"] = delete_nodes_from_network(network)
+        params["graph"] = network
         params["communities"] = communities
         params["seeds"] = set_seeds(params)
+        params["nodes_to_delete"] = set()
         ic_result = run_experiment(params)
+        
+        params["graph"] = delete_nodes_by_access(ic_result, params)
+        params["seed1"] = 0.3
+        params["seed2"] = 0.3
+        params["seeds"] = set_seeds(params)
+        ic_result = run_experiment(params)
+        
         ic_result = f(ic_result, params)
+        
         c1, c2 = split_result_by_communities(ic_result, params)
-        c1s.append(numpy.mean(c1))
-        c2s.append(numpy.mean(c2))
+        c1s.append(c1)
+        c2s.append(c2)
     return c1s, c2s
 
-factors = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]
-def plot_curve(network, community, f, label):
-    c1s, c2s = run_experiment_range(network, community, factors, f)
-    plt.figure()
-    plt.plot(factors, c1s)
-    plt.plot(factors, c2s)
-    plt.xlabel("Shrinkage factor")
-    plt.ylabel(label)
-    plt.show()
+def delete_nodes_by_access(ic_result, params):
+    network = read_graph(params["graph"])
+    edge_list = graph_to_edge_list(network)
+    total_nodes = params["n1"] + params["n2"]
+    
+    # NB we're deleting all edges instead of the nodes so that
+    # the communities stay the same
+    nodes_to_delete = set()
+    for node in range(total_nodes):
+        if random.random() < ic_result[node]:
+            nodes_to_delete.add(node)
+    params["nodes_to_delete"] = nodes_to_delete
+    edge_list = list(
+        (edge[0], edge[1]) for edge in edge_list
+        if (edge[0] not in nodes_to_delete and
+            edge[1] not in nodes_to_delete))
+    
+    g = nx.Graph()
+    g.add_nodes_from(range(total_nodes))
+    g.add_edges_from(edge_list)
+    write_output(g, "output.txt")
+    return "output.txt"
 
+factors = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]
+runs = range(1, 11)
+def plot_curves(network_invariant, community, f):
+    access_probs = {"c1": [[] for i in factors], "c2": [[] for i in factors]}
+    mean_access = {"c1": [], "c2": []}
+    fairness_ratios = []
+    for run in runs:
+        network = network_invariant.format(run)
+        c1s, c2s = run_experiment_range(network, community, factors, f)
+        for i in range(len(factors)):
+            access_probs["c1"][i].extend(c1s[i])
+            access_probs["c2"][i].extend(c2s[i])
+            ratio, mean_access_c1, mean_access_c2 = fairness_ratio_of_means(c1s[i], c2s[i])
+            fairness_ratios.append(ratio)
+            mean_access["c1"].append(mean_access_c1)
+            mean_access["c2"].append(mean_access_c2)
+    
+    # Access distributions
+    for i in range(len(factors)):
+        print("factor = {}:".format(factors[i]))
+        plt.figure()
+        hist(access_probs["c1"][i])
+        hist(access_probs["c2"][i])
+        plt.xlabel("Probability of node receiving information")
+        plt.ylabel("Density")
+        plt.title("Distribution of information access")
+        plt.show()
+    
+    # Mean access plots
+    plt.figure()
+    sns.lineplot(x=factors * 10, y=mean_access["c1"], estimator=numpy.mean, ci=95, label="A community")
+    sns.lineplot(x=factors * 10, y=mean_access["c2"], estimator=numpy.mean, ci=95, label="B community")
+    sns.scatterplot(x=factors * 10, y=mean_access["c1"])
+    sns.scatterplot(x=factors * 10, y=mean_access["c2"])
+    plt.xlabel("Probability of node receiving information")
+    plt.ylabel("Probability of access")
+    plt.title("Mean probability of access")
+    plt.show()
+    
+    # Fairness plot
+    plt.figure()
+    sns.lineplot(x=factors * 10, y=fairness_ratios, color="green", estimator=numpy.mean, ci=95)
+    sns.scatterplot(x=factors * 10, y=fairness_ratios, color="green")
+    plt.xlabel("Probability of node receiving information")
+    plt.ylabel("Fairness as ratio")
+    plt.title("Community fairness")
+    plt.show()
+    
 ```
 
-## Collateral consequences functions
+## Experiment 1+2
 
-Note, we'll have to fix the community calculate to create the right
-communities when using the different graphs. Right now we're using
-a specific network for which we know the community configuration.
+First, the probability that a node in community A is a seed increases from 0.1 to 0.9, while that in B stays constant at 0.1. Then, each node in the graph is removed with a probability equal to their information access. Finally, the communities are seeded with information at the same rate of 0.3, and the resulting distributions of information access are plotted, with the seed nodes removed.
 
-No transformation:
+Alpha is constant at 0.1 (probability of information propagation).
+
+Isolated, SBM:
 
 ```{python}
 communities = [list(range(1000)), list(range(1000, 2000))]
-network = "../data/reference_communities/Isolated_communities/SBM/Run_1/twocommunities_edgelist.txt"
-plot_curve(
-    network,
+network_invariant = "../data/graphs/experiment_isolated_2_sbm/run_{}/twocommunities_edgelist.txt"
+plot_curves(
+    network_invariant,
     communities,
-    id, "prob")
+    id)
 ```
 
-Square:
+Isolated, LFR:
 
 ```{python}
-plot_curve(
-    network,
+communities = [list(range(1000)), list(range(1000, 2000))]
+network_invariant = "../data/graphs/experiment_isolated_2_lfr/run_{}/twocommunities_edgelist.txt"
+plot_curves(
+    network_invariant,
     communities,
-    square, "squared prob")
+    id)
 ```
 
-Mean of neighbors:
+Connected, SBM:
 
 ```{python}
-plot_curve(
-    network,
+communities = [list(range(1000)), list(range(1000, 2000))]
+network_invariant = "../data/graphs/experiment_connected_2_sbm/run_{}/twocommunities_edgelist.txt"
+plot_curves(
+    network_invariant,
     communities,
-    f_mean, "mean of neighbors' prob")
+    id)
 ```
 
-Min of neighbors:
+Connected, LFR:
 
 ```{python}
-plot_curve(
-    network,
+communities = [list(range(1000)), list(range(1000, 2000))]
+network_invariant = "../data/graphs/experiment_connected_2_lfr/run_{}/twocommunities_edgelist.txt"
+plot_curves(
+    network_invariant,
     communities,
-    f_min, "min of neighbors' prob")
+    id)
 ```
+
+
+
+
+
+
+
+<!-- ## Collateral consequences functions -->
+
+<!-- Note, we'll have to fix the community calculate to create the right -->
+<!-- communities when using the different graphs. Right now we're using -->
+<!-- a specific network for which we know the community configuration. -->
+
+<!-- No transformation: -->
+
+<!-- ```{python} -->
+<!-- # communities = [list(range(1000)), list(range(1000, 2000))] -->
+<!-- # network = "../data/graphs/experiment_isolated_2_sbm/run_1/twocommunities_edgelist.txt" -->
+<!-- # plot_curve( -->
+<!-- #     network, -->
+<!-- #     communities, -->
+<!-- #     id, "prob") -->
+<!-- ``` -->
+
+<!-- Square: -->
+
+<!-- ```{python} -->
+<!-- # plot_curve( -->
+<!-- #     network, -->
+<!-- #     communities, -->
+<!-- #     square, "squared prob") -->
+<!-- ``` -->
+
+<!-- Mean of neighbors: -->
+
+<!-- ```{python} -->
+<!-- # plot_curve( -->
+<!-- #     network, -->
+<!-- #     communities, -->
+<!-- #     f_mean, "mean of neighbors' prob") -->
+<!-- ``` -->
+
+<!-- Min of neighbors: -->
+
+<!-- ```{python} -->
+<!-- # plot_curve( -->
+<!-- #     network, -->
+<!-- #     communities, -->
+<!-- #     f_min, "min of neighbors' prob") -->
+<!-- ``` -->
