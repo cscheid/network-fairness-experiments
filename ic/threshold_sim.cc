@@ -24,7 +24,7 @@ int main(int argc, char **argv)
 {
   if (argc < 6) {
     cout << "Expected at least 5 args" << endl;
-    cout << "Usage: " << argv[0] << " graph_in seeds_in alpha nreps fun" << endl;
+    cout << "Usage: " << argv[0] << " graph_in seeds_in threshs alpha nreps" << endl;
     return 1;
   }
 

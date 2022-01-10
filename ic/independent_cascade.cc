@@ -1,6 +1,7 @@
 #include "independent_cascade.h"
 #include <iostream>
 #include <cstdlib>
+#include <fstream>
 
 using namespace std;
 
@@ -42,11 +43,11 @@ std::vector<float> run_thresh_sim_ic(
     const Graph &graph)
 {
   int v = graph.n_nodes();
-  
+
   vector<int> hits(v, 0);
   for (int i = 0; i < n_rounds; ++i) {
     vector<int> inner_hits(v, 0);
-    run_ic_round(seeds, alpha, hits, graph);
+    run_ic_round(seeds, alpha, inner_hits, graph);
     for (int j = 0; j < graph.n_nodes(); ++j) {
       int count = 0;
       for (auto &out: graph.m_edges[j]) {
@@ -64,8 +65,6 @@ std::vector<float> run_thresh_sim_ic(
   }
   return result;
 }
-
-    
 
 vector<float> run_ic(vector<int> &seeds, float alpha, int n_rounds, const Graph &graph)
 {
