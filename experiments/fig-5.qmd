@@ -13,19 +13,113 @@ def degrees(network):
     rest = list(len(l) for l in network[1000:])
     return [essential, rest]
 
-files = glob.glob(f'../data/reference_communities/essential_workers_sbm/run_1/twocommunities_edgelist.txt')
+essential = []
+rest = []
+files = glob.glob(f'../data/graphs/experiment_essential_workers_2_sbm/run_1/twocommunities_edgelist.txt')
 for f in files:
     n = read_graph(f)
     [this_essential, this_rest] = degrees(n)
     essential.extend(this_essential)
     rest.extend(this_rest)
-print(essential)
-print(rest)
 plt.figure()
 hist(essential, label="Essential worker community")
 hist(rest, label="Rest")
 plt.legend()
 plt.xlabel("Node degree")
 plt.ylabel("Frequency")
+plt.show()
+
+def figure_1(params, xlabel):
+    c1, c2 = split_result_by_communities(params["ic_result"], params)
+    hist(c1)
+    hist(c2)
+    plt.xlabel(xlabel)
+    plt.ylabel("Frequency")
+
+def delete_nodes_from_network(network, nodes_to_delete):
+    network = read_graph(network)
+    edge_list = graph_to_edge_list(network)
+    for n in nodes_to_delete:
+        network[n] = []
+    network = list(list(e for e in l if e not in nodes_to_delete)
+        for l in network)
+    n = temp_name(".txt")
+    write_graph(network, n)
+    return n
+
+```
+
+## 1
+
+```{python}
+params = {}
+degrees = numpy.array(list(len(n) for n in read_graph(files[0])))
+params["thresholds"] = numpy.random.random(len(degrees)) * degrees
+nodes_to_delete = set(set_seeds(dict(
+                n1 = 1000,
+                n2 = 1000,
+                seed1 = 0.1,
+                seed2 = 0.1)))
+params["nodes_to_delete"] = nodes_to_delete
+params["graph"] = delete_nodes_from_network(files[0], nodes_to_delete)
+params["n1"] = 1000
+params["n2"] = 1000
+params["seed1"] = 0.1
+params["seed2"] = 0.1
+params["seeds"] = set_seeds(params)
+params["alpha"] = 0.1
+params["reprs"] = 100
+params["communities"] = [list(range(0, 1000)), list(range(1000, 2000))]
+params["ic_result"] = run_experiment(params)
+
+plt.figure()
+figure_1(params, "probability of infection")
+plt.show()
+```
+
+## 2
+
+```{python}
+params["ic_result"] = run_thresh_experiment(params)
+
+plt.figure()
+figure_1(params, "collateral harm")
+plt.show()
+```
+
+## 3
+
+```{python}
+params = {}
+params["thresholds"] = numpy.random.random(len(degrees)) * degrees
+nodes_to_delete = set(set_seeds(dict(
+                n1 = 1000,
+                n2 = 1000,
+                seed1 = 0.133333,
+                seed2 = 0.066666)))
+params["nodes_to_delete"] = nodes_to_delete
+params["graph"] = files[0]
+params["n1"] = 1000
+params["n2"] = 1000
+params["seed1"] = 0.1
+params["seed2"] = 0.1
+params["seeds"] = set_seeds(params)
+params["alpha"] = 0.1
+params["reprs"] = 100
+params["communities"] = [list(range(0, 1000)), list(range(1000, 2000))]
+params["ic_result"] = run_experiment(params)
+
+plt.figure()
+figure_1(params, "probability of infection")
+plt.show()
+```
+
+## 4
+
+```{python}
+params["ic_result"] = run_thresh_experiment(params)
+
+plt.figure()
+figure_1(params, "collateral harm")
 plt.show()
 ```
