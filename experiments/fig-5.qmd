@@ -31,6 +31,7 @@ plt.show()
 
 def figure_1(params, xlabel):
     c1, c2 = split_result_by_communities(params["ic_result"], params)
+    print("Community means: %s, %s" % (numpy.mean(c1), numpy.mean(c2)))
     hist(c1)
     hist(c2)
     plt.xlabel(xlabel)
@@ -87,7 +88,7 @@ figure_1(params, "collateral harm")
 plt.show()
 ```
 
-## 3
+## 3a, SBM-based
 
 ```{python}
 params = {}
@@ -95,8 +96,8 @@ params["thresholds"] = numpy.random.random(len(degrees)) * degrees
 nodes_to_delete = set(set_seeds(dict(
                 n1 = 1000,
                 n2 = 1000,
-                seed1 = 0.133333,
-                seed2 = 0.066666)))
+                seed1 = 0.12,
+                seed2 = 0.08)))
 params["nodes_to_delete"] = nodes_to_delete
 params["graph"] = files[0]
 params["n1"] = 1000
@@ -107,6 +108,20 @@ params["seeds"] = set_seeds(params)
 params["alpha"] = 0.1
 params["reprs"] = 100
 params["communities"] = [list(range(0, 1000)), list(range(1000, 2000))]
+params["ic_result"] = run_experiment(params)
+
+plt.figure()
+figure_1(params, "probability of infection")
+plt.show()
+```
+
+## 3b, degree-based
+
+```{python}
+probs = numpy.array(degrees)
+probs = (probs / probs.sum()) * 200.0
+nodes_to_delete = set(i for (i, v) in enumerate(list(probs)) if random.random() < v)
+params["nodes_to_delete"] = nodes_to_delete
 params["ic_result"] = run_experiment(params)
 
 plt.figure()
