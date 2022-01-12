@@ -235,6 +235,83 @@ run_and_plot(configure_experiment_2(
     graphs[3]["files"]), k, "figures/exp-2-lfr-connected")
 ```
 
+# Experiment 1+2: Overseeding and Deletions
+
+```{python}
+import os
+import random
+
+def configure_experiment_1_and_2(factors, graphs):
+    conf = configure_experiment_1(factors, graphs)
+    r = run_experiment_batch(conf)
+    
+    result = {}
+    params = dict(
+        n = 1000,
+        n1 = 1000,
+        n2 = 1000)
+    for f in factors:
+        for g in graphs:
+            # n = read_graph(g)
+            params["seed1"] = 0.3
+            params["seed2"] = 0.3
+            
+            nodes_to_delete = set()
+            total_nodes = params["n1"] + params["n2"]
+            ic_result = r[(f, g)]["ic_result"]
+            for node in range(total_nodes):
+                if random.random() < ic_result[node]:
+                    nodes_to_delete.add(node)
+            
+            params["nodes_to_delete"] = nodes_to_delete
+            network = delete_nodes_from_network(g, nodes_to_delete)
+            params["graph"] = network
+            params["seeds"] = set_seeds(params)
+            params["factor"] = f
+            params["graph_name"] = g
+            params["alpha"] = 0.1
+            params["reprs"] = n_reps
+            params["communities"] = [list(range(0, 1000)), list(range(1000, 2000))]
+            result[(f, g)] = copy.copy(params)
+    return result
+```
+
+## SBM, Isolated Communities
+
+```{python}
+k = (5, graphs[0]["files"][0])
+run_and_plot(configure_experiment_1_and_2(
+    list(range(1,10)),
+    graphs[0]["files"]), k, "figures/exp-1+2-sbm-isolated")
+```
+
+## SBM, Connected Communities
+
+```{python}
+k = (5, graphs[1]["files"][0])
+run_and_plot(configure_experiment_1_and_2(
+    list(range(1,10)),
+    graphs[1]["files"]), k, "figures/exp-1+2-sbm-connected")
+```
+
+## LFR, Isolated Communities
+
+```{python}
+k = (5, graphs[2]["files"][0])
+run_and_plot(configure_experiment_1_and_2(
+    list(range(1,10)),
+    graphs[2]["files"]), k, "figures/exp-1+2-lfr-isolated")
+```
+
+## LFR, Connected Communities
+
+```{python}
+k = (5, graphs[3]["files"][0])
+run_and_plot(configure_experiment_1_and_2(
+    list(range(1,10)),
+    graphs[3]["files"]), k, "figures/exp-1+2-lfr-connected")
+```
+
 # Experiment 3.1: Thresholds + Overseeding
 
 ```{python}
