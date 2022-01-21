@@ -264,45 +264,46 @@ This is not exactly comparable because since the overall sizes changed, there ar
 now fewer essential workers, so to make vaccination rate difference match the
 degree difference, we need to change the parameters.
 
-We arrive at $s_1$, $s_2$ by solving the system $s_1 = s_2 \times 1.5$, $400 s_1 + 1600 s_2 = 200$, which gives $s_1 \approx 0.136, s_2 \approx 0.091$.
+Given some amount of overseeding, community size, and total budget, we
+can work out the seeding probabilities.
 
 ```{python}
 
-def solve_seeding(n1):
-    n2 = 2000 - n1
-    # s1 = s2 * 1.5
-    # n1 s1 + n2 s2 = 200
-    # n1 s2 * 1.5 + n2 s2 = 200
-    # n1 s2 * 1.5 + (2000 - n1) s2 = 200
-    # n1 s2 * 1.5 + 2000 s2 - n1 s2 = 200
-    # 0.5 n1 s2 + 2000 s2 = 200
-    # s2 (0.5 n1 + 2000) = 200
-    # s2 = 200 / (2000 + 0.5 n1)
-    return 200 / (2000 + 0.5 * n1)
+def solve_seeding(n1, overseeding = 1.5):
+    budget = 200
+    size = 2000
+    n2 = size - n1
+    return budget / (size + (overseeding - 1) * n1)
 
-print("seed1: %s, seed2: %s" % (solve_seeding(n1) * 1.5, solve_seeding(n1)))
-params = {}
-params["thresholds"] = numpy.random.random(len(degrees)) * degrees
-nodes_to_delete = set(set_seeds(dict(
+def plot_overseeding(overseeding):
+    params = {}
+    params["thresholds"] = numpy.random.random(len(degrees)) * degrees
+    nodes_to_delete = set(set_seeds(dict(
                 n1 = n1,
                 n2 = n2,
-                seed1 = solve_seeding(n1) * 1.5,
-                seed2 = solve_seeding(n1))))
-params["nodes_to_delete"] = nodes_to_delete
-set_graph(params, many_comms)
-params["n1"] = n1
-params["n2"] = n2
-params["seed1"] = 0.1
-params["seed2"] = 0.1
-params["seeds"] = set_seeds(params)
-params["alpha"] = 0.1
-params["reprs"] = 100
-params["communities"] = [list(range(0, n1)), list(range(n1, 2000))]
-params["ic_result"] = run_experiment(params)
+                seed1 = solve_seeding(n1, overseeding) * overseeding,
+                seed2 = solve_seeding(n1, overseeding))))
+    params["nodes_to_delete"] = nodes_to_delete
+    set_graph(params, many_comms)
+    params["n1"] = n1
+    params["n2"] = n2
+    params["seed1"] = 0.1
+    params["seed2"] = 0.1
+    params["seeds"] = set_seeds(params)
+    params["alpha"] = 0.1
+    params["reprs"] = 100
+    params["communities"] = [list(range(0, n1)), list(range(n1, 2000))]
+    params["ic_result"] = run_experiment(params)
+    plt.figure()
+    figure_1(params, "probability of infection, overseeding = %s" % overseeding)
+    plt.show()
+    params["ic_result"] = run_thresh_experiment(params)
+    plt.figure()
+    figure_1(params, "collateral harm, overseeding = %s" % overseeding)
+    plt.show()
 
-plt.figure()
-figure_1(params, "probability of infection")
-plt.show()
+plot_overseeding(1)
+plot_overseeding(10)
 ```
 
 ## 3b, degree-based
@@ -343,5 +344,80 @@ params["ic_result"] = run_thresh_experiment(params)
     
 plt.figure()
 figure_1(params, "collateral harm")
+plt.show()
+```
+
+# curves
+
+```{python}
+def run_overseeding_experiment(o, n1, n2, graph):
+    params = {}
+    params["thresholds"] = numpy.random.random(len(degrees)) * degrees
+    nodes_to_delete = set(set_seeds(dict(
+                n1 = n1,
+                n2 = n2,
+                seed1 = solve_seeding(n1, o) * o,
+                seed2 = solve_seeding(n1, o))))
+    params["nodes_to_delete"] = nodes_to_delete
+    set_graph(params, many_comms)
+    params["n1"] = n1
+    params["n2"] = n2
+    params["seed1"] = 0.1
+    params["seed2"] = 0.1
+    params["seeds"] = set_seeds(params)
+    params["alpha"] = 0.1
+    params["reprs"] = 1000
+    params["communities"] = [list(range(0, n1)), list(range(n1, 2000))]
+    params["ic_result"] = run_experiment(params)
+    c1, c2 = split_result_by_communities(params["ic_result"], params)
+    params["mean_1"] = numpy.mean(c1)
+    params["mean_2"] = numpy.mean(c2)
+    params["ic_result"] = run_thresh_experiment(params)
+    c1, c2 = split_result_by_communities(params["ic_result"], params)
+    params["collateral_mean_1"] = numpy.mean(c1)
+    params["collateral_mean_2"] = numpy.mean(c2)
+    return params
+
+import numpy
+x = numpy.arange(-3, 3.1, 0.5)
+mean_1 = []
+mean_2 = []
+c_mean_1 = []
+c_mean_2 = []
+total = []
+c_total = []
+for i in x:
+    r = run_overseeding_experiment(10 ** i, 400, 1600, many_comms)
+    mean_1.append(r["mean_1"])
+    mean_2.append(r["mean_2"])
+    c_mean_1.append(r["collateral_mean_1"])
+    c_mean_2.append(r["collateral_mean_2"])
+    total.append(r["mean_1"] * n1 + r["mean_2"] * n2)
+    c_total.append(r["collateral_mean_1"] * n1 + r["collateral_mean_2"] * n2)
+
+plt.figure()
+plt.plot(x, mean_1, label="essential")
+plt.plot(x, mean_2, label="other")
+plt.xlabel("overseeding")
+plt.ylabel("mean infection per community")
+plt.show()
+
+plt.figure()
+plt.plot(x, total, label="total")
+plt.xlabel("overseeding")
+plt.ylabel("total infection")
+plt.show()
+
+plt.figure()
+plt.plot(x, c_mean_1, label="essential")
+plt.plot(x, c_mean_2, label="other")
+plt.xlabel("overseeding")
+plt.ylabel("mean collateral harm per community")
+plt.show()
+
+plt.figure()
+plt.plot(x, c_total, label="total")
+plt.xlabel("overseeding")
+plt.ylabel("total collateral harm")
 plt.show()
 ```
