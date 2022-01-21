@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang=""><head>
   <meta charset="utf-8">
-  <meta name="generator" content="quarto-0.2.413">
+  <meta name="generator" content="quarto-99.9.9">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title>Experiment 2</title>
   <style>
@@ -176,7 +176,7 @@
 <p></p><details>
 <summary>Code</summary><p></p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>ic_neighbor_result <span class="op">=</span> collect_neighbor_data(ic_result, params)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>ic_neighbor_result <span class="op">=</span> <span class="bu">list</span>(numpy.<span class="bu">min</span>(lst) <span class="cf">for</span> lst <span class="kw">in</span> ic_neighbor_result)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>ic_neighbor_result <span class="op">=</span> <span class="bu">list</span>(<span class="op">-</span><span class="dv">1</span> <span class="cf">if</span> <span class="bu">len</span>(lst) <span class="op">==</span> <span class="dv">0</span> <span class="cf">else</span> numpy.<span class="bu">min</span>(lst) <span class="cf">for</span> lst <span class="kw">in</span> ic_neighbor_result)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>plot_community_dists(ic_neighbor_result, params)</span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -247,7 +247,7 @@
 <span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
 <span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a>ic_neighbor_result <span class="op">=</span> collect_neighbor_data(ic_result, params)</span>
-<span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a>ic_neighbor_result <span class="op">=</span> <span class="bu">list</span>(numpy.<span class="bu">min</span>(lst) <span class="cf">for</span> lst <span class="kw">in</span> ic_neighbor_result)</span>
+<span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a>ic_neighbor_result <span class="op">=</span> <span class="bu">list</span>(<span class="op">-</span><span class="dv">1</span> <span class="cf">if</span> <span class="bu">len</span>(lst) <span class="op">==</span> <span class="dv">0</span> <span class="cf">else</span> numpy.<span class="bu">min</span>(lst) <span class="cf">for</span> lst <span class="kw">in</span> ic_neighbor_result)</span>
 <span id="cb5-68"><a href="#cb5-68" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
 <span id="cb5-69"><a href="#cb5-69" aria-hidden="true" tabindex="-1"></a>plot_community_dists(ic_neighbor_result, params)</span>
 <span id="cb5-70"><a href="#cb5-70" aria-hidden="true" tabindex="-1"></a>plt.show()</span>

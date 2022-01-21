@@ -27,11 +27,14 @@ def hist(v, **kwargs):
 def split_result_by_communities(experiment_result, params):
     seeds = params["seeds"]
     communities = params["communities"]
+    nodes_to_delete = set(params.get("nodes_to_delete", []))
     result_list = []
     for community in communities:
         community_result = []
         for node in community:
             if node in seeds:
+                continue
+            if node in nodes_to_delete:
                 continue
             v = experiment_result[node]
             if v == None:
@@ -176,8 +179,9 @@ def write_graph(network, filename):
         txt_file.write("{}\t{}\n".format(num_of_nodes, directed))
         for f, l in enumerate(network):
             for t in l:
-                txt_file.write("{}\t{}\n".format(f, t))
-    
+                if t > f:
+                    txt_file.write("{}\t{}\n".format(f, t))
+
 # def network_into_file(network):
 #     n = temp_name(".txt")
 #     g = nx.Graph(graph_to_edge_list(network))
