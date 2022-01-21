@@ -210,7 +210,7 @@ This is not exactly comparable because since the overall sizes changed, there ar
 now fewer essential workers, so to make vaccination rate difference match the
 degree difference, we need to change the parameters.
 
-We arrive at $s_1$, $s_2$ by solving the system $ s_1 = s_2 \times 1.5 $, $ 400 s_1 + 1600 s_2 = 200 $.
+We arrive at $s_1$, $s_2$ by solving the system $s_1 = s_2 \times 1.5$, $400 s_1 + 1600 s_2 = 200$.
 
 ```{python}
 params = {}
