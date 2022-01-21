@@ -1,5 +1,5 @@
 ---
-title: "Essential Worker Community Degree Distribution"
+title: "Essential Worker Community"
 ---
 
 ```{python}
@@ -8,26 +8,19 @@ from exps import *
 import numpy
 import matplotlib.pyplot as plt
 
-def degrees(network):
-    essential = list(len(l) for l in network[:1000])
-    rest = list(len(l) for l in network[1000:])
+def get_community_degrees(network, params):
+    essential = list(len(l) for l in network[:params["n1"]])
+    rest = list(len(l) for l in network[params["n1"] : params["n1"] + params["n2"]])
     return [essential, rest]
 
-essential = []
-rest = []
-files = glob.glob(f'../data/graphs/experiment_essential_workers_2_sbm/run_1/twocommunities_edgelist.txt')
-for f in files:
-    n = read_graph(f)
-    [this_essential, this_rest] = degrees(n)
-    essential.extend(this_essential)
-    rest.extend(this_rest)
-plt.figure()
-hist(essential, label="Essential worker community")
-hist(rest, label="Rest")
-plt.legend()
-plt.xlabel("Node degree")
-plt.ylabel("Frequency")
-plt.show()
+def plot_community_degrees(dists, labels, **kwargs):
+    plt.figure()
+    for (dist, label) in zip(dists, labels):
+        hist(dist, label=label, **kwargs)
+    plt.legend()
+    plt.xlabel("Node degree")
+    plt.ylabel("Frequency")
+    plt.show()
 
 def figure_1(params, xlabel):
     c1, c2 = split_result_by_communities(params["ic_result"], params)
@@ -40,14 +33,39 @@ def figure_1(params, xlabel):
 def delete_nodes_from_network(network, nodes_to_delete):
     network = read_graph(network)
     edge_list = graph_to_edge_list(network)
+    # delete out-edges
     for n in nodes_to_delete:
         network[n] = []
+    # delete in-edges
     network = list(list(e for e in l if e not in nodes_to_delete)
         for l in network)
     n = temp_name(".txt")
     write_graph(network, n)
     return n
+```
 
+# 2-community model
+
+## Data
+
+```{python}
+essential = []
+rest = []
+# files = glob.glob(f'../data/graphs/experiment_essential_workers_2_sbm/run_1/twocommunities_edgelist.txt')
+files = [ community_graph(0.0001/2, 1000, 0.015 / 2, 1000, 0.01 / 2) ]
+```
+
+## Degree distribution
+
+```{python}
+for f in files:
+    n = read_graph(f)
+    [this_essential, this_rest] = get_community_degrees(n, {"n1": 1000, "n2": 1000})
+    essential.extend(this_essential)
+    rest.extend(this_rest)
+plot_community_degrees(
+    [essential, rest],
+    ["Essential worker community", "Rest"], range=(0, 27))
 ```
 
 ## 1
@@ -99,7 +117,7 @@ nodes_to_delete = set(set_seeds(dict(
                 seed1 = 0.12,
                 seed2 = 0.08)))
 params["nodes_to_delete"] = nodes_to_delete
-params["graph"] = files[0]
+params["graph"] = delete_nodes_from_network(files[0], nodes_to_delete) # files[0]
 params["n1"] = 1000
 params["n2"] = 1000
 params["seed1"] = 0.1
@@ -122,6 +140,7 @@ probs = numpy.array(degrees)
 probs = (probs / probs.sum()) * 200.0
 nodes_to_delete = set(i for (i, v) in enumerate(list(probs)) if random.random() < v)
 params["nodes_to_delete"] = nodes_to_delete
+params["graph"] = delete_nodes_from_network(files[0], nodes_to_delete) # files[0]
 params["ic_result"] = run_experiment(params)
 
 plt.figure()
@@ -137,6 +156,7 @@ probs = 1 - numpy.power(1 - params["alpha"], degrees)
 probs = (probs / probs.sum()) * 200.0
 nodes_to_delete = set(i for (i, v) in enumerate(list(probs)) if random.random() < v)
 params["nodes_to_delete"] = nodes_to_delete
+params["graph"] = delete_nodes_from_network(files[0], nodes_to_delete) # files[0]
 params["ic_result"] = run_experiment(params)
 
 plt.figure()
@@ -154,39 +174,59 @@ figure_1(params, "collateral harm")
 plt.show()
 ```
 
-# multiple non-essential communities
+# 5-community model
 
 With this, we attempt to keep average degrees consistent across the
 experiments, but now there are _four_ non-essential worker
 communities, and one essential worker community. The community sizes
 are 400 each.
 
+## Data
+
+```{python}
+n_communities = 5
+def get_n1():
+    return int(2000 / n_communities)
+n1 = get_n1()
+n2 = 2000 - n1
+params = {}
+params["thresholds"] = numpy.random.random(len(degrees)) * degrees
+params["n1"] = n1
+params["n2"] = n2
+
+def make_many_community_graph():
+    params = [0.0001/2, n1, (0.015 / 2) / (n1 / 1000)]
+    for i in range(n_communities - 1):
+        params.extend([n1, (0.01 / 2) / (n1 / 1000)])
+    return community_graph(*params)
+
+many_comms = make_many_community_graph()
+```
+
+## Degree distribution
+
+```{python}
+plot_community_degrees(
+    get_community_degrees(read_graph(many_comms), params),
+    ["Essential worker community", "Rest"], range=(0, 27))
+```
+
 ## 1
 
 ```{python}
-many_comms = community_graph(
-    0.0001/2,
-    int(1000 * 0.4), (0.015 / 2) / 0.4,
-    int(1000 * 0.4), (0.01 / 2) / 0.4,
-    int(1000 * 0.4), (0.01 / 2) / 0.4,
-    int(1000 * 0.4), (0.01 / 2) / 0.4,
-    int(1000 * 0.4), (0.01 / 2) / 0.4)
-
 nodes_to_delete = set(set_seeds(dict(
-                n1 = 400,
-                n2 = 1600,
+                n1 = n1,
+                n2 = n2,
                 seed1 = 0.1,
                 seed2 = 0.1)))
 params["nodes_to_delete"] = nodes_to_delete
 params["graph"] = delete_nodes_from_network(many_comms, nodes_to_delete)
-params["n1"] = 400
-params["n2"] = 1600
 params["seed1"] = 0.1
 params["seed2"] = 0.1
 params["seeds"] = set_seeds(params)
 params["alpha"] = 0.1
 params["reprs"] = 100
-params["communities"] = [list(range(0, 400)), list(range(400, 2000))]
+params["communities"] = [list(range(0, n1)), list(range(n1, 2000))]
 params["ic_result"] = run_experiment(params)
 
 plt.figure()
@@ -210,26 +250,40 @@ This is not exactly comparable because since the overall sizes changed, there ar
 now fewer essential workers, so to make vaccination rate difference match the
 degree difference, we need to change the parameters.
 
-We arrive at $s_1$, $s_2$ by solving the system $s_1 = s_2 \times 1.5$, $400 s_1 + 1600 s_2 = 200$.
+We arrive at $s_1$, $s_2$ by solving the system $s_1 = s_2 \times 1.5$, $400 s_1 + 1600 s_2 = 200$, which gives $s_1 \approx 0.136, s_2 \approx 0.091$.
 
 ```{python}
+
+def solve_seeding(n1):
+    n2 = 2000 - n1
+    # s1 = s2 * 1.5
+    # n1 s1 + n2 s2 = 200
+    # n1 s2 * 1.5 + n2 s2 = 200
+    # n1 s2 * 1.5 + (2000 - n1) s2 = 200
+    # n1 s2 * 1.5 + 2000 s2 - n1 s2 = 200
+    # 0.5 n1 s2 + 2000 s2 = 200
+    # s2 (0.5 n1 + 2000) = 200
+    # s2 = 200 / (2000 + 0.5 n1)
+    return 200 / (2000 + 0.5 * n1)
+
+print("seed1: %s, seed2: %s" % (solve_seeding(n1) * 1.5, solve_seeding(n1)))
 params = {}
 params["thresholds"] = numpy.random.random(len(degrees)) * degrees
 nodes_to_delete = set(set_seeds(dict(
-                n1 = 400,
-                n2 = 1600,
-                seed1 = (200 / 2200) * 1.5,
-                seed2 = 200 / 2200)))
+                n1 = n1,
+                n2 = n2,
+                seed1 = solve_seeding(n1) * 1.5,
+                seed2 = solve_seeding(n1))))
 params["nodes_to_delete"] = nodes_to_delete
-params["graph"] = files[0]
-params["n1"] = 1000
-params["n2"] = 1000
+params["graph"] = delete_nodes_from_network(many_comms, nodes_to_delete)
+params["n1"] = n1
+params["n2"] = n2
 params["seed1"] = 0.1
 params["seed2"] = 0.1
 params["seeds"] = set_seeds(params)
 params["alpha"] = 0.1
 params["reprs"] = 100
-params["communities"] = [list(range(0, 1000)), list(range(1000, 2000))]
+params["communities"] = [list(range(0, n1)), list(range(n1, 2000))]
 params["ic_result"] = run_experiment(params)
 
 plt.figure()
@@ -244,6 +298,7 @@ probs = numpy.array(degrees)
 probs = (probs / probs.sum()) * 200.0
 nodes_to_delete = set(i for (i, v) in enumerate(list(probs)) if random.random() < v)
 params["nodes_to_delete"] = nodes_to_delete
+params["graph"] = delete_nodes_from_network(many_comms, nodes_to_delete)
 params["ic_result"] = run_experiment(params)
 
 plt.figure()
@@ -259,6 +314,7 @@ probs = 1 - numpy.power(1 - params["alpha"], degrees)
 probs = (probs / probs.sum()) * 200.0
 nodes_to_delete = set(i for (i, v) in enumerate(list(probs)) if random.random() < v)
 params["nodes_to_delete"] = nodes_to_delete
+params["graph"] = delete_nodes_from_network(many_comms, nodes_to_delete)
 params["ic_result"] = run_experiment(params)
 
 plt.figure()
@@ -270,7 +326,7 @@ plt.show()
 
 ```{python}
 params["ic_result"] = run_thresh_experiment(params)
-
+    
 plt.figure()
 figure_1(params, "collateral harm")
 plt.show()
