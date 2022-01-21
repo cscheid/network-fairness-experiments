@@ -42,6 +42,16 @@ def delete_nodes_from_network(network, nodes_to_delete):
     n = temp_name(".txt")
     write_graph(network, n)
     return n
+
+experiment_type = "sterilizing"
+
+def set_graph(params, network):
+    if experiment_type == "protective":
+        params["graph"] = network
+    elif experiment_type == "sterilizing":
+        params["graph"] = delete_nodes_from_network(network, params["nodes_to_delete"])
+    else:
+        raise Exception("Don't know how to run experiment %s" % experiment_type)
 ```
 
 # 2-community model
@@ -51,8 +61,8 @@ def delete_nodes_from_network(network, nodes_to_delete):
 ```{python}
 essential = []
 rest = []
-# files = glob.glob(f'../data/graphs/experiment_essential_workers_2_sbm/run_1/twocommunities_edgelist.txt')
-files = [ community_graph(0.0001/2, 1000, 0.015 / 2, 1000, 0.01 / 2) ]
+files = glob.glob(f'../data/graphs/experiment_essential_workers_2_sbm/run_1/twocommunities_edgelist.txt')
+# files = [ community_graph(0.0001/2, 1000, 0.015 / 2, 1000, 0.01 / 2) ]
 ```
 
 ## Degree distribution
@@ -80,7 +90,7 @@ nodes_to_delete = set(set_seeds(dict(
                 seed1 = 0.1,
                 seed2 = 0.1)))
 params["nodes_to_delete"] = nodes_to_delete
-params["graph"] = delete_nodes_from_network(files[0], nodes_to_delete)
+set_graph(params, files[0])
 params["n1"] = 1000
 params["n2"] = 1000
 params["seed1"] = 0.1
@@ -117,7 +127,7 @@ nodes_to_delete = set(set_seeds(dict(
                 seed1 = 0.12,
                 seed2 = 0.08)))
 params["nodes_to_delete"] = nodes_to_delete
-params["graph"] = delete_nodes_from_network(files[0], nodes_to_delete) # files[0]
+set_graph(params, files[0])
 params["n1"] = 1000
 params["n2"] = 1000
 params["seed1"] = 0.1
@@ -140,7 +150,7 @@ probs = numpy.array(degrees)
 probs = (probs / probs.sum()) * 200.0
 nodes_to_delete = set(i for (i, v) in enumerate(list(probs)) if random.random() < v)
 params["nodes_to_delete"] = nodes_to_delete
-params["graph"] = delete_nodes_from_network(files[0], nodes_to_delete) # files[0]
+set_graph(params, files[0])
 params["ic_result"] = run_experiment(params)
 
 plt.figure()
@@ -156,7 +166,7 @@ probs = 1 - numpy.power(1 - params["alpha"], degrees)
 probs = (probs / probs.sum()) * 200.0
 nodes_to_delete = set(i for (i, v) in enumerate(list(probs)) if random.random() < v)
 params["nodes_to_delete"] = nodes_to_delete
-params["graph"] = delete_nodes_from_network(files[0], nodes_to_delete) # files[0]
+set_graph(params, files[0])
 params["ic_result"] = run_experiment(params)
 
 plt.figure()
@@ -220,7 +230,7 @@ nodes_to_delete = set(set_seeds(dict(
                 seed1 = 0.1,
                 seed2 = 0.1)))
 params["nodes_to_delete"] = nodes_to_delete
-params["graph"] = delete_nodes_from_network(many_comms, nodes_to_delete)
+set_graph(params, many_comms)
 params["seed1"] = 0.1
 params["seed2"] = 0.1
 params["seeds"] = set_seeds(params)
@@ -275,7 +285,7 @@ nodes_to_delete = set(set_seeds(dict(
                 seed1 = solve_seeding(n1) * 1.5,
                 seed2 = solve_seeding(n1))))
 params["nodes_to_delete"] = nodes_to_delete
-params["graph"] = delete_nodes_from_network(many_comms, nodes_to_delete)
+set_graph(params, many_comms)
 params["n1"] = n1
 params["n2"] = n2
 params["seed1"] = 0.1
@@ -298,7 +308,7 @@ probs = numpy.array(degrees)
 probs = (probs / probs.sum()) * 200.0
 nodes_to_delete = set(i for (i, v) in enumerate(list(probs)) if random.random() < v)
 params["nodes_to_delete"] = nodes_to_delete
-params["graph"] = delete_nodes_from_network(many_comms, nodes_to_delete)
+set_graph(params, many_comms)
 params["ic_result"] = run_experiment(params)
 
 plt.figure()
@@ -314,7 +324,7 @@ probs = 1 - numpy.power(1 - params["alpha"], degrees)
 probs = (probs / probs.sum()) * 200.0
 nodes_to_delete = set(i for (i, v) in enumerate(list(probs)) if random.random() < v)
 params["nodes_to_delete"] = nodes_to_delete
-params["graph"] = delete_nodes_from_network(many_comms, nodes_to_delete)
+set_graph(params, many_comms)
 params["ic_result"] = run_experiment(params)
 
 plt.figure()

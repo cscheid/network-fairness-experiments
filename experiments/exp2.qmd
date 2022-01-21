@@ -57,7 +57,7 @@ Or the min:
 
 ```{python}
 ic_neighbor_result = collect_neighbor_data(ic_result, params)
-ic_neighbor_result = list(numpy.min(lst) for lst in ic_neighbor_result)
+ic_neighbor_result = list(-1 if len(lst) == 0 else numpy.min(lst) for lst in ic_neighbor_result)
 plt.figure()
 plot_community_dists(ic_neighbor_result, params)
 plt.show()
