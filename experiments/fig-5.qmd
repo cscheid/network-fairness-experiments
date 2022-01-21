@@ -129,6 +129,21 @@ figure_1(params, "probability of infection")
 plt.show()
 ```
 
+## 3c, probability-based
+
+```{python}
+probs = numpy.array(degrees)
+probs = 1 - numpy.power(1 - params["alpha"], degrees)
+probs = (probs / probs.sum()) * 200.0
+nodes_to_delete = set(i for (i, v) in enumerate(list(probs)) if random.random() < v)
+params["nodes_to_delete"] = nodes_to_delete
+params["ic_result"] = run_experiment(params)
+
+plt.figure()
+figure_1(params, "probability of infection")
+plt.show()
+```
+
 ## 4
 
 ```{python}
@@ -138,3 +153,87 @@ plt.figure()
 figure_1(params, "collateral harm")
 plt.show()
 ```
+
+# multiple non-essential communities
+
+With this, we attempt to keep average degrees consistent across the
+experiments, but now there are _four_ non-essential worker
+communities, and one essential worker community. The community sizes
+are 400 each.
+
+## 1
+
+```{python}
+many_comms = community_graph(
+    0.0001/2,
+    int(1000 * 0.4), (0.015 / 2) / 0.4,
+    int(1000 * 0.4), (0.01 / 2) / 0.4,
+    int(1000 * 0.4), (0.01 / 2) / 0.4,
+    int(1000 * 0.4), (0.01 / 2) / 0.4,
+    int(1000 * 0.4), (0.01 / 2) / 0.4)
+
+nodes_to_delete = set(set_seeds(dict(
+                n1 = 400,
+                n2 = 1600,
+                seed1 = 0.1,
+                seed2 = 0.1)))
+params["nodes_to_delete"] = nodes_to_delete
+params["graph"] = delete_nodes_from_network(many_comms, nodes_to_delete)
+params["n1"] = 400
+params["n2"] = 1600
+params["seed1"] = 0.1
+params["seed2"] = 0.1
+params["seeds"] = set_seeds(params)
+params["alpha"] = 0.1
+params["reprs"] = 100
+params["communities"] = [list(range(0, 400)), list(range(400, 2000))]
+params["ic_result"] = run_experiment(params)
+
+plt.figure()
+figure_1(params, "probability of infection")
+plt.show()
+```
+
+## 2
+
+```{python}
+params["ic_result"] = run_thresh_experiment(params)
+
+plt.figure()
+figure_1(params, "collateral harm")
+plt.show()
+```
+
+## 3a, SBM-based
+
+This is not exactly comparable because since the overall sizes changed, there are
+now fewer essential workers, so to make vaccination rate difference match the
+degree difference, we need to change the parameters.
+
+We arrive at $s_1$, $s_2$ by solving the system $ s_1 = s_2 \times 1.5 $, $ 400 s_1 + 1600 s_2 = 200 $.
+
+```{python}
+params = {}
+params["thresholds"] = numpy.random.random(len(degrees)) * degrees
+nodes_to_delete = set(set_seeds(dict(
+                n1 = 400,
+                n2 = 1600,
+                seed1 = (200 / 2200) * 1.5,
+                seed2 = 200 / 2200)))
+params["nodes_to_delete"] = nodes_to_delete
+params["graph"] = files[0]
+params["n1"] = 1000
+params["n2"] = 1000
+params["seed1"] = 0.1
+params["seed2"] = 0.1
+params["seeds"] = set_seeds(params)
+params["alpha"] = 0.1
+params["reprs"] = 100
+params["communities"] = [list(range(0, 1000)), list(range(1000, 2000))]
+params["ic_result"] = run_experiment(params)
+
+plt.figure()
+figure_1(params, "probability of infection")
+plt.show()
+```
+
