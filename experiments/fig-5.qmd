@@ -237,3 +237,41 @@ figure_1(params, "probability of infection")
 plt.show()
 ```
 
+## 3b, degree-based
+
+```{python}
+probs = numpy.array(degrees)
+probs = (probs / probs.sum()) * 200.0
+nodes_to_delete = set(i for (i, v) in enumerate(list(probs)) if random.random() < v)
+params["nodes_to_delete"] = nodes_to_delete
+params["ic_result"] = run_experiment(params)
+
+plt.figure()
+figure_1(params, "probability of infection")
+plt.show()
+```
+
+## 3c, probability-based
+
+```{python}
+probs = numpy.array(degrees)
+probs = 1 - numpy.power(1 - params["alpha"], degrees)
+probs = (probs / probs.sum()) * 200.0
+nodes_to_delete = set(i for (i, v) in enumerate(list(probs)) if random.random() < v)
+params["nodes_to_delete"] = nodes_to_delete
+params["ic_result"] = run_experiment(params)
+
+plt.figure()
+figure_1(params, "probability of infection")
+plt.show()
+```
+
+## 4
+
+```{python}
+params["ic_result"] = run_thresh_experiment(params)
+
+plt.figure()
+figure_1(params, "collateral harm")
+plt.show()
+```
