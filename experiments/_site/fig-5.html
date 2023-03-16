@@ -1,133 +1,161 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang=""><head>
-  <meta charset="utf-8">
-  <meta name="generator" content="quarto-99.9.9">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>Essential Worker Community</title>
-  <style>
-    code{white-space: pre-wrap;}
-    span.smallcaps{font-variant: small-caps;}
-    span.underline{text-decoration: underline;}
-    div.column{display: inline-block; vertical-align: top; width: 50%;}
-    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-    ul.task-list{list-style: none;}
-    pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-    pre > code.sourceCode > span:empty { height: 1.2em; }
-    .sourceCode { overflow: visible; }
-    code.sourceCode > span { color: inherit; text-decoration: inherit; }
-    div.sourceCode { margin: 1em 0; }
-    pre.sourceCode { margin: 0; }
-    @media screen {
-    div.sourceCode { overflow: auto; }
-    }
-    @media print {
-    pre > code.sourceCode { white-space: pre-wrap; }
-    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-    }
-    pre.numberSource code
-      { counter-reset: source-line 0; }
-    pre.numberSource code > span
-      { position: relative; left: -4em; counter-increment: source-line; }
-    pre.numberSource code > span > a:first-child::before
-      { content: counter(source-line);
-        position: relative; left: -1em; text-align: right; vertical-align: baseline;
-        border: none; display: inline-block;
-        -webkit-touch-callout: none; -webkit-user-select: none;
-        -khtml-user-select: none; -moz-user-select: none;
-        -ms-user-select: none; user-select: none;
-        padding: 0 4px; width: 4em;
-        color: #aaaaaa;
-      }
-    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-    div.sourceCode
-      {   }
-    @media screen {
-    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-    }
-    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-    code span.at { color: #7d9029; } /* Attribute */
-    code span.bn { color: #40a070; } /* BaseN */
-    code span.bu { } /* BuiltIn */
-    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-    code span.ch { color: #4070a0; } /* Char */
-    code span.cn { color: #880000; } /* Constant */
-    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-    code span.dt { color: #902000; } /* DataType */
-    code span.dv { color: #40a070; } /* DecVal */
-    code span.er { color: #ff0000; font-weight: bold; } /* Error */
-    code span.ex { } /* Extension */
-    code span.fl { color: #40a070; } /* Float */
-    code span.fu { color: #06287e; } /* Function */
-    code span.im { } /* Import */
-    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-    code span.op { color: #666666; } /* Operator */
-    code span.ot { color: #007020; } /* Other */
-    code span.pp { color: #bc7a00; } /* Preprocessor */
-    code span.sc { color: #4070a0; } /* SpecialChar */
-    code span.ss { color: #bb6688; } /* SpecialString */
-    code span.st { color: #4070a0; } /* String */
-    code span.va { color: #19177c; } /* Variable */
-    code span.vs { color: #4070a0; } /* VerbatimString */
-    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-  </style>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
-  <script src="site_libs/quarto-nav/quarto-nav.js"></script>
-  <script src="site_libs/clipboard/clipboard.min.js"></script>
-  <meta name="quarto:offset" content="./">
-  <script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-  <script src="site_libs/quarto-search/fuse.min.js"></script>
-  <script src="site_libs/quarto-search/quarto-search.js"></script>
-  <script src="site_libs/quarto-html/quarto.js"></script>
-  <script src="site_libs/quarto-html/popper.min.js"></script>
-  <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-  <script src="site_libs/quarto-html/anchor.min.js"></script>
-  <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-  <link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet">
-  <script src="site_libs/bootstrap/bootstrap.min.js"></script>
-  <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-  <link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet">
-  <script id="quarto-search-options" type="application/json">{
-    "location": "sidebar",
-    "copy-button": false,
-    "collapse-after": 2,
-    "panel-placement": "start",
-    "type": "textbox",
-    "limit": 20,
-    "language": {
-      "search-no-results-text": "No results",
-      "search-matching-documents-text": "matching documents",
-      "search-copy-link-title": "Copy link to search",
-      "search-hide-matches-text": "Hide additional matches",
-      "search-more-match-text": "more match in this document",
-      "search-more-matches-text": "more matches in this document",
-      "search-clear-button-title": "Clear",
-      "search-detached-cancel-button-title": "Cancel",
-      "search-submit-button-title": "Submit"
-    }
-  }</script>
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Essential Worker Community</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
 </head>
+
 <body class="fullcontent">
+
 <div id="quarto-search-results"></div>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
 <!-- margin-sidebar -->
+    
 <!-- main -->
-<main class="content">
-<header id="title-block-header">
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
 <div class="quarto-title-block"><div><h1 class="title">Essential Worker Community</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li><li><hr class="dropdown-divider"></li><li><a id="quarto-view-source" class="dropdown-item" href="javascript:void(0)" role="button">View Source</a></li></ul></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
 </header>
-<p></p><details>
-<summary>Code</summary><p></p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> glob</span>
+
+<div class="cell" data-execution_count="1">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> glob</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> exps <span class="im">import</span> <span class="op">*</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -179,24 +207,27 @@
 <span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
 <span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">Exception</span>(<span class="st">"Don't know how to run experiment </span><span class="sc">%s</span><span class="st">"</span> <span class="op">%</span> experiment_type)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
+</div>
 <section id="community-model" class="level1">
 <h1>2-community model</h1>
 <section id="data" class="level2">
 <h2 class="anchored" data-anchor-id="data">Data</h2>
-<p></p><details>
-<summary>Code</summary><p></p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>essential <span class="op">=</span> []</span>
+<div class="cell" data-execution_count="2">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>essential <span class="op">=</span> []</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>rest <span class="op">=</span> []</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>files <span class="op">=</span> glob.glob(<span class="ss">f'../data/graphs/experiment_essential_workers_2_sbm/run_1/twocommunities_edgelist.txt'</span>)</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># files = [ community_graph(0.0001/2, 1000, 0.015 / 2, 1000, 0.01 / 2) ]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
+</div>
 </section>
 <section id="degree-distribution" class="level2">
 <h2 class="anchored" data-anchor-id="degree-distribution">Degree distribution</h2>
 <div class="cell" data-execution_count="3">
-<p></p><details>
-<summary>Code</summary><p></p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> f <span class="kw">in</span> files:</span>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> f <span class="kw">in</span> files:</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> read_graph(f)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    [this_essential, this_rest] <span class="op">=</span> get_community_degrees(n, {<span class="st">"n1"</span>: <span class="dv">1000</span>, <span class="st">"n2"</span>: <span class="dv">1000</span>})</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    essential.extend(this_essential)</span>
@@ -207,7 +238,7 @@
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    filename<span class="op">=</span><span class="st">"figures/essential-worker-sbm-degree-distribution.png"</span>,</span>
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">range</span><span class="op">=</span>(<span class="dv">0</span>, <span class="dv">27</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output-display">
+<div class="cell-output cell-output-display">
 <p><img src="fig-5_files/figure-html/cell-4-output-1.png" width="597" height="422"></p>
 </div>
 </div>
@@ -215,9 +246,9 @@
 <section id="section" class="level2">
 <h2 class="anchored" data-anchor-id="section">1</h2>
 <div class="cell" data-execution_count="4">
-<p></p><details>
-<summary>Code</summary><p></p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>params <span class="op">=</span> {}</span>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>params <span class="op">=</span> {}</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>degrees <span class="op">=</span> numpy.array(<span class="bu">list</span>(<span class="bu">len</span>(n) <span class="cf">for</span> n <span class="kw">in</span> read_graph(files[<span class="dv">0</span>])))</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>params[<span class="st">"thresholds"</span>] <span class="op">=</span> numpy.random.random(<span class="bu">len</span>(degrees)) <span class="op">*</span> degrees</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>nodes_to_delete <span class="op">=</span> <span class="bu">set</span>(set_seeds(<span class="bu">dict</span>(</span>
@@ -241,39 +272,39 @@
 <span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>figure_1(params, <span class="st">"probability of infection"</span>)</span>
 <span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output-stdout">
-<pre><code>Community means: 0.5526528117359413, 0.2842606516290727</code></pre>
+<div class="cell-output cell-output-stdout">
+<pre><code>Community means: 0.5597710843373495, 0.28624378109452736</code></pre>
 </div>
-<div class="cell-output-display">
-<p><img src="fig-5_files/figure-html/cell-5-output-2.png" width="576" height="422"></p>
+<div class="cell-output cell-output-display">
+<p><img src="fig-5_files/figure-html/cell-5-output-2.png" width="589" height="424"></p>
 </div>
 </div>
 </section>
 <section id="section-1" class="level2">
 <h2 class="anchored" data-anchor-id="section-1">2</h2>
 <div class="cell" data-execution_count="5">
-<p></p><details>
-<summary>Code</summary><p></p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>params[<span class="st">"ic_result"</span>] <span class="op">=</span> run_thresh_experiment(params)</span>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>params[<span class="st">"ic_result"</span>] <span class="op">=</span> run_thresh_experiment(params)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>figure_1(params, <span class="st">"collateral harm"</span>)</span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output-stdout">
-<pre><code>Community means: 0.5494987775061125, 0.3284586466165414</code></pre>
+<div class="cell-output cell-output-stdout">
+<pre><code>Community means: 0.5585060240963855, 0.36256218905472637</code></pre>
 </div>
-<div class="cell-output-display">
-<p><img src="fig-5_files/figure-html/cell-6-output-2.png" width="576" height="422"></p>
+<div class="cell-output cell-output-display">
+<p><img src="fig-5_files/figure-html/cell-6-output-2.png" width="576" height="424"></p>
 </div>
 </div>
 </section>
 <section id="a-sbm-based" class="level2">
 <h2 class="anchored" data-anchor-id="a-sbm-based">3a, SBM-based</h2>
 <div class="cell" data-execution_count="6">
-<p></p><details>
-<summary>Code</summary><p></p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>params <span class="op">=</span> {}</span>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>params <span class="op">=</span> {}</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>params[<span class="st">"thresholds"</span>] <span class="op">=</span> numpy.random.random(<span class="bu">len</span>(degrees)) <span class="op">*</span> degrees</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>nodes_to_delete <span class="op">=</span> <span class="bu">set</span>(set_seeds(<span class="bu">dict</span>(</span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>                n1 <span class="op">=</span> <span class="dv">1000</span>,</span>
@@ -296,20 +327,20 @@
 <span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>figure_1(params, <span class="st">"probability of infection"</span>)</span>
 <span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output-stdout">
-<pre><code>Community means: 0.5394444444444445, 0.27281472684085517</code></pre>
+<div class="cell-output cell-output-stdout">
+<pre><code>Community means: 0.5461403508771929, 0.2659855769230769</code></pre>
 </div>
-<div class="cell-output-display">
-<p><img src="fig-5_files/figure-html/cell-7-output-2.png" width="576" height="422"></p>
+<div class="cell-output cell-output-display">
+<p><img src="fig-5_files/figure-html/cell-7-output-2.png" width="589" height="422"></p>
 </div>
 </div>
 </section>
 <section id="b-degree-based" class="level2">
 <h2 class="anchored" data-anchor-id="b-degree-based">3b, degree-based</h2>
 <div class="cell" data-execution_count="7">
-<p></p><details>
-<summary>Code</summary><p></p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>probs <span class="op">=</span> numpy.array(degrees)</span>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>probs <span class="op">=</span> numpy.array(degrees)</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>probs <span class="op">=</span> (probs <span class="op">/</span> probs.<span class="bu">sum</span>()) <span class="op">*</span> <span class="fl">200.0</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>nodes_to_delete <span class="op">=</span> <span class="bu">set</span>(i <span class="cf">for</span> (i, v) <span class="kw">in</span> <span class="bu">enumerate</span>(<span class="bu">list</span>(probs)) <span class="cf">if</span> random.random() <span class="op">&lt;</span> v)</span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>params[<span class="st">"nodes_to_delete"</span>] <span class="op">=</span> nodes_to_delete</span>
@@ -320,10 +351,10 @@
 <span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>figure_1(params, <span class="st">"probability of infection"</span>)</span>
 <span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output-stdout">
-<pre><code>Community means: 0.5075322997416021, 0.2687529976019185</code></pre>
+<div class="cell-output cell-output-stdout">
+<pre><code>Community means: 0.5352487562189054, 0.265990675990676</code></pre>
 </div>
-<div class="cell-output-display">
+<div class="cell-output cell-output-display">
 <p><img src="fig-5_files/figure-html/cell-8-output-2.png" width="576" height="422"></p>
 </div>
 </div>
@@ -331,9 +362,9 @@
 <section id="c-probability-based" class="level2">
 <h2 class="anchored" data-anchor-id="c-probability-based">3c, probability-based</h2>
 <div class="cell" data-execution_count="8">
-<p></p><details>
-<summary>Code</summary><p></p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>probs <span class="op">=</span> numpy.array(degrees)</span>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>probs <span class="op">=</span> numpy.array(degrees)</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>probs <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> numpy.power(<span class="dv">1</span> <span class="op">-</span> params[<span class="st">"alpha"</span>], degrees)</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>probs <span class="op">=</span> (probs <span class="op">/</span> probs.<span class="bu">sum</span>()) <span class="op">*</span> <span class="fl">200.0</span></span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>nodes_to_delete <span class="op">=</span> <span class="bu">set</span>(i <span class="cf">for</span> (i, v) <span class="kw">in</span> <span class="bu">enumerate</span>(<span class="bu">list</span>(probs)) <span class="cf">if</span> random.random() <span class="op">&lt;</span> v)</span>
@@ -345,30 +376,30 @@
 <span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>figure_1(params, <span class="st">"probability of infection"</span>)</span>
 <span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output-stdout">
-<pre><code>Community means: 0.5335884567126725, 0.25520446096654276</code></pre>
+<div class="cell-output cell-output-stdout">
+<pre><code>Community means: 0.5292183622828784, 0.2433700980392157</code></pre>
 </div>
-<div class="cell-output-display">
-<p><img src="fig-5_files/figure-html/cell-9-output-2.png" width="576" height="422"></p>
+<div class="cell-output cell-output-display">
+<p><img src="fig-5_files/figure-html/cell-9-output-2.png" width="589" height="422"></p>
 </div>
 </div>
 </section>
 <section id="section-2" class="level2">
 <h2 class="anchored" data-anchor-id="section-2">4</h2>
 <div class="cell" data-execution_count="9">
-<p></p><details>
-<summary>Code</summary><p></p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>params[<span class="st">"ic_result"</span>] <span class="op">=</span> run_thresh_experiment(params)</span>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>params[<span class="st">"ic_result"</span>] <span class="op">=</span> run_thresh_experiment(params)</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>figure_1(params, <span class="st">"collateral harm"</span>)</span>
 <span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output-stdout">
-<pre><code>Community means: 0.5027478042659975, 0.28784386617100377</code></pre>
+<div class="cell-output cell-output-stdout">
+<pre><code>Community means: 0.5420223325062035, 0.28770833333333334</code></pre>
 </div>
-<div class="cell-output-display">
-<p><img src="fig-5_files/figure-html/cell-10-output-2.png" width="576" height="422"></p>
+<div class="cell-output cell-output-display">
+<p><img src="fig-5_files/figure-html/cell-10-output-2.png" width="585" height="422"></p>
 </div>
 </div>
 </section>
@@ -378,9 +409,10 @@
 <p>With this, we attempt to keep average degrees consistent across the experiments, but now there are <em>four</em> non-essential worker communities, and one essential worker community. The community sizes are 400 each.</p>
 <section id="data-1" class="level2">
 <h2 class="anchored" data-anchor-id="data-1">Data</h2>
-<p></p><details>
-<summary>Code</summary><p></p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>n_communities <span class="op">=</span> <span class="dv">5</span></span>
+<div class="cell" data-execution_count="10">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>n_communities <span class="op">=</span> <span class="dv">5</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_n1():</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">int</span>(<span class="dv">2000</span> <span class="op">/</span> n_communities)</span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>n1 <span class="op">=</span> get_n1()</span>
@@ -398,17 +430,18 @@
 <span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>many_comms <span class="op">=</span> make_many_community_graph()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
+</div>
 </section>
 <section id="degree-distribution-1" class="level2">
 <h2 class="anchored" data-anchor-id="degree-distribution-1">Degree distribution</h2>
 <div class="cell" data-execution_count="11">
-<p></p><details>
-<summary>Code</summary><p></p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>plot_community_degrees(</span>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>plot_community_degrees(</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    get_community_degrees(read_graph(many_comms), params),</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    [<span class="st">"Essential worker community"</span>, <span class="st">"Rest"</span>], <span class="bu">range</span><span class="op">=</span>(<span class="dv">0</span>, <span class="dv">27</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output-display">
+<div class="cell-output cell-output-display">
 <p><img src="fig-5_files/figure-html/cell-12-output-1.png" width="597" height="422"></p>
 </div>
 </div>
@@ -416,9 +449,9 @@
 <section id="section-3" class="level2">
 <h2 class="anchored" data-anchor-id="section-3">1</h2>
 <div class="cell" data-execution_count="12">
-<p></p><details>
-<summary>Code</summary><p></p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>nodes_to_delete <span class="op">=</span> <span class="bu">set</span>(set_seeds(<span class="bu">dict</span>(</span>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>nodes_to_delete <span class="op">=</span> <span class="bu">set</span>(set_seeds(<span class="bu">dict</span>(</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>                n1 <span class="op">=</span> n1,</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>                n2 <span class="op">=</span> n2,</span>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>                seed1 <span class="op">=</span> <span class="fl">0.1</span>,</span>
@@ -437,30 +470,30 @@
 <span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>figure_1(params, <span class="st">"probability of infection"</span>)</span>
 <span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output-stdout">
-<pre><code>Community means: 0.548006230529595, 0.2702731411229135</code></pre>
+<div class="cell-output cell-output-stdout">
+<pre><code>Community means: 0.5741846153846154, 0.2558506543494996</code></pre>
 </div>
-<div class="cell-output-display">
-<p><img src="fig-5_files/figure-html/cell-13-output-2.png" width="576" height="426"></p>
+<div class="cell-output cell-output-display">
+<p><img src="fig-5_files/figure-html/cell-13-output-2.png" width="576" height="422"></p>
 </div>
 </div>
 </section>
 <section id="section-4" class="level2">
 <h2 class="anchored" data-anchor-id="section-4">2</h2>
 <div class="cell" data-execution_count="13">
-<p></p><details>
-<summary>Code</summary><p></p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>params[<span class="st">"ic_result"</span>] <span class="op">=</span> run_thresh_experiment(params)</span>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>params[<span class="st">"ic_result"</span>] <span class="op">=</span> run_thresh_experiment(params)</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>figure_1(params, <span class="st">"collateral harm"</span>)</span>
 <span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output-stdout">
-<pre><code>Community means: 0.5640498442367601, 0.2938543247344461</code></pre>
+<div class="cell-output cell-output-stdout">
+<pre><code>Community means: 0.6241846153846154, 0.30641262509622785</code></pre>
 </div>
-<div class="cell-output-display">
-<p><img src="fig-5_files/figure-html/cell-14-output-2.png" width="585" height="424"></p>
+<div class="cell-output cell-output-display">
+<p><img src="fig-5_files/figure-html/cell-14-output-2.png" width="585" height="422"></p>
 </div>
 </div>
 </section>
@@ -469,9 +502,9 @@
 <p>This is not exactly comparable because since the overall sizes changed, there are now fewer essential workers, so to make vaccination rate difference match the degree difference, we need to change the parameters.</p>
 <p>Given some amount of overseeding, community size, and total budget, we can work out the seeding probabilities.</p>
 <div class="cell" data-execution_count="14">
-<p></p><details>
-<summary>Code</summary><p></p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> solve_seeding(n1, overseeding <span class="op">=</span> <span class="fl">1.5</span>):</span>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> solve_seeding(n1, overseeding <span class="op">=</span> <span class="fl">1.5</span>):</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    budget <span class="op">=</span> <span class="dv">200</span></span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    size <span class="op">=</span> <span class="dv">2000</span></span>
 <span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    n2 <span class="op">=</span> size <span class="op">-</span> n1</span>
@@ -507,28 +540,28 @@
 <span id="cb22-34"><a href="#cb22-34" aria-hidden="true" tabindex="-1"></a>plot_overseeding(<span class="dv">1</span>)</span>
 <span id="cb22-35"><a href="#cb22-35" aria-hidden="true" tabindex="-1"></a>plot_overseeding(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output-stdout">
-<pre><code>Community means: 0.5308282208588957, 0.2727700617283951</code></pre>
+<div class="cell-output cell-output-stdout">
+<pre><code>Community means: 0.5907715133531156, 0.2873255813953488</code></pre>
 </div>
-<div class="cell-output-display">
-<p><img src="fig-5_files/figure-html/cell-15-output-2.png" width="589" height="422"></p>
+<div class="cell-output cell-output-display">
+<p><img src="fig-5_files/figure-html/cell-15-output-2.png" width="576" height="422"></p>
 </div>
-<div class="cell-output-stdout">
-<pre><code>Community means: 0.5205828220858895, 0.3099074074074074</code></pre>
+<div class="cell-output cell-output-stdout">
+<pre><code>Community means: 0.658160237388724, 0.3140852713178295</code></pre>
 </div>
-<div class="cell-output-display">
-<p><img src="fig-5_files/figure-html/cell-15-output-4.png" width="585" height="423"></p>
+<div class="cell-output cell-output-display">
+<p><img src="fig-5_files/figure-html/cell-15-output-4.png" width="576" height="422"></p>
 </div>
-<div class="cell-output-stdout">
-<pre><code>Community means: 0.3237931034482759, 0.3124025974025974</code></pre>
+<div class="cell-output cell-output-stdout">
+<pre><code>Community means: 0.2583913043478261, 0.3103345454545455</code></pre>
 </div>
-<div class="cell-output-display">
-<p><img src="fig-5_files/figure-html/cell-15-output-6.png" width="578" height="422"></p>
+<div class="cell-output cell-output-display">
+<p><img src="fig-5_files/figure-html/cell-15-output-6.png" width="576" height="422"></p>
 </div>
-<div class="cell-output-stdout">
-<pre><code>Community means: 0.2965948275862069, 0.3757070707070707</code></pre>
+<div class="cell-output cell-output-stdout">
+<pre><code>Community means: 0.23552173913043478, 0.36397090909090907</code></pre>
 </div>
-<div class="cell-output-display">
+<div class="cell-output cell-output-display">
 <p><img src="fig-5_files/figure-html/cell-15-output-8.png" width="585" height="422"></p>
 </div>
 </div>
@@ -536,9 +569,9 @@
 <section id="b-degree-based-1" class="level2">
 <h2 class="anchored" data-anchor-id="b-degree-based-1">3b, degree-based</h2>
 <div class="cell" data-execution_count="15">
-<p></p><details>
-<summary>Code</summary><p></p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>probs <span class="op">=</span> numpy.array(degrees)</span>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>probs <span class="op">=</span> numpy.array(degrees)</span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>probs <span class="op">=</span> (probs <span class="op">/</span> probs.<span class="bu">sum</span>()) <span class="op">*</span> <span class="fl">200.0</span></span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>nodes_to_delete <span class="op">=</span> <span class="bu">set</span>(i <span class="cf">for</span> (i, v) <span class="kw">in</span> <span class="bu">enumerate</span>(<span class="bu">list</span>(probs)) <span class="cf">if</span> random.random() <span class="op">&lt;</span> v)</span>
 <span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>params[<span class="st">"nodes_to_delete"</span>] <span class="op">=</span> nodes_to_delete</span>
@@ -549,20 +582,20 @@
 <span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>figure_1(params, <span class="st">"probability of infection"</span>)</span>
 <span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output-stdout">
-<pre><code>Community means: 0.5310759493670886, 0.2661497730711044</code></pre>
+<div class="cell-output cell-output-stdout">
+<pre><code>Community means: 0.5569303797468355, 0.2550077160493827</code></pre>
 </div>
-<div class="cell-output-display">
-<p><img src="fig-5_files/figure-html/cell-16-output-2.png" width="589" height="422"></p>
+<div class="cell-output cell-output-display">
+<p><img src="fig-5_files/figure-html/cell-16-output-2.png" width="576" height="422"></p>
 </div>
 </div>
 </section>
 <section id="c-probability-based-1" class="level2">
 <h2 class="anchored" data-anchor-id="c-probability-based-1">3c, probability-based</h2>
 <div class="cell" data-execution_count="16">
-<p></p><details>
-<summary>Code</summary><p></p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>probs <span class="op">=</span> numpy.array(degrees)</span>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>probs <span class="op">=</span> numpy.array(degrees)</span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>probs <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> numpy.power(<span class="dv">1</span> <span class="op">-</span> params[<span class="st">"alpha"</span>], degrees)</span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>probs <span class="op">=</span> (probs <span class="op">/</span> probs.<span class="bu">sum</span>()) <span class="op">*</span> <span class="fl">200.0</span></span>
 <span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>nodes_to_delete <span class="op">=</span> <span class="bu">set</span>(i <span class="cf">for</span> (i, v) <span class="kw">in</span> <span class="bu">enumerate</span>(<span class="bu">list</span>(probs)) <span class="cf">if</span> random.random() <span class="op">&lt;</span> v)</span>
@@ -574,30 +607,30 @@
 <span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>figure_1(params, <span class="st">"probability of infection"</span>)</span>
 <span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output-stdout">
-<pre><code>Community means: 0.5237223974763406, 0.24987786259541986</code></pre>
+<div class="cell-output cell-output-stdout">
+<pre><code>Community means: 0.565886075949367, 0.27391006097560977</code></pre>
 </div>
-<div class="cell-output-display">
-<p><img src="fig-5_files/figure-html/cell-17-output-2.png" width="576" height="422"></p>
+<div class="cell-output cell-output-display">
+<p><img src="fig-5_files/figure-html/cell-17-output-2.png" width="589" height="422"></p>
 </div>
 </div>
 </section>
 <section id="section-5" class="level2">
 <h2 class="anchored" data-anchor-id="section-5">4</h2>
 <div class="cell" data-execution_count="17">
-<p></p><details>
-<summary>Code</summary><p></p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>params[<span class="st">"ic_result"</span>] <span class="op">=</span> run_thresh_experiment(params)</span>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>params[<span class="st">"ic_result"</span>] <span class="op">=</span> run_thresh_experiment(params)</span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
 <span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>figure_1(params, <span class="st">"collateral harm"</span>)</span>
 <span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output-stdout">
-<pre><code>Community means: 0.5697160883280757, 0.2709007633587786</code></pre>
+<div class="cell-output cell-output-stdout">
+<pre><code>Community means: 0.6042088607594936, 0.32897103658536586</code></pre>
 </div>
-<div class="cell-output-display">
-<p><img src="fig-5_files/figure-html/cell-18-output-2.png" width="585" height="422"></p>
+<div class="cell-output cell-output-display">
+<p><img src="fig-5_files/figure-html/cell-18-output-2.png" width="576" height="422"></p>
 </div>
 </div>
 </section>
@@ -605,9 +638,9 @@
 <section id="curves" class="level1">
 <h1>curves</h1>
 <div class="cell" data-execution_count="18">
-<p></p><details>
-<summary>Code</summary><p></p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode python cell-code code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> run_overseeding_experiment(o, n1, n2, graph):</span>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> run_overseeding_experiment(o, n1, n2, graph):</span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>    params <span class="op">=</span> {}</span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>    params[<span class="st">"thresholds"</span>] <span class="op">=</span> numpy.random.random(<span class="bu">len</span>(degrees)) <span class="op">*</span> degrees</span>
 <span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>    nodes_to_delete <span class="op">=</span> <span class="bu">set</span>(set_seeds(<span class="bu">dict</span>(</span>
@@ -678,23 +711,210 @@
 <span id="cb33-69"><a href="#cb33-69" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"total collateral harm"</span>)</span>
 <span id="cb33-70"><a href="#cb33-70" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output-display">
+<div class="cell-output cell-output-display">
 <p><img src="fig-5_files/figure-html/cell-19-output-1.png" width="589" height="422"></p>
 </div>
-<div class="cell-output-display">
+<div class="cell-output cell-output-display">
 <p><img src="fig-5_files/figure-html/cell-19-output-2.png" width="593" height="422"></p>
 </div>
-<div class="cell-output-display">
+<div class="cell-output cell-output-display">
 <p><img src="fig-5_files/figure-html/cell-19-output-3.png" width="589" height="422"></p>
 </div>
-<div class="cell-output-display">
+<div class="cell-output cell-output-display">
 <p><img src="fig-5_files/figure-html/cell-19-output-4.png" width="593" height="422"></p>
 </div>
 </div>
 
 
 <!-- -->
-<div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title anchored" id="quarto-embedded-source-code-modal-label" data-anchor-id="curves">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
 <div class="sourceCode" id="cb34" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Essential Worker Community"</span></span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
@@ -1119,142 +1339,8 @@
 <span id="cb34-458"><a href="#cb34-458" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
-</section>
-</main> <!-- /main -->
-<script type="application/javascript">
-window.document.addEventListener("DOMContentLoaded", function (event) {
-  const icon = "";
-  const anchorJS = new window.AnchorJS();
-  anchorJS.options = {
-    placement: 'right',
-    icon: icon
-  };
-  anchorJS.add('.anchored');
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
-    }
-  });
-  clipboard.on('success', function(e) {
-    // button target
-    const button = e.trigger;
-    // don't keep focus
-    button.blur();
-    // flash "checked"
-    button.classList.add('code-copy-button-checked');
-    setTimeout(function() {
-      button.classList.remove('code-copy-button-checked');
-    }, 1000);
-    // clear code selection
-    e.clearSelection();
-  });
-  const viewSource = window.document.getElementById('quarto-view-source') ||
-                     window.document.getElementById('quarto-code-tools-source');
-  if (viewSource) {
-    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
-    viewSource.addEventListener("click", function(e) {
-      if (sourceUrl) {
-        // rstudio viewer pane
-        if (/\bcapabilities=\b/.test(window.location)) {
-          window.open(sourceUrl);
-        } else {
-          window.location.href = sourceUrl;
-        }
-      } else {
-        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
-        modal.show();
-      }
-      return false;
-    });
-  }
-  function toggleCodeHandler(show) {
-    return function(e) {
-      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
-      for (let i=0; i<detailsSrc.length; i++) {
-        const details = detailsSrc[i].parentElement;
-        if (show) {
-          details.open = true;
-        } else {
-          details.removeAttribute("open");
-        }
-      }
-      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
-      const fromCls = show ? "hidden" : "unhidden";
-      const toCls = show ? "unhidden" : "hidden";
-      for (let i=0; i<cellCodeDivs.length; i++) {
-        const codeDiv = cellCodeDivs[i];
-        if (codeDiv.classList.contains(fromCls)) {
-          codeDiv.classList.remove(fromCls);
-          codeDiv.classList.add(toCls);
-        } 
-      }
-      return false;
-    }
-  }
-  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
-  if (hideAllCode) {
-    hideAllCode.addEventListener("click", toggleCodeHandler(false));
-  }
-  const showAllCode = window.document.getElementById("quarto-show-all-code");
-  if (showAllCode) {
-    showAllCode.addEventListener("click", toggleCodeHandler(true));
-  }
-  function tippyHover(el, contentFn) {
-    const config = {
-      allowHTML: true,
-      content: contentFn,
-      maxWidth: 500,
-      delay: 100,
-      arrow: false,
-      appendTo: function(el) {
-          return el.parentElement;
-      },
-      interactive: true,
-      interactiveBorder: 10,
-      theme: 'quarto',
-      placement: 'bottom-start'
-    };
-    window.tippy(el, config); 
-  }
-  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-  for (var i=0; i<noterefs.length; i++) {
-    const ref = noterefs[i];
-    tippyHover(ref, function() {
-      let href = ref.getAttribute('href');
-      try { href = new URL(href).hash; } catch {}
-      const id = href.replace(/^#\/?/, "");
-      const note = window.document.getElementById(id);
-      return note.innerHTML;
-    });
-  }
-  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-  for (var i=0; i<bibliorefs.length; i++) {
-    const ref = bibliorefs[i];
-    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
-    tippyHover(ref, function() {
-      var popup = window.document.createElement('div');
-      cites.forEach(function(cite) {
-        var citeDiv = window.document.createElement('div');
-        citeDiv.classList.add('hanging-indent');
-        citeDiv.classList.add('csl-entry');
-        var biblioDiv = window.document.getElementById('ref-' + cite);
-        if (biblioDiv) {
-          citeDiv.innerHTML = biblioDiv.innerHTML;
-        }
-        popup.appendChild(citeDiv);
-      });
-      return popup.innerHTML;
-    });
-  }
-});
-</script>
-<nav class="page-navigation">
-  <div class="nav-page nav-page-previous">
-  </div>
-  <div class="nav-page nav-page-next">
-  </div>
-</nav>
 </div> <!-- /content -->
+
 
 
 </body></html>
