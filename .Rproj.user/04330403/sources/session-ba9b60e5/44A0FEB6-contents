@@ -1,0 +1,60 @@
+---
+title: "Collateral Consequences"
+---
+
+# Jensen's inequality stuff
+
+Here we aggregate last
+
+```{python}
+from exps import *
+
+overseeding_factor = 4
+
+params = dict(
+    # graph params
+    n = 1000,
+    p1 = 0.01 / 2,
+    p2 = 0.01 / 2,
+    p_inter = 0.0001 / 2,
+    # seeding params
+    seed1 = overseeding_factor * 0.1,
+    seed2 = 0.1,
+    # IC params
+    alpha = 0.1,
+    reprs = 10000,
+    communities = [list(range(0, 1000)), list(range(1000, 2000))]
+    )
+params["graph"] = two_communities(params)
+params["seeds"] = set_seeds(params)
+
+ic_neighbor_result_mean = read_array(ic_fun(
+    params["graph"],
+    array_into_file(params["seeds"]),
+    str(params["alpha"]),
+    str(params["reprs"]),
+    "mean"
+    ))
+
+ic_neighbor_result_min = read_array(ic_fun(
+    params["graph"],
+    array_into_file(params["seeds"]),
+    str(params["alpha"]),
+    str(params["reprs"]),
+    "min"
+    ))
+```
+
+Mean shouldn't change:
+
+```{python}
+plot_community_dists(ic_neighbor_result_mean, params)
+
+```
+
+Min should change:
+
+```{python}
+plot_community_dists(ic_neighbor_result_mean, params)
+
+```

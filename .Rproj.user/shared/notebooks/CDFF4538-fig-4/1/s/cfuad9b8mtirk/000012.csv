@@ -1,0 +1,5 @@
+"2","<string>:8: RuntimeWarning: More than 20 figures have been opened. Figures created through the pyplot interface (`matplotlib.pyplot.figure`) are retained until explicitly closed and may consume too much memory. (To control this warning, see the rcParam `figure.max_open_warning`).
+"
+"0","k"
+"1","(5, '../data/reference_communities/More_connected_communities/SBM/run_2/twocommunities_edgelist.txt')
+"

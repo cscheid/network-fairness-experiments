@@ -1,0 +1,528 @@
+import argparse
+import configparser
+import networkx as nx
+import matplotlib.pyplot as plt
+from networkx.exception import NetworkXUnfeasible
+from scipy.stats import bernoulli
+import os
+import random
+import build_generic_network as bgn
+import csv
+import statistics
+import numpy as np
+#from networkx.generators.community import LFR_benchmark_graph
+import os
+
+def run():
+    # ConfigParser support https://docs.python.org/3/library/configparser.html#supported-ini-file-structure
+    parser = argparse.ArgumentParser(description='get path to the config file.')
+    parser.add_argument('filepath', help='path to the config file, including filename')
+    args = parser.parse_args()
+    configFile = args.filepath  # get configFile
+    # configFile="PATH TO CONFIGFILE" #uncomment this line to overwrite configFile
+    config = configparser.ConfigParser()  # make config object
+    config.read(configFile)  # read configFile
+
+    # GLOBAL CONFIG VARIABLES (ENSURE THIS MATCHES CONFIGFILE NAMES/FORMAT)
+    # [GENERAL]
+    basic = config['GENERAL']['basic']
+    SBM = config['GENERAL']['SBM']
+    LFR = config['GENERAL']['LFR']
+    degreeDistribution = config['GENERAL']['degreeDistribution']
+    highDegree = config['GENERAL']['highDegree']
+    removeNode = config['GENERAL']['removeNode']
+    edgeList = config['GENERAL']['edgeList']
+    neighborsList = config['GENERAL']['neighborsList']
+    seedEdgelist = config['GENERAL']['seedEdgelist']
+
+    # [SETTINGS]
+    number = int(config['SETTINGS']['number'])
+    size = int(config['SETTINGS']['size'])
+    intraNodes = config['SETTINGS']['intraNodes']
+    interNodes = config['SETTINGS']['interNodes']
+    aveDegree = config['SETTINGS']['aveDegree']
+    maxDegree = config['SETTINGS']['maxDegree']
+    mixingParameter = config['SETTINGS']['mixingParameter']
+    high = config['SETTINGS']['high']
+    probsRemove = config['SETTINGS']['probsRemove']
+    numsRemove = config['SETTINGS']['numsRemove']
+    probsSeed = config['SETTINGS']['probsSeed']
+    numsSeed = config['SETTINGS']['numsSeed']
+
+    # [FILES]
+    inEdgesFile = config['FILES']['inEdgesFile']
+    inNodesFile = config['FILES']['inNodesFile']
+    neighborsFile = config['FILES']['neighborsFile']
+    inSeedEdgesFile = config['FILES']['inSeedEdgesFile']
+    tableFile = config['FILES']['tableFile']
+
+    # libfile = glob.glob('../build/lib.macosx-10.14.6-x86_64-3.8/mainOrig.cpython-38-darwin.so')[0]
+    # libVectors = ctypes.CDLL(libfile)
+    # libVectors.main.restype = ctypes.c_void_p
+    # https://stackoverflow.com/questions/7530473/ctypes-and-passing-a-by-reference-to-a-function
+    # graph = ctypes.
+    # libVectors.main.argtypes = [ctypes.c_float,ctypes.c_int,ctypes.c_byref(graph),ctypes.c_wchar_p]
+    main(basic, SBM, LFR, highDegree, removeNode, edgeList, neighborsList, seedEdgelist, degreeDistribution, number, size, intraNodes, interNodes, aveDegree, maxDegree, mixingParameter, high, probsRemove, numsRemove, probsSeed, numsSeed, inEdgesFile, inNodesFile, neighborsFile, inSeedEdgesFile, tableFile)
+    return
+
+def main(basic, SBM, LFR, highDegree, removeNode, edgeList, neighborsList, seedEdgelist, degreeDistribution, number, size, intraNodes, interNodes, aveDegree, maxDegree, mixingParameter, high, probsRemove, numsRemove, probsSeed, numsSeed, inEdgesFile, inNodesFile, neighborsFile, inSeedEdgesFile, tableFile):
+    made_graph_total = False
+    while not made_graph_total:
+        total_nodes = int(size) * int(number)
+        if basic == 'yes':
+            print("building",number,"communities of",size,"nodes...")
+            model = 'basic'
+            if highDegree == 'yes':
+                G = degree_communities(number,size,total_nodes,intraNodes,interNodes,high)
+            else:
+                G = k_communities(number,size,total_nodes,intraNodes,interNodes)
+        elif SBM == 'yes':
+            model = 'SBM'
+            print("building",number,"communities using SBM from networkx...")
+            if highDegree=="yes":
+                G = degree_communities_SBM(number,size,intraNodes,interNodes,high)
+            else:    
+                G = k_communities_SBM(number,total_nodes,intraNodes,interNodes,high)
+        elif LFR == 'yes':
+            model = 'LFR'
+            # create file used by LFR_benchmark code to build LFR network
+            config_LFR(total_nodes, size, aveDegree, maxDegree, mixingParameter)
+            os.system('cd ../../LFR_benchmark ; ./benchmark -f LFR_config.txt')
+            fileDir = os.path.dirname(os.path.realpath('__file__'))
+            community = os.path.join(fileDir, "../../LFR_benchmark/community.dat")
+            community = os.path.abspath(os.path.realpath(community))
+            membership = {}
+            with open(community) as file:
+                membershipFile = csv.reader(file, delimiter='\t')
+                for line in membershipFile:
+                    corrected_node_number = int(line[0]) - 1
+                    # {com_1: [0,1,2,3,4]}
+                    membership.setdefault(int(line[1]), []).append(corrected_node_number)
+            network = os.path.join(fileDir, "../../LFR_benchmark/network.dat")
+            network = os.path.abspath(os.path.realpath(network))
+            G = k_communities_LFR(number, size, network)
+            G = renumber_communities_LFR(G, membership, size)
+
+        G = bgn.largest_connected_component_transform(G)
+        if len(G) == total_nodes:
+            print("The graph has indeed",total_nodes, " nodes")
+            made_graph_total = True
+        else:
+            print("The graph does not have",total_nodes, " nodes, so trying again...")
+    if len(G) != total_nodes:
+        raise ValueError("len(G) must be",total_nodes, " for the iterators on range(",total_nodes, ") to be correct")
+    if degreeDistribution == 'yes':
+        degree_distribution(G,size,number,model)
+    # Checked for iterator.
+    if removeNode == 'yes':
+        if probsRemove:
+            #convert config file string to list of floats
+            probsRemoveList = [float(prob) for prob in probsRemove.split(',')]
+            if len(probsRemoveList)!=number:
+                print("Missing arguments for node removal in communities.")
+            node_removal_prob(number,size,G,probsRemoveList)
+        elif numsRemove:
+            numsRemoveList = [float(prob) for prob in numsRemove.split(',')]
+            if len(numsRemoveList)!=number:
+                print("Missing arguments for node removal in communities.")
+            node_removal_number(number,size,G,numsRemoveList)
+        else:
+            raise ValueError("Missing arguments on how to remove nodes: either probRemoveA and probRemoveB OR numRemoveA and numRemoveB.")
+
+    # Checked for iterator.
+    # nodeList is always "yes" to make sure an old nodelist is never used with a new edgelist.
+    print("producing nodelist as", inNodesFile, " in same directory")
+    produce_nodelist(G, inNodesFile)
+
+    # Checked for iterator.
+    if edgeList == 'yes':
+        print("producing edgelist as", inEdgesFile, " in same directory")
+        produce_edgelist(G, inEdgesFile)
+
+    # Checked for iterator.
+    if neighborsList == 'yes':
+        print("producing list of neighbors per node as",neighborsFile,"in same directory")
+        produce_neighborlist(G,neighborsFile)
+
+    # Modified to choose nodes directly from G as opposed to from range(x*1000).
+    if seedEdgelist == 'yes':
+        print("producing edgelist with seeds as", inSeedEdgesFile, " in same directory")
+        if probsSeed:
+            probsSeedList = [float(prob) for prob in probsSeed.split(',')]
+            if len(probsSeedList)!=number:
+                print("Missing arguments for seed edge list creation.")
+            produce_seed_edgelist(number,size,G,inSeedEdgesFile,probsSeedList)
+        elif numsSeed:
+            numsSeedList = [float(prob) for prob in numsSeed.split(',')]
+            if len(numsSeedList)!=number:
+                print("Missing arguments for seed edge list creation.")
+            produce_seed_edgelist_number(number,size,G,inSeedEdgesFile,numsSeedList)
+        elif not probsSeed and not numsSeed:
+            raise ValueError("Missing arguments for seed edge list creation.")
+
+    # Converting the non-continuous, some id >= n node ids to continuous, in [0, n-1] ids:
+    if edgeList == 'yes':
+        convert_ids_edgelist(inNodesFile, inEdgesFile, tableFile)
+    if seedEdgelist == 'yes':
+        convert_ids_edgelist(inNodesFile, inSeedEdgesFile, tableFile)
+    print("Length of the nodes:", len(G.nodes))
+    print("Length of the edges:", len(G.edges))
+    return
+
+def k_communities(number,size,total_nodes,intra,inter):
+    intra = float(intra)
+    inter = float(inter)
+    G = nx.Graph()
+    for i in range(total_nodes):
+        G.add_node(i)
+    for k in range(number):
+        base = k * size
+        trials = bernoulli.rvs(intra, size=4950000)
+        index = 0
+        for i in range(base, base + (size - 1)):
+            for j in range(i + 1, base + size):
+                if trials[index]:
+                    G.add_edge(i, j)
+                index += 1
+    num_of_intra_edges = len(G.edges)
+    print("Expectation(|intra-community edges|) =",(number*size*intra),":", num_of_intra_edges)
+    for k in range(number - 1):
+        for m in range(k + 1, number):
+            source_base = k * size
+            target_base = m * size
+            trials = bernoulli.rvs(inter, size=10000000)
+            index = 0
+            for i in range(source_base, source_base + size):
+                for j in range(target_base, target_base + size):
+                    if trials[index]:
+                        G.add_edge(i, j)
+                    index += 1                    
+    num_of_inter_edges = len(G.edges) - num_of_intra_edges
+    print("Expectation(|inter-community edges|) = TBD:", num_of_inter_edges)
+    # fig = plt.figure()
+    # nx.draw_spring(G, with_labels=True)
+    # plt.show()
+    #plt.close()
+    return G
+
+def degree_communities(number,size,total_nodes,intra,inter,high):
+    intra = float(intra)
+    inter = float(inter)
+    settings = [float(prob) for prob in high.split(',')]
+    intraHigh = settings[0]
+    interHigh = settings[1]
+    G = nx.Graph()
+    for i in range(total_nodes):
+        G.add_node(i)
+    for k in range(number):
+        base = k * size
+        if k>0: #1st community is the high degree centrality community
+            trials = bernoulli.rvs(intra, size=4950000)
+        else:
+            trials = bernoulli.rvs(intraHigh, size=4950000)
+        index = 0
+        for i in range(base, base + (size-1)):
+            for j in range(i + 1, base + size):
+                if trials[index]:
+                    G.add_edge(i, j)
+                index += 1
+    num_of_intra_edges = len(G.edges)
+    print("Expectation(|intra-community edges|) = TBD:", num_of_intra_edges)
+    for k in range(int(number) - 1):
+        for m in range(k + 1, int(number)):
+            source_base = k * size
+            target_base = m * size
+            if k>0:
+                trials = bernoulli.rvs(inter, size=10000000)
+            else:
+                trials = bernoulli.rvs(interHigh, size=10000000)
+            index = 0
+            for i in range(source_base, source_base + size):
+                for j in range(target_base, target_base + size):
+                    if trials[index]:
+                        G.add_edge(i, j)
+                    index += 1
+    num_of_inter_edges = len(G.edges) - num_of_intra_edges
+    print("Expectation(|inter-community edges|) = TBD:", num_of_inter_edges)
+    return G
+
+def k_communities_SBM(number,size,total_nodes,intra,inter):
+    intra = float(intra)
+    inter = float(inter)
+    sizes=[]
+    probs=[]
+    for i in range(number):
+        sizes.append(size)
+        if len(probs)>0 and probs[i-1]==[intra,inter]:
+            probs.append([inter,intra]) 
+        else:
+            probs.append([intra,inter])
+    G = nx.generators.community.stochastic_block_model(sizes,probs,sparse=False)
+    #fig = plt.figure()
+    #nx.draw_spring(G, with_labels=True)
+    #plt.show()
+    #plt.close()
+    return G
+
+def degree_communities_SBM(number,size,intra,inter,high):
+    intra = float(intra)
+    inter = float(inter)
+    settings = [float(prob) for prob in high.split(',')]
+    intraHigh = settings[0]
+    interHigh = settings[1]
+    sizes = []
+    probs = []
+    for i in range(number):
+        sizes.append(size)
+        probs.append([])
+        for j in range(number):
+            if i == j:
+                if i == 0:
+                    probs[i].append(intraHigh)
+                else:
+                    probs[i].append(intra)
+            else:
+                if (i or j) == 0:
+                    probs[i].append(interHigh)
+                else:
+                    probs[i].append(inter)
+    G = nx.generators.community.stochastic_block_model(sizes,probs,sparse=False)
+    return G
+
+def config_LFR(total_nodes,size,aveDegree,maxDegree,mu):
+    with open("../../LFR_benchmark/LFR_config.txt",'w') as file:
+        file.write("-N\t{}\n".format(total_nodes))
+        file.write("-k\t{}\n".format(aveDegree))
+        file.write("-maxk\t{}\n".format(maxDegree))
+        file.write("-minc\t{}\n".format(size))
+        file.write("-maxc\t{}\n".format(size))
+        file.write("-mu\t{}".format(mu))
+    return
+
+def k_communities_LFR(number,size,network):
+    G = nx.Graph()
+    with open(network) as file:
+        edgeFile = csv.reader(file, delimiter='\t')
+        for line in edgeFile:
+            starting_node_number = int(line[0])-1
+            ending_node_number = int(line[1])-1
+            G.add_edge(starting_node_number,ending_node_number)
+    return G
+
+def renumber_communities_LFR(G, membership, size):
+    print("Length of G before renumbering:", len(G))
+    mapping = {node: None for node in G.nodes}
+    for i in range(len(membership)):
+        source_id_list = membership[i + 1]
+        target_id_list = [j for j in range(i * size, (i + 1) * size)]
+        for k in range(len(source_id_list)):
+            mapping[source_id_list[k]] = target_id_list[k]
+    relabeled_G = nx.relabel_nodes(G, mapping, copy=True)
+    print("Length of G after renumbering:", len(relabeled_G))
+
+    for node in G.nodes:
+        if G.degree[node] != relabeled_G.degree[mapping[node]]:
+            raise ValueError("G.degree[node] != relabeled_G.degree[mapping[node]]")
+    if len(G) != len(relabeled_G):
+        raise ValueError("len(G) != len(relabeled_G)")
+    return relabeled_G
+
+def degree_distribution(G,size,number,model):
+    lower = 0
+    upper = size
+    ave_degree = []
+    for i in range(number):
+        each_degree=[]
+        for node in range(lower,upper):
+            each_degree.append(G.degree(node))
+        ave_degree.append(each_degree)
+        lower += size
+        upper += size
+        print("Average degree of community",i+1,":",statistics.mean(ave_degree[i]))
+        print("Max degree of community",i+1,":",max(ave_degree[i]))
+        plt.hist(ave_degree[i],label="community {}".format(i+1),alpha=0.7)
+    plt.legend()
+    plt.title("{} Degree distribution per community".format(model))
+    plt.savefig('{}_degree_distribution.pdf'.format(model))
+    return
+
+def node_removal_prob(number,size,G,Pr):
+    lower=0
+    upper=size
+    for i in range(number):
+        count = 0
+        for node in G.nodes:
+            if lower <= node < upper:
+                dice=random.random()
+                if dice <= float(Pr[i]):
+                    G.remove_node(node)
+                    count += 1
+        lower = lower + size
+        upper = upper + size
+        print("Number of nodes removed in community {}: {}".format(i,count))
+    print("len(G) = {} after node removal".format(len(G)))
+    return G
+
+def node_removal_number(number,size,G,Nr):
+    #DOES NOT WORK WITH LFR
+    lower = 0
+    upper = size
+    for i in range(number):
+        count = 0
+        index = random.sample([node for node in G.nodes if lower <= node < upper], Nr[i])
+        lower = lower + int(size)
+        upper = upper + int(size)
+        for x in index:
+            G.remove_node(x)
+            count += 1
+        print("Number of nodes removed in community {}: {}".format(i,count))
+    return G
+    
+
+def produce_edgelist(G, inEdgesFile):
+    with open(inEdgesFile, 'w') as txt_file:
+        num_of_nodes = len(G.nodes)
+        print("WHAT", num_of_nodes)
+        directed = 0
+        txt_file.write("{}\t{}\n".format(num_of_nodes, directed))
+        for edge in G.edges:
+            txt_file.write("{}\t{}\n".format(edge[0], edge[1]))
+    return
+
+def produce_nodelist(G, inNodesFile):
+    with open(inNodesFile, 'w') as txt_file:
+        for node in G:
+            row = [node]
+            str_row = [str(i) for i in row]
+            line_string = "; ".join(str_row)
+            txt_file.write(line_string + "\n")  
+    #print("List of nodes in G:",list(G))    
+    return
+
+def produce_neighborlist(G,neighborsFile):
+    with open(neighborsFile,'w') as txt_file:
+        for node in G:
+            neighbors = list(G.neighbors(node))
+            txt_file.write("{}\t{}\n".format(node,neighbors))
+    return
+
+def produce_seed_edgelist(number,size,G,inSeedEdgesFile,Ps):
+    with open(inSeedEdgesFile, 'w') as txt_file:
+        seeds = []
+        lower = 0
+        upper = size
+        num_of_nodes = len(G.nodes)
+        directed = 0
+        txt_file.write("{}\t{}\n".format(num_of_nodes, directed))
+        for edge in G.edges:
+            txt_file.write("{}\t{}\n".format(edge[0], edge[1]))
+        txt_file.write("s")
+        for i in range(number):
+            for node in G.nodes:
+                if lower <= node < upper:
+                    dice=random.random()
+                    if dice <= float(Ps[i]):
+                        txt_file.write("\t{}".format(node))
+                        seeds.append(node)
+            lower = lower + int(size)
+            upper = upper + int(size)
+        txt_file.write("\n")
+    print("Number of seed nodes:", len(seeds))
+    print("len(G) = {} after produce_seed_edgelist".format(len(G.nodes)))
+    return
+
+#DOES NOT WORK WITH LFR
+def produce_seed_edgelist_number(number,size,G, inSeedEdgesFile,Ns):
+    with open(inSeedEdgesFile, 'w') as txt_file:
+        lower = 0
+        upper = size
+        num_of_nodes = len(G.nodes)
+        directed = 0
+        seeds = []
+        txt_file.write("{}\t{}\n".format(num_of_nodes, directed))
+        for edge in G.edges:
+            txt_file.write("{}\t{}\n".format(edge[0], edge[1]))
+        txt_file.write("s")
+        for i in range(number):
+            index = random.sample([node for node in G.nodes if lower <= node < upper], Ns[i])
+            for x in index:
+                txt_file.write("\t{}".format(x))
+                seeds.append(x)
+            lower = lower + size
+            upper = upper + size
+    print("Number of seed nodes:", len(seeds))
+    return G
+    
+
+def convert_ids_edgelist(inNodesFile, inEdgesFileSeedOrNot, tableFile):
+    """
+    Creates an id conversion table and rewrites the edgelist (for C++ code).
+    :param inEdgesFileSeedOrNot: edgelist file path
+    :return: None
+    """
+    # Construct graph from nodelist and edgelist:
+    G = nx.Graph()
+    with open(inNodesFile, 'r') as txt_file:
+        for line in txt_file:
+            if line[-1] == "\n":
+                line = line[:-1]
+            G.add_node(int(line))
+    with open(inEdgesFileSeedOrNot, 'r') as txt_file:
+        next(txt_file)
+        for line in txt_file:
+            if line[-1] == "\n":
+                line = line[:-1]
+            line = line.split("\t")
+            try:
+                G.add_edge(int(line[0]), int(line[1]))
+            except:
+                pass
+    print("len(G) = {} after reconstructing the graph from nodelist and edgelist".format(len(G)))
+
+    # Relabel the nodes with continuous integers:
+    G = nx.convert_node_labels_to_integers(G, ordering="sorted", label_attribute="original_id")
+    print("len(G) = {} after converting labels to integers".format(len(G)))
+
+    # Save conversion table:
+    with open(tableFile, 'w') as txt_file:
+        txt_file.write("original_id\tcontinuous_id\n")
+        for node in range(len(G)):
+            # print(len(G), node)
+            txt_file.write("{}\t{}\n".format(G.nodes[node]["original_id"], node))
+
+    # Write a continuous id edgelist using the conversion table:
+    # {original_id: continuous_id}
+    original_to_continuous_id = {}
+    with open(tableFile, 'r') as table_txt:
+        next(table_txt)
+        for line in table_txt:
+            line = line[:-1].split("\t")
+            original_to_continuous_id[int(line[0])] = int(line[1])
+
+    # Writing the continuous id edgelist:
+    with open(inEdgesFileSeedOrNot, 'r') as original_txt:
+        with open(inEdgesFileSeedOrNot[:-4] + "_continuous.txt", 'w') as continuous_txt:
+            first_line = next(original_txt)
+            continuous_txt.write(first_line)
+            if int(first_line.split("\t")[0]) != len(G):
+                raise ValueError("original edgelist and reconstructed graph's len(G)'s are not matching")
+            for line in original_txt:
+                if line[-1] == "\n":
+                    line = line[:-1]
+                line = line.split("\t")
+                new_line = []
+                for element in line:
+                    try:
+                        new_line.append(original_to_continuous_id[int(element)])
+                    except:
+                        new_line.append(element)
+                if new_line[0] == "":
+                    raise ValueError("Please delete the empty string line in the original edgelist")
+                if len(new_line) <= 1:
+                    raise ValueError("Length of the new line is less than 1")
+                new_line = "\t".join([str(i) for i in new_line])
+                continuous_txt.write("{}\n".format(new_line))
+    return
+
+if __name__=="__main__":
+    run()

@@ -1,0 +1,7 @@
+"0","communities = [list(range(1000)), list(range(1000, 2000))]"
+"0","network = ""../data/reference_communities/Isolated_communities/SBM/run_1/twocommunities_edgelist.txt"""
+"0","plot_curve("
+"0","    network,"
+"0","    communities,"
+"0","    id, ""prob"")"
+"0",""

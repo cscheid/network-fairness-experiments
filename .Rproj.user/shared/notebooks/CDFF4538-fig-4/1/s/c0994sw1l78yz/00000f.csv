@@ -1,0 +1,4 @@
+"0","k = (5, graphs[0][""files""][0])"
+"0","run_and_plot(configure_experiment_1_and_2("
+"0","    list(range(1,10)),"
+"0","    graphs[0][""files""]), k, ""figures/exp-1+2-sbm-isolated"")"

@@ -1,0 +1,9 @@
+"0","#| echo: false"
+"0","plt.figure()"
+"1","<Figure size 640x480 with 0 Axes>
+"
+"0","plot_demographics_dists(ic_result, params)"
+"2","NameError: name 'ic_result' is not defined
+"
+"0","plt.show()"
+"0",""

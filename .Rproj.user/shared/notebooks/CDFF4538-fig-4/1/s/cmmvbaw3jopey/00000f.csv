@@ -1,0 +1,4 @@
+"0","k = (5, graphs[2][""files""][0])"
+"0","run_thresh_and_plot(configure_experiment_2("
+"0","    list(range(1,10)),"
+"0","    graphs[2][""files""]), k, ""figures/exp-3-2-lfr-isolated"")"

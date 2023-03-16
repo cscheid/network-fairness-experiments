@@ -1,0 +1,28 @@
+{
+    "id": "11400E12",
+    "path": null,
+    "project_path": null,
+    "type": "object_explorer",
+    "hash": "0",
+    "contents": "",
+    "dirty": false,
+    "created": 1677804462365.0,
+    "source_on_save": false,
+    "relative_order": 6,
+    "properties": {
+        "id": "042cfc67632e4c2db8cfaed7f5ef3bab",
+        "name": "graphs",
+        "title": "graphs",
+        "language": "Python",
+        "source_window_id": "",
+        "Source": "Source"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 140248617247120,
+    "encoding": "",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1677804462365,
+    "read_only": false,
+    "read_only_alternatives": []
+}

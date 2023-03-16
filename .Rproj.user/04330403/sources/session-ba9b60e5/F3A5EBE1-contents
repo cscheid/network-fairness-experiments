@@ -1,0 +1,75 @@
+---
+title: "Experiment 1"
+format: 
+  html:
+    code-tools: true
+    code-fold: true
+---
+
+Two Erdos-Renyi graphs $n=1000, p=0.01$ connected to one another with random edges, $p=0.0001$.
+We overseed one community and look at the access probabilities.
+
+(I'm dividing the probability by 2 there so that my results match
+those of the students. I'm pretty sure this is harmless and coming
+from different convention on how to interpret the values in symmetric
+graphs when generating them, etc.)
+
+```{python}
+#| code-fold: show
+from exps import *
+
+overseeding_factor = 4
+
+params = dict(
+    # graph params
+    n = 1000,
+    p1 = 0.01 / 2,
+    p2 = 0.01 / 2,
+    p_inter = 0.0001 / 2,
+    # seeding params
+    seed1 = overseeding_factor * 0.1,
+    seed2 = 0.1,
+    # IC params
+    alpha = 0.1,
+    reprs = 10000,
+    communities = [list(range(0, 1000)), list(range(1000, 2000))]
+    )
+    
+```
+
+We generate a community graph and seeds:
+
+```{python}
+params["graph"] = two_communities(params)
+params["seeds"] = set_seeds(params)
+```
+
+Then, we run the IC computation:
+
+```{python}
+ic_result = run_experiment(params)
+```
+
+Finally, we plot the distribution of access probabilities across the
+communities:
+
+# Basic
+
+Access probs:
+```{python}
+#| echo: false
+plt.figure()
+plot_community_dists(ic_result, params)
+plt.show()
+```
+
+$x^2$ access probs:
+
+Access probs:
+```{python}
+#| echo: false
+plt.figure()
+plot_community_dists(list(v ** 2 for v in ic_result), params)
+plt.show()
+```
+

@@ -1,0 +1,28 @@
+{
+    "id": "92BC3F9B",
+    "path": null,
+    "project_path": null,
+    "type": "object_explorer",
+    "hash": "0",
+    "contents": "",
+    "dirty": false,
+    "created": 1677804556175.0,
+    "source_on_save": false,
+    "relative_order": 8,
+    "properties": {
+        "id": "c14602079465402c8e815768d8430a9f",
+        "name": "files",
+        "title": "files",
+        "language": "Python",
+        "source_window_id": "",
+        "Source": "Source"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 0,
+    "encoding": "",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1677804556175,
+    "read_only": false,
+    "read_only_alternatives": []
+}

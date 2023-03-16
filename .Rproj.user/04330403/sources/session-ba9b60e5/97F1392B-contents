@@ -1,0 +1,125 @@
+# code for network models from Wang et. al. 2022
+# creates a network containing two mutually exclusive groups: 'majority' and 'minority'
+
+# M: proportion of 'minority' nodes
+# E: number of edges for each new node
+# N: number of nodes in network
+# H: homophily - H = 0.5 for random mixing, 1.0 for perfectly homophilic.
+# ALPHA: preferential attachment strength 
+# PD: diversification probability 
+# ED: diversified links - ED = 0 is Homophily BA
+
+from exps import *
+import networkx as nx
+import random
+import numpy as np
+import matplotlib.pyplot as plt
+
+n = 1000
+M = 0.2
+E = 2 
+N = 1000
+H = 0.5
+ALPHA = 1
+PD = 0.6
+ED = 1
+p_inter = 0.0001
+alpha = 0.1
+reprs = 10000
+communities = [list(range(0, 1000)), list(range(1000, 2000))]
+params = dict(seed1 = 0.3,seed2 = 0.3)
+#M, E, N = 0.2, 2, 1000
+#H, ALPHA = 0.5, 1
+#PD, ED = 0.6, 1
+#inter_community_prob = 0.0001
+#isolated: 0.0001
+#connected: 0.001
+
+def DiversifiedHomophilyBA(m, e0, e1, h0, h1, alpha, po, eo0, eo1, N, weighted=True):
+    homo_dict = {0: h0, 1: h1}
+    e_dict = {0: e0, 1: e1}
+    eo_dict = {0: eo0, 1: eo1}
+    portion = {0: po, 1: 1 - po}  # different group 1-po
+    G = nx.Graph()
+    G.add_nodes_from([(0, {'group': 0}), (1, {'group': 1})])
+    G.add_edge(0, 1)
+    for t in range(N):
+        # choose which group this new node is in
+        if random.random() < m:
+            g = 1  # 1 is minority group
+        else:
+            g = 0
+        # calculate connection probability to each node
+        degree = dict(G.degree())
+        group = nx.get_node_attributes(G, "group")
+        info = []
+        for node in sorted(group):
+            g_n = group[node]
+            d_n = degree[node]
+            h = homo_dict[g]
+            if g_n == g:
+                p = h * d_n**alpha
+            else:
+                p = (1 - h) * d_n**alpha
+            info.append(p)
+        # select node based on the probability
+        selected_nodes = random.choices(
+            sorted(group), weights=info, k=e_dict[g] - eo_dict[g])
+        # select friends of friends who are of opposite group of me based on
+        # degree
+        info_dict = {}
+        for n in selected_nodes:
+            degree_n = degree[n]
+            neighbors = list(G.neighbors(n))
+            for neighbor in neighbors:
+                # if group[neighbor] != g:
+                degree_neighbor = degree[neighbor]
+                distance = abs(degree_neighbor - degree_n)
+                if neighbor in info_dict:
+                    if distance > info_dict[neighbor]:
+                        info_dict[neighbor] = portion[
+                            group[neighbor] == g] / (distance + 0.1)
+                else:
+                    info_dict[neighbor] = portion[
+                        group[neighbor] == g] / (distance + 0.1)
+        if len(info_dict) > 0:
+            fof, info = list(zip(*info_dict.items()))
+            fof, info = list(fof), list(info)
+            if weighted:
+                selected_fof = random.choices(
+                    fof, weights=info, k=min(len(info), eo_dict[g]))
+            else:
+                selected_fof = random.choices(
+                    fof, k=min(len(info), eo_dict[g]))
+        else:
+            selected_fof = []
+        # add edges
+        G.add_node(2 + t, group=g)
+        G.add_edges_from([(2 + t, target)
+                          for target in selected_nodes + selected_fof])
+    return G
+
+#create two communities each containing a 'majority' and 'minority' population  
+C1 = DiversifiedHomophilyBA(M, E, E, 0.5, 0.5, ALPHA, PD, ED, ED, N)
+C2 = DiversifiedHomophilyBA(M, E, E, 0.5, 0.5, ALPHA, PD, ED, ED, N)
+#creates N+2 ndoes
+
+#combine these two communities into a single network
+rename = {}
+for i in range(N+2): 
+  rename[i] = (N+2+i)
+C2 = nx.relabel_nodes(C2,rename)
+C = nx.compose(C1,C2) #preserves attributes
+for i in range(N+2):
+    for j in range(N,N+N+2):
+        p = random.random()
+        if p < p_inter:
+          C.add_edge(i,j)
+#nx.draw_spring(C, with_labels=True)
+#plt.show()
+  
+#Set seeds
+params["seeds"] = set_seeds(params)
+
+#Run IC
+ic_result = run_experiment(params)

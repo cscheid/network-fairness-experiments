@@ -1,0 +1,5 @@
+"0","params[""graph""] = demographics_communities(params)"
+"2","PermissionError: [Errno 13] Permission denied: '../generate_demographics_graph.py'
+"
+"0","params[""seeds""] = set_seeds(params)"
+"0",""
