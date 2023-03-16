@@ -153,19 +153,6 @@ def f_min(r, params):
             return None
         return numpy.min(v)
     return list(min_or_none(v) for v in r)
-def preferential(r, params):
-    r = collect_neighbor_data(r, params)
-    graph = read_graph(params["graph"])
-    group = nx.get_node_attributes(G, "group")
-    def self_or_none(v):
-        if len(v) == 0:
-            return None
-        for neighbor in v:
-            g_n = group[neighbor]
-            if g_n ==
-            numpy.mean
-        return 
-    return r
 
 ##############################################################################
 # graph IO

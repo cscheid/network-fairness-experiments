@@ -7,7 +7,6 @@ from operator import itemgetter
 
 import matplotlib.pyplot as plt
 import seaborn as sns
-import networkx as nx
 
 def collect_neighbor_data(result, params):
     graph = read_graph(params["graph"])
@@ -46,44 +45,9 @@ def split_result_by_communities(experiment_result, params):
             community_result.append(v)
         result_list.append(community_result)
     return result_list
-  
-#we want to seperate the results by communities and also by group
-def split_result_by_demographics(experiment_result, params):
-    seeds = params["seeds"]
-    communities = params["communities"]
-    nodes_to_delete = set(params.get("nodes_to_delete", []))
-    result_list = []
-    group = nx.get_node_attributes(G, "group")
-    majority_result = []
-    minority_result = []
-    for community in communities:
-        community_result = []
-        for node in community:
-            if node in seeds:
-                continue
-            if node in nodes_to_delete:
-                continue
-            v = experiment_result[node]
-            if v == None:
-                continue
-            if v == -1:
-                continue
-            if group[node] == 0:
-              majority_result.append(v)
-            if group[node] == 1:
-              minority_result.append(v)
-            community_result.append(v)
-        result_list.append(community_result)
-    result_list.append(majority_result)
-    result_list.append(minority_result)
-    return result_list
     
 def plot_community_dists(result, params):
     for result in split_result_by_communities(result, params):
-        hist(result)
-
-def plot_demographics_dists(result, params):
-    for result in split_result_by_demographics(result, params):
         hist(result)
 
 def array_into_file(vec):
@@ -142,12 +106,6 @@ def two_communities(params):
     n1 = params.get('n1', params.get("n", 0))
     n2 = params.get('n2', params.get("n", 0))
     return community_graph(params["p_inter"], n1, params["p1"], n2, params["p2"])
-
-#def demographics_communities(params): #should it differ in any way?
-#    n1 = params.get('n1', params.get("n", 0))
-#    n2 = params.get('n2', params.get("n", 0))
-#    return demographics_graph(params["p_inter"])
-#    m, e0, e1, h0, h1, alpha, po, eo0, eo1, N
 
 def read_graph(name):
     g = []
